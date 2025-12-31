@@ -6,20 +6,111 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{margin:0;font-family:Arial;background:#0f0f0f;color:#fff}
-header{background:#000;padding:15px;text-align:center;border-bottom:2px solid #d4af37}
-h1{color:#d4af37;margin:0}
-.container{padding:15px;max-width:1100px;margin:auto}
-.produtos{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}
-.card{background:#1a1a1a;border-radius:10px;padding:10px;text-align:center}
-.card img{width:100%;height:150px;object-fit:cover;border-radius:8px}
-.preco{color:#d4af37;font-weight:bold;margin:5px 0}
-button{background:#25d366;border:none;padding:10px;border-radius:5px;font-weight:bold;cursor:pointer}
-button:disabled{background:#555;color:#aaa}
-.carrinho{position:fixed;top:0;right:0;background:#000;width:100%;max-width:350px;height:100%;padding:15px;display:none;overflow:auto}
-.carrinho h3{color:#d4af37}
-.whats{position:fixed;bottom:20px;right:20px;background:#25d366;color:#000;padding:15px;border-radius:50%;font-size:20px;text-decoration:none}
-input,textarea{width:100%;padding:8px;margin-bottom:8px;border-radius:5px;border:none}
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#0f0f0f;
+  color:#fff;
+}
+
+header{
+  background:#000;
+  padding:15px;
+  text-align:center;
+  border-bottom:2px solid #d4af37;
+}
+
+header h1{
+  margin:0;
+  color:#d4af37;
+}
+
+header p{
+  margin:5px 0 0;
+  font-size:14px;
+  color:#ccc;
+}
+
+.container{
+  padding:15px;
+  max-width:900px;
+  margin:auto;
+}
+
+h2{
+  color:#d4af37;
+  margin:20px 0 10px;
+}
+
+/* TABELA */
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:#1a1a1a;
+}
+
+th,td{
+  padding:12px;
+  border-bottom:1px solid #333;
+}
+
+th{
+  background:#000;
+  color:#d4af37;
+}
+
+button{
+  background:#25d366;
+  border:none;
+  padding:8px 12px;
+  border-radius:5px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* CARRINHO */
+#cart{
+  position:fixed;
+  top:0;
+  right:0;
+  width:320px;
+  height:100%;
+  background:#000;
+  padding:15px;
+  border-left:2px solid #d4af37;
+  overflow:auto;
+}
+
+#cart h3{
+  color:#d4af37;
+}
+
+.cart-item{
+  font-size:14px;
+  margin-bottom:6px;
+}
+
+.total{
+  font-weight:bold;
+  color:#25d366;
+  margin:10px 0;
+}
+
+input, textarea{
+  width:100%;
+  padding:8px;
+  margin-bottom:8px;
+  border-radius:5px;
+  border:none;
+}
+
+footer{
+  text-align:center;
+  font-size:12px;
+  color:#aaa;
+  padding:15px;
+  margin-top:20px;
+}
 </style>
 </head>
 
@@ -31,108 +122,74 @@ input,textarea{width:100%;padding:8px;margin-bottom:8px;border-radius:5px;border
 </header>
 
 <div class="container">
-<h2>🛒 Produtos</h2>
-<div class="produtos" id="lista"></div>
+<h2>🧾 Produtos (Unitário)</h2>
+
+<table>
+<tr>
+  <th>Produto</th>
+  <th>Preço</th>
+  <th></th>
+</tr>
+
+<tr><td>Guaraná Antártica 350ml</td><td>R$ 5,00</td><td><button onclick="add('Guaraná Antártica 350ml',5)">Adicionar</button></td></tr>
+<tr><td>Guaraná Antártica 2L</td><td>R$ 12,00</td><td><button onclick="add('Guaraná Antártica 2L',12)">Adicionar</button></td></tr>
+<tr><td>Whisky White Horse 1L</td><td>R$ 97,86</td><td><button onclick="add('Whisky White Horse 1L',97.86)">Adicionar</button></td></tr>
+<tr><td>Corona Long Neck</td><td>R$ 9,00</td><td><button onclick="add('Corona Long Neck',9)">Adicionar</button></td></tr>
+<tr><td>Budweiser Long Neck</td><td>R$ 9,00</td><td><button onclick="add('Budweiser Long Neck',9)">Adicionar</button></td></tr>
+<tr><td>Budweiser Lata 269ml</td><td>R$ 4,00</td><td><button onclick="add('Budweiser Lata 269ml',4)">Adicionar</button></td></tr>
+<tr><td>Brahma Duplo Malte 350ml</td><td>R$ 4,50</td><td><button onclick="add('Brahma Duplo Malte 350ml',4.5)">Adicionar</button></td></tr>
+<tr><td>Red Bull 250ml</td><td>R$ 10,50</td><td><button onclick="add('Red Bull 250ml',10.5)">Adicionar</button></td></tr>
+<tr><td>Smirnoff Ice</td><td>R$ 9,00</td><td><button onclick="add('Smirnoff Ice',9)">Adicionar</button></td></tr>
+<tr><td>Coca-Cola 2L</td><td>R$ 13,50</td><td><button onclick="add('Coca-Cola 2L',13.5)">Adicionar</button></td></tr>
+<tr><td>Heineken Long Neck</td><td>R$ 9,00</td><td><button onclick="add('Heineken Long Neck',9)">Adicionar</button></td></tr>
+
+</table>
 </div>
 
-<div class="carrinho" id="carrinho">
-<h3>🛒 Carrinho</h3>
-<div id="itens"></div>
-<p><strong>Total: R$ <span id="total">0</span></strong></p>
+<!-- CARRINHO -->
+<div id="cart">
+<h3>🛒 Resumo do Pedido</h3>
+<div id="items"></div>
+<p class="total">Total: R$ <span id="total">0.00</span></p>
 
-<h3>🧾 Dados</h3>
+<h3>🧾 Dados do Cliente</h3>
 <input id="nome" placeholder="Nome completo">
 <input id="endereco" placeholder="Endereço completo">
 <input id="cpf" placeholder="CPF">
-<textarea id="obs" placeholder="Observação"></textarea>
+<textarea id="obs" placeholder="Observações"></textarea>
 
 <button onclick="finalizar()">Finalizar no WhatsApp</button>
-<button onclick="fechar()">Fechar</button>
 </div>
 
-<a class="whats" onclick="abrir()">🛒</a>
+<footer>
+© 2025 Adega GS Oficial • Venda responsável
+</footer>
 
 <script>
-/* ===== CONFIGURAÇÃO DA ADEGA ===== */
-const pedidoMinimo = 30;
 const whatsapp = "5511981654980";
-
-const produtos = [
-  {
-    nome:"Heineken 600ml",
-    preco:12,
-    imagem:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Heineken_bottle.jpg",
-    estoque:true
-  },
-  {
-    nome:"Whisky Red Label",
-    preco:119.90,
-    imagem:"https://upload.wikimedia.org/wikipedia/commons/4/4f/Johnnie_Walker_Red_Label.jpg",
-    estoque:true
-  },
-  {
-    nome:"Vinho Tinto Seco",
-    preco:39.90,
-    imagem:"https://upload.wikimedia.org/wikipedia/commons/1/12/Red_wine_glass.jpg",
-    estoque:false
-  },
-  {
-    nome:"Carvão",
-    preco:17,
-    imagem:"https://upload.wikimedia.org/wikipedia/commons/2/2f/Charcoal.jpg",
-    estoque:true
-  },
-  {
-    nome:"Gelo 5kg",
-    preco:18,
-    imagem:"https://upload.wikimedia.org/wikipedia/commons/3/3a/Ice_cubes.jpg",
-    estoque:true
-  }
-];
-/* ================================= */
-
 let carrinho = [];
 
-function render(){
-  const lista = document.getElementById("lista");
-  lista.innerHTML="";
-  produtos.forEach((p,i)=>{
-    lista.innerHTML+=`
-      <div class="card">
-        <img src="${p.imagem}">
-        <h4>${p.nome}</h4>
-        <div class="preco">R$ ${p.preco.toFixed(2)}</div>
-        <button ${!p.estoque?"disabled":""} onclick="add(${i})">
-          ${p.estoque?"Adicionar":"Esgotado"}
-        </button>
-      </div>`;
-  });
-}
-render();
-
-function add(i){
-  carrinho.push(produtos[i]);
+function add(nome, preco){
+  carrinho.push({nome,preco});
   atualizar();
-  abrir();
 }
 
 function atualizar(){
-  let html="",total=0;
-  carrinho.forEach(p=>{
-    total+=p.preco;
-    html+=`<p>${p.nome} - R$ ${p.preco.toFixed(2)}</p>`;
+  let html = "";
+  let total = 0;
+  carrinho.forEach(i=>{
+    html += `<div class="cart-item">• ${i.nome} - R$ ${i.preco.toFixed(2)}</div>`;
+    total += i.preco;
   });
-  document.getElementById("itens").innerHTML=html;
-  document.getElementById("total").innerText=total.toFixed(2);
+  document.getElementById("items").innerHTML = html;
+  document.getElementById("total").innerText = total.toFixed(2);
 }
 
-function abrir(){document.getElementById("carrinho").style.display="block"}
-function fechar(){document.getElementById("carrinho").style.display="none"}
-
 function finalizar(){
-  const total = carrinho.reduce((s,p)=>s+p.preco,0);
-  if(total<pedidoMinimo){alert("Pedido mínimo R$ "+pedidoMinimo);return;}
-  const msg = `Pedido:%0A${carrinho.map(p=>"- "+p.nome).join("%0A")}%0ATotal: R$ ${total.toFixed(2)}%0A%0ANome: ${nome.value}%0AEndereço: ${endereco.value}%0ACPF: ${cpf.value}%0AObs: ${obs.value}`;
+  let total = carrinho.reduce((s,i)=>s+i.preco,0);
+  let msg = `Pedido:%0A`;
+  carrinho.forEach(i=>msg+=`- ${i.nome}%0A`);
+  msg += `%0ATotal: R$ ${total.toFixed(2)}%0A%0ANome: ${nome.value}%0AEndereço: ${endereco.value}%0ACPF: ${cpf.value}%0AObs: ${obs.value}`;
   window.open(`https://wa.me/${whatsapp}?text=${msg}`);
 }
 </script>
