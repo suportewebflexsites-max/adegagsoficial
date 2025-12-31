@@ -9,7 +9,7 @@
 body{
   margin:0;
   font-family:Arial, sans-serif;
-  background:#0f0f0f;
+  background:#0b0b0b;
   color:#fff;
 }
 header{
@@ -17,16 +17,19 @@ header{
   padding:15px;
   border-bottom:2px solid #c9a23f;
 }
-header h1{color:#c9a23f;margin:0;}
+header h1{color:#c9a23f;margin:5px 0;}
+header p{margin:4px 0;color:#ccc;}
 .container{padding:15px;}
+
 .categoria{margin-top:30px;}
 .categoria h2{
   color:#c9a23f;
   border-bottom:1px solid #333;
   padding-bottom:5px;
 }
+
 .produto{
-  background:#1c1c1c;
+  background:#161616;
   padding:10px;
   border-radius:8px;
   margin-top:10px;
@@ -38,22 +41,24 @@ header h1{color:#c9a23f;margin:0;}
 .produto button{
   background:#28c76f;
   border:none;
-  padding:6px 12px;
+  padding:8px 14px;
   border-radius:6px;
   font-weight:bold;
   cursor:pointer;
 }
+
 #btnCarrinho{
   position:fixed;
   right:15px;
   bottom:15px;
   background:#28c76f;
   color:#000;
-  padding:15px;
+  padding:16px;
   border-radius:50%;
-  font-size:20px;
+  font-size:22px;
   cursor:pointer;
 }
+
 #painel{
   position:fixed;
   top:0;
@@ -61,13 +66,31 @@ header h1{color:#c9a23f;margin:0;}
   width:100%;
   max-width:420px;
   height:100%;
-  background:#111;
+  background:#0f0f0f;
   padding:15px;
   display:none;
   overflow-y:auto;
 }
-.item{margin-bottom:6px;}
-.total{margin-top:10px;color:#28c76f;font-size:18px;}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:8px;
+}
+.item button{
+  background:#333;
+  color:#fff;
+  border:none;
+  padding:2px 8px;
+  border-radius:5px;
+}
+
+.total{
+  margin-top:10px;
+  font-size:18px;
+  color:#28c76f;
+}
+
 input,textarea{
   width:100%;
   margin-top:8px;
@@ -75,6 +98,15 @@ input,textarea{
   border-radius:6px;
   border:none;
 }
+
+.upload{
+  margin-top:10px;
+  padding:12px;
+  border:1px dashed #28c76f;
+  text-align:center;
+  border-radius:8px;
+}
+
 .btn{
   width:100%;
   margin-top:12px;
@@ -85,6 +117,7 @@ input,textarea{
   font-weight:bold;
   cursor:pointer;
   background:#28c76f;
+  color:#000;
 }
 </style>
 </head>
@@ -94,7 +127,8 @@ input,textarea{
 <header>
   <h1>🍷 Adega GS Oficial</h1>
   <p>Pagamento: PIX • Débito • Crédito</p>
-  <p>Após confirmação do pagamento, o pedido será preparado e encaminhado.</p>
+  <p>O link de pagamento será enviado junto com o valor do frete.</p>
+  <p>Após pagamento confirmado, o pedido será preparado e encaminhado.</p>
 </header>
 
 <div class="container" id="produtos"></div>
@@ -102,11 +136,19 @@ input,textarea{
 <div id="btnCarrinho" onclick="abrirCarrinho()">🛒</div>
 
 <div id="painel">
-  <h2>Resumo do Pedido</h2>
+  <h2>📄 Resumo do Pedido</h2>
   <div id="lista"></div>
   <div class="total" id="total"></div>
 
-  <h3>Dados do Cliente</h3>
+  <h3>💳 Pagamento</h3>
+  <p>Formas aceitas: PIX • Débito • Crédito</p>
+
+  <div class="upload">
+    📎 Enviar comprovante (Foto ou PDF)
+    <input type="file" accept="image/*,.pdf">
+  </div>
+
+  <h3>👤 Dados do Cliente</h3>
   <input id="nome" placeholder="Nome *">
   <input id="endereco" placeholder="Endereço *">
   <input id="numero" placeholder="Número da casa *">
@@ -145,19 +187,19 @@ const categorias = {
  ["Cerveja Império 210ml",6],
  ["Cerveja Spaten 269ml",4.50]
 ],
+"Energéticos":[
+ ["Red Bull 250ml",10],
+ ["Baly Melancia 2L",10.50],
+ ["Baly Tropical 2L",12.35],
+ ["Baly Maçã Verde 2L",12.35],
+ ["Baly Morango e Pêssego 2L",12.35]
+],
 "Refrigerantes":[
  ["Guaraná Antártica 350ml",4],
  ["Guaraná Antártica 2L",12],
  ["Coca-Cola 2L",12.50],
  ["Coca-Cola Lata 350ml",4],
- ["Baly Melancia 2L",10.50],
- ["Baly Tropical 2L",12.35],
- ["Baly Maçã Verde 2L",12.35],
- ["Baly Morango e Pêssego 2L",12.35],
  ["Vibe 2L",11.60]
-],
-"Energéticos":[
- ["Red Bull 250ml",10]
 ],
 "Destilados":[
  ["Whisky White Horse 1L",99.99],
@@ -210,7 +252,14 @@ function atualizar(){
         if(p[0]===i)preco=p[1];
       });
     }
-    html+=`<div class="item">${i} x${carrinho[i]}</div>`;
+    html+=`
+    <div class="item">
+      ${i} x${carrinho[i]}
+      <span>
+        <button onclick="carrinho['${i}']--; if(carrinho['${i}']<=0)delete carrinho['${i}']; atualizar()">−</button>
+        <button onclick="add('${i}',${preco}); atualizar()">+</button>
+      </span>
+    </div>`;
     total+=preco*carrinho[i];
   }
   document.getElementById("lista").innerHTML=html;
@@ -225,7 +274,7 @@ function finalizar(){
   const obs=document.getElementById("obs").value;
 
   let total=0;
-  let texto="Pedido Adega GS Oficial:%0A";
+  let texto="Pedido Adega GS Oficial:%0A%0A";
 
   for(let i in carrinho){
     texto+=`${i} x${carrinho[i]}%0A`;
