@@ -7,215 +7,193 @@
 
 <style>
 body{margin:0;font-family:Arial;background:#0f0f0f;color:#fff}
-header{background:#000;padding:15px;border-bottom:2px solid #d4af37;text-align:center}
-header img{height:80px;margin-bottom:5px}
+header{background:#000;padding:15px;text-align:center;border-bottom:2px solid #d4af37}
+header img{height:90px}
 header h1{color:#d4af37;margin:5px 0}
-header p{color:#ccc;font-size:14px;margin:2px 0}
+header p{color:#ccc;font-size:14px;margin:0}
 
-.container{max-width:1200px;margin:auto;padding:15px}
-h2{color:#d4af37;margin:25px 0 10px}
-
+.container{padding:15px;max-width:1200px;margin:auto}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:15px}
+
 .card{background:#1a1a1a;border-radius:10px;padding:10px;text-align:center;position:relative}
-.card img{width:100%;height:130px;object-fit:contain;border-radius:8px;background:#000}
-.card h4{margin:8px 0 2px;font-size:14px}
-.preco{color:#d4af37;font-weight:bold;margin-bottom:8px}
-.card button{background:#25d366;border:none;padding:8px;width:100%;border-radius:5px;font-weight:bold;cursor:pointer}
+.card img{width:100%;height:120px;object-fit:contain;background:#000;border-radius:8px}
+.card h4{font-size:13px;margin:6px 0}
+.preco{color:#d4af37;font-weight:bold}
+.card button{background:#25d366;border:none;padding:8px;width:100%;border-radius:5px;font-weight:bold;margin-top:5px}
 
-.qtd{
-  position:absolute;top:8px;right:8px;
-  background:#25d366;color:#000;
-  font-weight:bold;border-radius:50%;
-  padding:4px 8px;font-size:12px
-}
+.qtd{position:absolute;top:6px;right:6px;background:#25d366;color:#000;font-weight:bold;border-radius:50%;padding:4px 8px;font-size:12px}
 
-/* Carrinho */
-#cart{
-  position:fixed;right:0;top:0;width:340px;height:100%;
-  background:#000;border-left:2px solid #d4af37;
-  padding:15px;overflow:auto;
-  transform:translateX(100%);transition:.3s;z-index:999
-}
+#cart{position:fixed;right:0;top:0;width:340px;height:100%;background:#000;padding:15px;border-left:2px solid #d4af37;overflow:auto;transform:translateX(100%);transition:.3s}
 #cart.open{transform:translateX(0)}
-.cart-item{font-size:14px;margin-bottom:6px}
-.cart-item button{
-  background:#333;color:#fff;border:none;
-  padding:3px 6px;margin:0 3px
-}
-.total{color:#25d366;font-weight:bold;margin:10px 0}
 
-input,textarea{
-  width:100%;padding:8px;margin-bottom:8px;
-  border-radius:5px;border:none
-}
+.open-cart{position:fixed;bottom:20px;right:20px;background:#25d366;color:#000;padding:15px;border-radius:50%;font-size:20px}
+.badge{position:absolute;top:-5px;right:-5px;background:red;color:#fff;border-radius:50%;padding:3px 7px;font-size:12px}
 
-.cart-btn{
-  background:#25d366;color:#000;
-  border:none;padding:10px;width:100%;
-  border-radius:5px;font-weight:bold;margin-bottom:8px
-}
+.cart-item{font-size:14px;margin-bottom:5px}
+.cart-item button{background:#333;color:#fff;border:none;padding:3px 6px}
 
-.open-cart{
-  position:fixed;bottom:20px;right:20px;
-  background:#25d366;color:#000;
-  padding:15px;border-radius:50%;
-  font-size:20px;cursor:pointer;z-index:1000
-}
+input,textarea{width:100%;padding:8px;margin-bottom:6px;border-radius:5px;border:none}
 
-.badge{
-  position:absolute;top:-5px;right:-5px;
-  background:red;color:#fff;
-  font-size:12px;border-radius:50%;
-  padding:3px 7px
-}
+.total{color:#25d366;font-weight:bold;margin:8px 0}
 
-.links-entrega a{
-  display:block;
-  text-decoration:none;
-  color:#25d366;
-  margin-bottom:6px;
-}
+label{display:block;margin-bottom:4px}
 </style>
 </head>
 
 <body>
 
 <header>
-  <img src="logo.png">
-  <h1>Adega GS Oficial</h1>
-  <p>📍 Rua Plácido Parreira Lima, 142</p>
-  <p>🕒 11:00 às 04:00</p>
+<img src="logo.png">
+<h1>Adega GS Oficial</h1>
+<p>📍 Rua Plácido Parreira Lima, 142 • 🕒 11:00 às 04:00</p>
 </header>
 
 <div class="container">
-<h2>🛒 Produtos</h2>
 <div class="grid" id="produtos"></div>
 </div>
 
 <div id="cart">
-<h3>🧾 Resumo do Pedido</h3>
+<h3>🧾 Resumo</h3>
 <div id="itens"></div>
 
 <p class="total">Produtos: R$ <span id="total">0.00</span></p>
 
 <h4>🚚 Entrega</h4>
-<div class="links-entrega">
-<a href="https://m.uber.com/ul/?action=setPickup&dropoff[formatted_address]=Rua+Plácido+Parreira+Lima+142" target="_blank">🚕 Calcular no Uber Moto</a>
-<a href="https://99app.com/go/ride?destination=Rua+Plácido+Parreira+Lima+142" target="_blank">🚖 Calcular na 99 Moto</a>
+<a href="https://m.uber.com/ul/?action=setPickup&dropoff[formatted_address]=Rua+Plácido+Parreira+Lima+142" target="_blank">Uber Moto</a><br>
+<a href="https://99app.com/go/ride?destination=Rua+Plácido+Parreira+Lima+142" target="_blank">99 Moto</a>
+<input id="entrega" placeholder="Valor da entrega *">
+
+<h4>💳 Pagamento</h4>
+<label><input type="radio" name="pagamento" value="PIX"> PIX</label>
+<label><input type="radio" name="pagamento" value="Débito"> Débito</label>
+<label><input type="radio" name="pagamento" value="Crédito"> Crédito</label>
+
+<div id="pixBox" style="display:none;border:1px solid #25d366;padding:6px;margin:6px 0">
+PIX: <strong>61888559000194</strong>
 </div>
 
-<input id="entrega" placeholder="Valor da entrega (Uber/99) *">
-
-<p class="total">Total geral: R$ <span id="totalGeral">0.00</span></p>
-<small>Pedido mínimo: R$ 20,00</small>
-
-<h3>👤 Dados do Cliente</h3>
-<input id="nome" placeholder="Nome completo *">
-<input id="endereco" placeholder="Endereço completo *">
+<h4>👤 Cliente</h4>
+<input id="nome" placeholder="Nome *">
+<input id="endereco" placeholder="Endereço *">
 <input id="cpf" placeholder="CPF *">
 <textarea id="obs" placeholder="Observações"></textarea>
 
-<button class="cart-btn" onclick="finalizar()">Finalizar no WhatsApp</button>
-<button class="cart-btn" onclick="toggleCart()">Continuar comprando</button>
+<p class="total">Total geral: R$ <span id="totalGeral">0.00</span></p>
+
+<button onclick="finalizar()">Finalizar no WhatsApp</button>
+<button onclick="toggleCart()">Continuar comprando</button>
 </div>
 
 <div class="open-cart" onclick="toggleCart()">🛒<span class="badge" id="count">0</span></div>
 
 <script>
 const whatsapp="5511981654980";
-const pedidoMinimo=20;
-
-const IMG="logo.png";
+const pedidoMin=20;
 
 const produtos=[
- {n:"Guaraná Antártica lata 350ml",p:4,img:IMG},
- {n:"Guaraná Antártica 2L",p:12,img:IMG},
- {n:"Heineken 269ml",p:5.20,img:IMG},
- {n:"Amstel Lata 269ml",p:9,img:IMG},
- {n:"Skol Lata 269ml",p:4,img:IMG},
- {n:"Carvão",p:18,img:IMG},
- {n:"Saco de Gelo",p:18,img:IMG}
+["Amstel lata 269ml c/12 uni",34],
+["Heineken lata 269ml c/8 uni",41.6],
+["Original lata 269ml c/8 uni",32],
+["Skol Beats Senses lata c/8",48],
+["Skol Beats Red Mix lata c/8",48],
+["Skol Beats GT lata c/8",48],
+["Brahma Duplo Malte 350ml c/12",54],
+["Budweiser lata 269ml c/8",56],
+["Guaraná Antártica 350ml",4],
+["Guaraná Antártica 2L",12],
+["Whisky White Horse 1L",99.99],
+["Corona Long Neck",8],
+["Budweiser Long Neck",8],
+["Budweiser Lata 269ml",9],
+["Brahma Duplo Malte 350ml",4.5],
+["Red Bull 250ml",10],
+["Baly Melancia 2L",10.5],
+["Baly Tropical 2L",12.35],
+["Baly Maçã Verde 2L",12.35],
+["Baly Morango/Pêssego 2L",12.35],
+["Vibe 2L",11.6],
+["Gin Eternity 900ml",25.9],
+["Pitu Lata 350ml",6],
+["Velho Barreiro 910ml",18],
+["Ice Smirnoff 275ml",8],
+["Coca-Cola 2L",12.5],
+["Coca-Cola Lata 350ml",4],
+["Heineken Long Neck",8],
+["Amstel Lata 269ml",9],
+["Heineken 269ml",5.2],
+["Original Lata 269ml",4],
+["Skol Lata 269ml",4],
+["Skol Beats Senses 269ml",6],
+["Skol Beats Red Mix 269ml",6],
+["Skol Beats GT 269ml",6],
+["Smirnoff 1L",42.5],
+["Gelo melancia",4.5],
+["Gelo coco",4.5],
+["Whisky Ballantines 1L",99.99],
+["Whisky Red Label 1L",99.99],
+["Cerveja Império 210ml",6],
+["Cerveja Spaten 269ml",4.5],
+["Skol lata c/15",56],
+["Carvão",18],
+["Saco de gelo",18]
 ];
 
 let cart={};
 
+const produtosDiv=document.getElementById("produtos");
+
 function render(){
-  const div=document.getElementById("produtos");
-  div.innerHTML="";
-  produtos.forEach((p,i)=>{
-    const qtd=cart[p.n]||0;
-    div.innerHTML+=`
-      <div class="card">
-        ${qtd?`<div class="qtd">${qtd}</div>`:""}
-        <img src="${p.img}">
-        <h4>${p.n}</h4>
-        <div class="preco">R$ ${p.p.toFixed(2)}</div>
-        <button onclick="add(${i})">Adicionar</button>
-      </div>`;
-  });
+produtosDiv.innerHTML="";
+produtos.forEach((p,i)=>{
+const q=cart[p[0]]||0;
+produtosDiv.innerHTML+=`
+<div class="card">
+${q?`<div class="qtd">${q}</div>`:""}
+<img src="logo.png">
+<h4>${p[0]}</h4>
+<div class="preco">R$ ${p[1].toFixed(2)}</div>
+<button onclick="add(${i})">Adicionar</button>
+</div>`;
+});
 }
 render();
 
-function add(i){
-  const n=produtos[i].n;
-  cart[n]=(cart[n]||0)+1;
-  atualizar();
+function add(i){cart[produtos[i][0]]=(cart[produtos[i][0]]||0)+1;update();}
+function menos(n){cart[n]--;if(cart[n]<=0)delete cart[n];update();}
+function mais(n){cart[n]++;update();}
+
+function update(){
+let t=0,c=0,html="";
+for(let n in cart){
+const p=produtos.find(x=>x[0]==n);
+t+=p[1]*cart[n];c+=cart[n];
+html+=`${n} x${cart[n]} <button onclick="menos('${n}')">-</button><button onclick="mais('${n}')">+</button><br>`;
+}
+itens.innerHTML=html;
+total.innerText=t.toFixed(2);
+totalGeral.innerText=(t+(+entrega.value||0)).toFixed(2);
+count.innerText=c;
+render();
 }
 
-function atualizar(){
-  let html="",total=0,count=0;
-  for(let n in cart){
-    const p=produtos.find(x=>x.n===n);
-    html+=`
-      <div class="cart-item">
-        ${n} x${cart[n]}
-        <button onclick="menos('${n}')">-</button>
-        <button onclick="mais('${n}')">+</button>
-      </div>`;
-    total+=p.p*cart[n];
-    count+=cart[n];
-  }
-  document.getElementById("itens").innerHTML=html;
-  document.getElementById("total").innerText=total.toFixed(2);
+document.querySelectorAll("input[name=pagamento]").forEach(e=>{
+e.onchange=()=>pixBox.style.display=e.value=="PIX"?"block":"none";
+});
 
-  const entrega=parseFloat(document.getElementById("entrega").value)||0;
-  document.getElementById("totalGeral").innerText=(total+entrega).toFixed(2);
-
-  document.getElementById("count").innerText=count;
-  render();
-}
-
-function menos(n){cart[n]--;if(cart[n]<=0)delete cart[n];atualizar()}
-function mais(n){cart[n]++;atualizar()}
-function toggleCart(){document.getElementById("cart").classList.toggle("open")}
-
-document.getElementById("entrega").addEventListener("input",atualizar);
+function toggleCart(){cartDiv.classList.toggle("open");}
 
 function finalizar(){
-  const entrega=parseFloat(entregaInput.value||entrega.value)||0;
-  const total=parseFloat(document.getElementById("total").innerText);
-  const totalGeral=total+entrega;
-
-  if(total<pedidoMinimo){alert("Pedido mínimo R$ 20,00");return;}
-  if(!nome.value||!endereco.value||!cpf.value||!entrega.value){
-    alert("Preencha todos os dados e o valor da entrega");
-    return;
-  }
-
-  let msg="🛒 *Pedido - Adega GS Oficial*%0A%0A";
-  for(let n in cart){msg+=`• ${n} x${cart[n]}%0A`;}
-  msg+=`
-%0A💰 Produtos: R$ ${total.toFixed(2)}
-%0A🚗 Entrega: R$ ${entrega.toFixed(2)}
-%0A💵 Total: R$ ${totalGeral.toFixed(2)}
-%0A%0A👤 Nome: ${nome.value}
-%0A🏠 Endereço: ${endereco.value}
-%0A🪪 CPF: ${cpf.value}
-%0A📝 Obs: ${obs.value}
-%0A🌐 https://suportewebflexsites-max.github.io/adegagsoficial/
-`;
-  window.open(`https://wa.me/${whatsapp}?text=${msg}`);
+const pag=document.querySelector("input[name=pagamento]:checked");
+if(total.innerText<pedidoMin||!pag||!nome.value||!endereco.value||!cpf.value||!entrega.value){
+alert("Preencha tudo corretamente");return;
 }
+let msg="Pedido Adega GS%0A";
+for(let n in cart){msg+=`• ${n} x${cart[n]}%0A`;}
+msg+=`Total: R$ ${totalGeral.innerText}%0APagamento: ${pag.value}`;
+window.open(`https://wa.me/${whatsapp}?text=${msg}`);
+}
+
+const cartDiv=document.getElementById("cart");
 </script>
 
 </body>
