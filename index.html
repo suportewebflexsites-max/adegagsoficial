@@ -6,126 +6,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
-  margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  background:#0f0f0f;
-  color:#fff;
-}
-header{
-  background:#000;
-  padding:15px;
-  text-align:center;
-  border-bottom:2px solid #d4af37;
-}
-header h1{margin:0;color:#d4af37}
-header p{margin:5px 0 0;color:#ccc;font-size:14px}
+body{margin:0;font-family:Arial;background:#0f0f0f;color:#fff}
+header{background:#000;padding:15px;text-align:center;border-bottom:2px solid #d4af37}
+h1{color:#d4af37;margin:0}
+header p{color:#ccc;font-size:14px;margin:5px 0}
+.container{max-width:1100px;margin:auto;padding:15px}
+h2{color:#d4af37;margin-top:25px}
+.produtos{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}
+.card{background:#1a1a1a;border-radius:10px;padding:10px;text-align:center}
+.card img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+.preco{color:#d4af37;font-weight:bold;margin:6px 0}
+.card button{background:#25d366;border:none;padding:8px;width:100%;border-radius:5px;font-weight:bold;cursor:pointer}
 
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:15px;
-}
-
-h2{color:#d4af37}
-
-.produtos{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:15px;
-}
-
-.card{
-  background:#1a1a1a;
-  border-radius:10px;
-  padding:10px;
-  text-align:center;
-}
-.card img{
-  width:100%;
-  height:140px;
-  object-fit:cover;
-  border-radius:8px;
-}
-.preco{
-  color:#d4af37;
-  font-weight:bold;
-  margin:6px 0;
-}
-.card button{
-  background:#25d366;
-  border:none;
-  padding:8px;
-  width:100%;
-  border-radius:5px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-/* CARRINHO */
 #cart{
-  position:fixed;
-  right:0;
-  top:0;
-  width:320px;
-  height:100%;
-  background:#000;
-  border-left:2px solid #d4af37;
-  padding:15px;
-  transform:translateX(100%);
-  transition:.3s;
-  overflow:auto;
+  position:fixed;right:0;top:0;width:320px;height:100%;
+  background:#000;border-left:2px solid #d4af37;
+  padding:15px;overflow:auto;transform:translateX(100%);
+  transition:.3s
 }
 #cart.open{transform:translateX(0)}
-
-.cart-item{
-  font-size:14px;
-  margin-bottom:8px;
-}
-.cart-item button{
-  background:#333;
-  color:#fff;
-  border:none;
-  padding:3px 6px;
-  margin:0 4px;
-}
-
-.total{
-  color:#25d366;
-  font-weight:bold;
-  margin:10px 0;
-}
-
-input,textarea{
-  width:100%;
-  padding:8px;
-  margin-bottom:8px;
-  border-radius:5px;
-  border:none;
-}
-
-.cart-btn{
-  background:#25d366;
-  color:#000;
-  border:none;
-  padding:10px;
-  width:100%;
-  border-radius:5px;
-  font-weight:bold;
-  margin-bottom:8px;
-}
-
-.open-cart{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#25d366;
-  color:#000;
-  padding:15px;
-  border-radius:50%;
-  font-size:20px;
-  cursor:pointer;
-}
+.cart-item{font-size:14px;margin-bottom:8px}
+.cart-item button{background:#333;color:#fff;border:none;padding:3px 6px;margin:0 4px}
+.total{color:#25d366;font-weight:bold;margin:10px 0}
+input,textarea{width:100%;padding:8px;margin-bottom:8px;border-radius:5px;border:none}
+.cart-btn{background:#25d366;color:#000;border:none;padding:10px;width:100%;border-radius:5px;font-weight:bold;margin-bottom:8px}
+.open-cart{position:fixed;bottom:20px;right:20px;background:#25d366;color:#000;padding:15px;border-radius:50%;font-size:20px;cursor:pointer}
 </style>
 </head>
 
@@ -137,12 +42,15 @@ input,textarea{
 </header>
 
 <div class="container">
-<h2>🛒 Produtos</h2>
 
-<div class="produtos" id="produtos"></div>
+<h2>🧾 Produtos Unitários</h2>
+<div class="produtos" id="unitarios"></div>
+
+<h2>📦 Produtos em Fardo</h2>
+<div class="produtos" id="fardos"></div>
+
 </div>
 
-<!-- CARRINHO -->
 <div id="cart">
 <h3>🧾 Resumo do Pedido</h3>
 <div id="itens"></div>
@@ -163,63 +71,60 @@ input,textarea{
 <script>
 const whatsapp="5511981654980";
 
-/* ===== PRODUTOS (VOCÊ CONTROLA AQUI) ===== */
-const produtos=[
- {nome:"Guaraná Antártica 350ml",preco:5,img:"https://upload.wikimedia.org/wikipedia/commons/4/4c/Guarana_Antarctica_can.jpg"},
- {nome:"Whisky White Horse 1L",preco:97.86,img:"https://upload.wikimedia.org/wikipedia/commons/0/02/White_Horse_whisky.jpg"},
- {nome:"Heineken Long Neck",preco:9,img:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Heineken_bottle.jpg"},
- {nome:"Red Bull 250ml",preco:10.5,img:"https://upload.wikimedia.org/wikipedia/commons/5/5c/Red_Bull_can.jpg"}
+/* ===== PRODUTOS DO PDF ===== */
+const unitarios=[
+ {n:"Guaraná Antártica 350ml",p:5,img:"https://upload.wikimedia.org/wikipedia/commons/4/4c/Guarana_Antarctica_can.jpg"},
+ {n:"Guaraná Antártica 2L",p:12,img:"https://upload.wikimedia.org/wikipedia/commons/7/7a/Guarana_Antarctica_2L.jpg"},
+ {n:"Whisky White Horse 1L",p:97.86,img:"https://upload.wikimedia.org/wikipedia/commons/0/02/White_Horse_whisky.jpg"},
+ {n:"Corona Long Neck",p:9,img:"https://upload.wikimedia.org/wikipedia/commons/6/63/Corona_Extra_bottle.jpg"},
+ {n:"Budweiser Long Neck",p:9,img:"https://upload.wikimedia.org/wikipedia/commons/5/55/Budweiser_bottle.jpg"},
+ {n:"Budweiser Lata 269ml",p:4,img:"https://upload.wikimedia.org/wikipedia/commons/1/11/Budweiser_can.jpg"},
+ {n:"Brahma Duplo Malte 350ml",p:4.5,img:"https://upload.wikimedia.org/wikipedia/commons/7/7e/Brahma_Duplo_Malte.jpg"},
+ {n:"Red Bull 250ml",p:10.5,img:"https://upload.wikimedia.org/wikipedia/commons/5/5c/Red_Bull_can.jpg"},
+ {n:"Coca-Cola 2L",p:13.5,img:"https://upload.wikimedia.org/wikipedia/commons/2/2f/Coca-Cola_2L.jpg"},
+ {n:"Heineken Long Neck",p:9,img:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Heineken_bottle.jpg"}
 ];
-/* ======================================= */
+
+const fardos=[
+ {n:"Amstel lata 269ml (12 un)",p:38,img:"https://upload.wikimedia.org/wikipedia/commons/3/3a/Amstel_can.jpg"},
+ {n:"Heineken lata 269ml (8 un)",p:41.6,img:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Heineken_bottle.jpg"},
+ {n:"Original lata 269ml (8 un)",p:32,img:"https://upload.wikimedia.org/wikipedia/commons/6/6e/Original_beer_can.jpg"},
+ {n:"Brahma Duplo Malte 350ml (12 un)",p:54,img:"https://upload.wikimedia.org/wikipedia/commons/7/7e/Brahma_Duplo_Malte.jpg"}
+];
+/* =========================== */
 
 let cart={};
 
-function renderProdutos(){
-  const p=document.getElementById("produtos");
-  p.innerHTML="";
-  produtos.forEach((i,idx)=>{
-    p.innerHTML+=`
+function render(lista,el){
+  el.innerHTML="";
+  lista.forEach((i,idx)=>{
+    el.innerHTML+=`
     <div class="card">
       <img src="${i.img}">
-      <h4>${i.nome}</h4>
-      <div class="preco">R$ ${i.preco.toFixed(2)}</div>
-      <button onclick="add(${idx})">Adicionar</button>
+      <h4>${i.n}</h4>
+      <div class="preco">R$ ${i.p.toFixed(2)}</div>
+      <button onclick="add('${i.n}',${i.p})">Adicionar</button>
     </div>`;
   });
 }
-renderProdutos();
+render(unitarios,document.getElementById("unitarios"));
+render(fardos,document.getElementById("fardos"));
 
-function add(i){
-  cart[i]=(cart[i]||0)+1;
+function add(n,p){
+  cart[n]=(cart[n]||0)+1;
   atualizar();
 }
 
 function atualizar(){
   let html="",total=0;
-  for(let i in cart){
-    const p=produtos[i];
-    total+=p.preco*cart[i];
-    html+=`
-    <div class="cart-item">
-      ${p.nome} <br>
-      <button onclick="menos(${i})">-</button>
-      ${cart[i]}
-      <button onclick="add(${i})">+</button>
-      <button onclick="remover(${i})">🗑️</button>
-    </div>`;
+  for(let n in cart){
+    let preco=0;
+    [...unitarios,...fardos].forEach(p=>{if(p.n===n)preco=p.p});
+    total+=preco*cart[n];
+    html+=`${n} x${cart[n]}<br>`;
   }
   document.getElementById("itens").innerHTML=html;
   document.getElementById("total").innerText=total.toFixed(2);
-}
-
-function menos(i){
-  cart[i]--;
-  if(cart[i]<=0) delete cart[i];
-  atualizar();
-}
-function remover(i){
-  delete cart[i];
-  atualizar();
 }
 
 function toggleCart(){
@@ -229,9 +134,11 @@ function toggleCart(){
 function finalizar(){
   let msg="Pedido:%0A";
   let total=0;
-  for(let i in cart){
-    msg+=`- ${produtos[i].nome} x${cart[i]}%0A`;
-    total+=produtos[i].preco*cart[i];
+  for(let n in cart){
+    let preco=0;
+    [...unitarios,...fardos].forEach(p=>{if(p.n===n)preco=p.p});
+    msg+=`- ${n} x${cart[n]}%0A`;
+    total+=preco*cart[n];
   }
   msg+=`%0ATotal: R$ ${total.toFixed(2)}%0A%0ANome: ${nome.value}%0AEndereço: ${endereco.value}%0ACPF: ${cpf.value}%0AObs: ${obs.value}`;
   window.open(`https://wa.me/${whatsapp}?text=${msg}`);
