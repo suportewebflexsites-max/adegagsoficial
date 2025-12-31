@@ -6,115 +6,90 @@
 <title>Adega GS Oficial</title>
 
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width:100%; overflow-x:hidden; font-family: Arial, sans-serif; background:#0f0f0f; color:#fff; }
-
-header {
-  padding: 16px;
-  background:#111;
-  text-align:center;
-  font-size:22px;
-  font-weight:bold;
-  color:#d4af37;
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+body{background:#0b0b0b;color:#fff;padding-bottom:90px}
+h2{color:#d4af37;margin:20px 16px 10px}
+header{
+  background:#000;
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border-bottom:1px solid #222;
 }
+header img{width:40px}
+header span{font-size:18px;font-weight:bold;color:#d4af37}
 
-.section-title {
-  margin:20px 16px 10px;
-  font-size:18px;
-  color:#d4af37;
-  border-bottom:1px solid #333;
-  padding-bottom:5px;
+.banner{
+  margin:16px;
+  border-radius:12px;
+  overflow:hidden;
 }
+.banner img{width:100%;display:block}
 
-.product {
+.product{
+  background:#151515;
+  margin:10px 16px;
+  padding:12px;
+  border-radius:10px;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  background:#1b1b1b;
-  margin:8px 16px;
-  padding:12px;
-  border-radius:10px;
 }
-
-.product span { font-size:15px; }
-
-.product button {
+.product-info span{display:block}
+.product-info .price{color:#aaa;margin-top:4px}
+button{
   background:#2ecc71;
   border:none;
   color:#000;
   padding:8px 14px;
-  border-radius:8px;
+  border-radius:6px;
+  font-weight:bold;
   cursor:pointer;
 }
 
-.cart-btn {
+.cart-btn{
   position:fixed;
   bottom:20px;
   right:20px;
   background:#2ecc71;
-  width:56px;
-  height:56px;
+  width:60px;
+  height:60px;
   border-radius:50%;
   display:flex;
-  justify-content:center;
   align-items:center;
-  font-size:22px;
-  color:#000;
-  cursor:pointer;
-  z-index:1000;
+  justify-content:center;
+  font-size:24px;
 }
-
-.cart-count {
+.cart-count{
   position:absolute;
-  top:-6px;
-  right:-6px;
+  top:5px;
+  right:5px;
   background:red;
   color:#fff;
-  border-radius:50%;
-  width:20px;
-  height:20px;
   font-size:12px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  padding:2px 6px;
+  border-radius:50%;
 }
 
-#cart {
+.modal{
   position:fixed;
-  top:0;
-  right:0;
-  width:100%;
-  max-width:420px;
-  height:100vh;
+  inset:0;
+  background:rgba(0,0,0,.8);
+  display:none;
+}
+.modal-content{
   background:#111;
-  z-index:2000;
-  transform:translateX(100%);
-  transition:.3s;
-  overflow-y:auto;
-}
-
-#cart.open { transform:translateX(0); }
-
-.cart-header {
+  max-width:500px;
+  margin:40px auto;
+  border-radius:12px;
   padding:16px;
-  font-size:18px;
-  background:#000;
-  display:flex;
-  justify-content:space-between;
+  max-height:90vh;
+  overflow:auto;
 }
+.modal h3{margin-bottom:10px}
 
-.cart-item {
-  padding:12px 16px;
-  border-bottom:1px solid #333;
-}
-
-.total {
-  padding:16px;
-  font-size:18px;
-  color:#2ecc71;
-}
-
-input, select, textarea {
+.input{
   width:100%;
   padding:10px;
   margin:6px 0;
@@ -122,114 +97,161 @@ input, select, textarea {
   border:none;
 }
 
-button.full {
-  width:100%;
-  padding:14px;
-  margin:10px 0;
-  background:#2ecc71;
-  border:none;
-  font-size:16px;
-  border-radius:8px;
-  cursor:pointer;
-}
+.payment label{display:block;margin:6px 0}
 
-.small {
-  font-size:13px;
-  color:#aaa;
-  margin:0 16px;
+.footer-btns{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
 }
+.footer-btns button{flex:1}
+
+.alert{color:#f39c12;font-size:14px;margin-top:6px}
 </style>
 </head>
 
 <body>
 
-<header>Adega GS Oficial</header>
+<header>
+  <img src="assets/img/logo-adega-gs.png">
+  <span>Adega GS Oficial</span>
+</header>
 
-<div class="section-title">🍺 Cervejas</div>
-<div id="cervejas"></div>
-
-<div class="section-title">⚡ Energéticos</div>
-<div id="energeticos"></div>
-
-<div class="section-title">🥤 Refrigerantes</div>
-<div id="refrigerantes"></div>
-
-<div class="section-title">🥃 Destilados</div>
-<div id="destilados"></div>
-
-<div class="section-title">🧊 Gelo & Extras</div>
-<div id="extras"></div>
-
-<div class="cart-btn" onclick="toggleCart()">🛒
-  <div class="cart-count" id="cartCount">0</div>
+<div class="banner">
+  <img src="assets/img/banner.jpg">
 </div>
 
-<div id="cart">
-  <div class="cart-header">
-    <span>Meu Carrinho</span>
-    <span onclick="toggleCart()">✖</span>
-  </div>
+<h2>🍺 Cervejas</h2>
+<div id="cervejas"></div>
 
-  <div id="cartItems"></div>
+<h2>⚡ Energéticos</h2>
+<div id="energeticos"></div>
 
-  <div class="total" id="total">Total: R$ 0,00</div>
-  <div class="small">Pedido mínimo: R$ 20,00</div>
+<h2>🥤 Refrigerantes</h2>
+<div id="refrigerantes"></div>
 
-  <div class="section-title">Pagamento</div>
-  <select id="pagamento" required>
-    <option value="">Selecione</option>
-    <option>PIX</option>
-    <option>Débito</option>
-    <option>Crédito</option>
-  </select>
+<h2>🥃 Destilados</h2>
+<div id="destilados"></div>
 
-  <div class="section-title">Cupom (opcional)</div>
-  <input placeholder="Digite o cupom">
+<h2>🧊 Gelo & Extras</h2>
+<div id="extras"></div>
 
-  <div class="section-title">Dados do Cliente</div>
-  <input id="nome" placeholder="Nome completo *">
-  <input id="endereco" placeholder="Endereço *">
-  <input id="numero" placeholder="Número da casa *">
-  <input id="cpf" placeholder="CPF *">
-  <textarea placeholder="Observações (opcional)"></textarea>
+<div class="cart-btn" onclick="openCart()">
+🛒
+<span class="cart-count" id="cartCount">0</span>
+</div>
 
-  <button class="full" onclick="finalizar()">Finalizar pedido</button>
-  <button class="full" style="background:#444" onclick="toggleCart()">Continuar comprando</button>
+<div class="modal" id="cartModal">
+<div class="modal-content">
+<h3>Meu Carrinho</h3>
+<div id="cartItems"></div>
+<p id="total"></p>
+<p class="alert">Pedido mínimo R$ 20,00</p>
+
+<h4>Pagamento *</h4>
+<div class="payment">
+<label><input type="radio" name="pay" value="PIX"> PIX</label>
+<label><input type="radio" name="pay" value="Débito"> Cartão Débito</label>
+<label><input type="radio" name="pay" value="Crédito"> Cartão Crédito</label>
+</div>
+
+<input class="input" placeholder="Cupom (opcional)">
+<input class="input" id="nome" placeholder="Nome completo *">
+<input class="input" id="endereco" placeholder="Endereço *">
+<input class="input" id="numero" placeholder="Número da casa *">
+<input class="input" id="cpf" placeholder="CPF *">
+<input class="input" placeholder="Observações (opcional)">
+
+<div class="footer-btns">
+<button onclick="closeCart()">Continuar comprando</button>
+<button onclick="finalizar()">Finalizar pedido</button>
+</div>
+</div>
 </div>
 
 <script>
 const produtos = {
- cervejas: [
- ["Amstel Lata 269ml",9],["Heineken 269ml",5.20],["Original Lata 269ml",4],
- ["Brahma Duplo Malte 350ml",4.50],["Corona Long Neck 330ml",8],
- ["Budweiser Long Neck 330ml",8],["Spaten 269ml",4.50],["Skol Lata 269ml",4]
+ cervejas:[
+ {n:"Amstel Lata 269ml",p:9},
+ {n:"Heineken 269ml",p:5.20},
+ {n:"Original Lata 269ml",p:4},
+ {n:"Brahma Duplo Malte 350ml",p:4.5},
+ {n:"Corona Long Neck 330ml",p:8},
+ {n:"Budweiser Long Neck 330ml",p:8},
+ {n:"Spaten 269ml",p:4.5},
+ {n:"Skol Lata 269ml",p:4},
  ],
- energeticos: [
- ["Red Bull 250ml",10],["Baly 2L",12.35],["Vibe 2L",11.60]
+ energeticos:[
+ {n:"Red Bull 250ml",p:10},
+ {n:"Baly 2L",p:12.35},
+ {n:"Vibe 2L",p:11.6}
  ],
- refrigerantes: [
- ["Guaraná Antártica 350ml",4],["Guaraná Antártica 2L",12],
- ["Coca-Cola Lata 350ml",4],["Coca-Cola 2L",12.50]
+ refrigerantes:[
+ {n:"Coca-Cola Lata 350ml",p:4},
+ {n:"Coca-Cola 2L",p:12.5},
+ {n:"Guaraná Antártica Lata 350ml",p:4},
+ {n:"Guaraná Antártica 2L",p:12}
  ],
- destilados: [
- ["Whisky White Horse 1L",99.99],["Whisky Ballantines 1L",99.99],
- ["Whisky Red Label 1L",99.99],["Gin Eternity 900ml",25.90],
- ["Smirnoff 1L",42.50],["Velho Barreiro 910ml",18],["Pitu Lata 350ml",6]
+ destilados:[
+ {n:"Whisky White Horse 1L",p:99.99},
+ {n:"Whisky Ballantines 1L",p:99.99},
+ {n:"Whisky Red Label 1L",p:99.99},
+ {n:"Gin Eternity 900ml",p:25.9},
+ {n:"Smirnoff 1L",p:42.5},
+ {n:"Velho Barreiro 910ml",p:18},
+ {n:"Pitu Lata 350ml",p:6},
+ {n:"Ice Smirnoff 275ml",p:8}
  ],
- extras: [
- ["Gelo sabor melancia",4.50],["Gelo sabor coco",4.50],
- ["Carvão",18],["Saco de gelo",18]
+ extras:[
+ {n:"Gelo Sabor Melancia",p:4.5},
+ {n:"Gelo Sabor Coco",p:4.5},
+ {n:"Carvão",p:18},
+ {n:"Saco de Gelo",p:18}
  ]
 };
 
-let cart=[], total=0;
+let cart=[];
 
 function render(cat,id){
  produtos[cat].forEach(p=>{
-  document.getElementById(id).innerHTML+=
-  `<div class="product"><span>${p[0]}<br>R$ ${p[1].toFixed(2)}</span>
-  <button onclick="add('${p[0]}',${p[1]})">Adicionar</button></div>`;
+ document.getElementById(id).innerHTML+=`
+ <div class="product">
+ <div class="product-info">
+ <span>${p.n}</span>
+ <span class="price">R$ ${p.p.toFixed(2)}</span>
+ </div>
+ <button onclick="add('${p.n}',${p.p})">Adicionar</button>
+ </div>`;
  });
+}
+
+function add(n,p){
+ cart.push({n,p});
+ document.getElementById("cartCount").innerText=cart.length;
+}
+
+function openCart(){
+ document.getElementById("cartModal").style.display="block";
+ let html="",t=0;
+ cart.forEach(i=>{html+=`<p>${i.n} - R$ ${i.p.toFixed(2)}</p>`;t+=i.p});
+ document.getElementById("cartItems").innerHTML=html;
+ document.getElementById("total").innerText="Total: R$ "+t.toFixed(2);
+}
+
+function closeCart(){document.getElementById("cartModal").style.display="none"}
+
+function finalizar(){
+ let t=cart.reduce((a,b)=>a+b.p,0);
+ if(t<20){alert("Pedido mínimo R$ 20,00");return;}
+ let pay=document.querySelector('input[name="pay"]:checked');
+ if(!pay){alert("Escolha forma de pagamento");return;}
+ if(!nome.value||!endereco.value||!numero.value||!cpf.value){
+ alert("Preencha todos os campos obrigatórios");return;
+ }
+ let msg=`🍷 ADEGA GS OFICIAL 🍷\n\n`;
+ cart.forEach(i=>msg+=`• ${i.n} - R$ ${i.p.toFixed(2)}\n`);
+ msg+=`\nTotal: R$ ${t.toFixed(2)}\nPagamento: ${pay.value}\n\nNome: ${nome.value}\nEndereço: ${endereco.value}, ${numero.value}\nCPF: ${cpf.value}`;
+ window.open("https://wa.me/55SEUNUMERO?text="+encodeURIComponent(msg));
 }
 
 render("cervejas","cervejas");
@@ -237,29 +259,6 @@ render("energeticos","energeticos");
 render("refrigerantes","refrigerantes");
 render("destilados","destilados");
 render("extras","extras");
-
-function add(nome,preco){
- cart.push({nome,preco});
- total+=preco;
- update();
-}
-
-function update(){
- document.getElementById("cartItems").innerHTML=cart.map(i=>`<div class="cart-item">${i.nome} - R$ ${i.preco.toFixed(2)}</div>`).join("");
- document.getElementById("total").innerText=`Total: R$ ${total.toFixed(2)}`;
- document.getElementById("cartCount").innerText=cart.length;
-}
-
-function toggleCart(){
- document.getElementById("cart").classList.toggle("open");
-}
-
-function finalizar(){
- if(total<20) return alert("Pedido mínimo R$ 20,00");
- if(!nome.value||!endereco.value||!numero.value||!cpf.value||!pagamento.value)
-  return alert("Preencha todos os campos obrigatórios");
- alert("Pedido enviado com sucesso!");
-}
 </script>
 
 </body>
