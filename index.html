@@ -2,272 +2,264 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Adega GS Oficial</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adega GS Oficial</title>
 
 <style>
-body {
-  margin:0;
-  font-family: Arial, sans-serif;
-  background:#0e0e0e;
-  color:#fff;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width:100%; overflow-x:hidden; font-family: Arial, sans-serif; background:#0f0f0f; color:#fff; }
+
 header {
+  padding: 16px;
+  background:#111;
   text-align:center;
-  padding:15px;
-  border-bottom:2px solid #c9a24d;
+  font-size:22px;
+  font-weight:bold;
+  color:#d4af37;
 }
-header h1 {
-  color:#c9a24d;
-  margin:0;
-}
-.category {
-  padding:12px;
-}
-.category h2 {
-  color:#c9a24d;
+
+.section-title {
+  margin:20px 16px 10px;
+  font-size:18px;
+  color:#d4af37;
   border-bottom:1px solid #333;
   padding-bottom:5px;
 }
+
 .product {
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  background:#1a1a1a;
-  margin:8px 0;
-  padding:10px;
-  border-radius:8px;
+  align-items:center;
+  background:#1b1b1b;
+  margin:8px 16px;
+  padding:12px;
+  border-radius:10px;
 }
-.product img {
-  width:60px;
-  height:60px;
-  border-radius:6px;
-  object-fit:cover;
-  background:#333;
-}
-.product-info {
-  flex:1;
-  margin-left:10px;
-}
-.product-info p {
-  margin:3px 0;
-}
+
+.product span { font-size:15px; }
+
 .product button {
   background:#2ecc71;
   border:none;
-  padding:8px 12px;
-  border-radius:6px;
+  color:#000;
+  padding:8px 14px;
+  border-radius:8px;
   cursor:pointer;
-  font-weight:bold;
 }
-#cart-btn {
+
+.cart-btn {
   position:fixed;
   bottom:20px;
   right:20px;
   background:#2ecc71;
-  color:#000;
-  width:60px;
-  height:60px;
+  width:56px;
+  height:56px;
   border-radius:50%;
-  font-size:20px;
-  border:none;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:22px;
+  color:#000;
+  cursor:pointer;
+  z-index:1000;
 }
+
+.cart-count {
+  position:absolute;
+  top:-6px;
+  right:-6px;
+  background:red;
+  color:#fff;
+  border-radius:50%;
+  width:20px;
+  height:20px;
+  font-size:12px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
 #cart {
   position:fixed;
   top:0;
-  right:-100%;
-  width:100%;
-  height:100%;
-  background:#111;
-  padding:15px;
-  overflow:auto;
-  transition:.3s;
-}
-#cart.active {
   right:0;
+  width:100%;
+  max-width:420px;
+  height:100vh;
+  background:#111;
+  z-index:2000;
+  transform:translateX(100%);
+  transition:.3s;
+  overflow-y:auto;
 }
-.cart-item {
+
+#cart.open { transform:translateX(0); }
+
+.cart-header {
+  padding:16px;
+  font-size:18px;
+  background:#000;
   display:flex;
   justify-content:space-between;
-  margin:8px 0;
 }
-.cart-item button {
-  margin:0 5px;
+
+.cart-item {
+  padding:12px 16px;
+  border-bottom:1px solid #333;
 }
+
+.total {
+  padding:16px;
+  font-size:18px;
+  color:#2ecc71;
+}
+
 input, select, textarea {
   width:100%;
-  padding:8px;
+  padding:10px;
   margin:6px 0;
-  border-radius:5px;
-  border:none;
-}
-.btn {
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border:none;
   border-radius:6px;
-  font-size:16px;
+  border:none;
 }
-.btn-green {
+
+button.full {
+  width:100%;
+  padding:14px;
+  margin:10px 0;
   background:#2ecc71;
-  color:#000;
+  border:none;
+  font-size:16px;
+  border-radius:8px;
+  cursor:pointer;
 }
-.btn-gray {
-  background:#444;
-  color:#fff;
-}
-.notice {
-  font-size:14px;
-  color:#ccc;
+
+.small {
+  font-size:13px;
+  color:#aaa;
+  margin:0 16px;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<h1>🍷 Adega GS Oficial</h1>
-</header>
+<header>Adega GS Oficial</header>
 
-<div id="products"></div>
+<div class="section-title">🍺 Cervejas</div>
+<div id="cervejas"></div>
 
-<button id="cart-btn" onclick="openCart()">🛒 <span id="cart-count">0</span></button>
+<div class="section-title">⚡ Energéticos</div>
+<div id="energeticos"></div>
+
+<div class="section-title">🥤 Refrigerantes</div>
+<div id="refrigerantes"></div>
+
+<div class="section-title">🥃 Destilados</div>
+<div id="destilados"></div>
+
+<div class="section-title">🧊 Gelo & Extras</div>
+<div id="extras"></div>
+
+<div class="cart-btn" onclick="toggleCart()">🛒
+  <div class="cart-count" id="cartCount">0</div>
+</div>
 
 <div id="cart">
-<h2>Resumo do Pedido</h2>
-<div id="cart-items"></div>
+  <div class="cart-header">
+    <span>Meu Carrinho</span>
+    <span onclick="toggleCart()">✖</span>
+  </div>
 
-<p><strong>Total: R$ <span id="total">0.00</span></strong></p>
-<p class="notice">Pedido mínimo: R$ 20,00</p>
+  <div id="cartItems"></div>
 
-<h3>Forma de Pagamento *</h3>
-<select id="payment" required>
-<option value="">Selecione</option>
-<option>PIX</option>
-<option>Débito</option>
-<option>Crédito</option>
-</select>
+  <div class="total" id="total">Total: R$ 0,00</div>
+  <div class="small">Pedido mínimo: R$ 20,00</div>
 
-<label>Enviar comprovante (Foto ou PDF)</label>
-<input type="file" accept="image/*,.pdf">
+  <div class="section-title">Pagamento</div>
+  <select id="pagamento" required>
+    <option value="">Selecione</option>
+    <option>PIX</option>
+    <option>Débito</option>
+    <option>Crédito</option>
+  </select>
 
-<h3>Dados do Cliente</h3>
-<input id="name" placeholder="Nome *">
-<input id="address" placeholder="Endereço *">
-<input id="number" placeholder="Número da casa *">
-<input id="cpf" placeholder="CPF *">
-<textarea id="obs" placeholder="Observações (opcional)"></textarea>
+  <div class="section-title">Cupom (opcional)</div>
+  <input placeholder="Digite o cupom">
 
-<p class="notice">
-O link de pagamento será enviado junto com o valor do frete.<br>
-Após pagamento confirmado, o pedido será preparado e encaminhado.
-</p>
+  <div class="section-title">Dados do Cliente</div>
+  <input id="nome" placeholder="Nome completo *">
+  <input id="endereco" placeholder="Endereço *">
+  <input id="numero" placeholder="Número da casa *">
+  <input id="cpf" placeholder="CPF *">
+  <textarea placeholder="Observações (opcional)"></textarea>
 
-<button class="btn btn-green" onclick="finalizar()">Finalizar no WhatsApp</button>
-<button class="btn btn-gray" onclick="closeCart()">Continuar comprando</button>
+  <button class="full" onclick="finalizar()">Finalizar pedido</button>
+  <button class="full" style="background:#444" onclick="toggleCart()">Continuar comprando</button>
 </div>
 
 <script>
-const minPedido = 20;
-const whatsapp = "55SEUNUMEROAQUI";
+const produtos = {
+ cervejas: [
+ ["Amstel Lata 269ml",9],["Heineken 269ml",5.20],["Original Lata 269ml",4],
+ ["Brahma Duplo Malte 350ml",4.50],["Corona Long Neck 330ml",8],
+ ["Budweiser Long Neck 330ml",8],["Spaten 269ml",4.50],["Skol Lata 269ml",4]
+ ],
+ energeticos: [
+ ["Red Bull 250ml",10],["Baly 2L",12.35],["Vibe 2L",11.60]
+ ],
+ refrigerantes: [
+ ["Guaraná Antártica 350ml",4],["Guaraná Antártica 2L",12],
+ ["Coca-Cola Lata 350ml",4],["Coca-Cola 2L",12.50]
+ ],
+ destilados: [
+ ["Whisky White Horse 1L",99.99],["Whisky Ballantines 1L",99.99],
+ ["Whisky Red Label 1L",99.99],["Gin Eternity 900ml",25.90],
+ ["Smirnoff 1L",42.50],["Velho Barreiro 910ml",18],["Pitu Lata 350ml",6]
+ ],
+ extras: [
+ ["Gelo sabor melancia",4.50],["Gelo sabor coco",4.50],
+ ["Carvão",18],["Saco de gelo",18]
+ ]
+};
 
-const produtos = [
-{cat:"Cervejas", nome:"Amstel Lata 269ml", preco:9},
-{cat:"Cervejas", nome:"Heineken 269ml", preco:5.20},
-{cat:"Cervejas", nome:"Brahma Duplo Malte 350ml", preco:4.50},
-{cat:"Cervejas", nome:"Corona Long Neck 330ml", preco:8},
-{cat:"Cervejas", nome:"Budweiser Long Neck 330ml", preco:8},
-{cat:"Cervejas", nome:"Skol Lata 269ml", preco:4},
+let cart=[], total=0;
 
-{cat:"Energéticos", nome:"Red Bull 250ml", preco:10},
-{cat:"Energéticos", nome:"Baly 2L", preco:12.35},
-{cat:"Energéticos", nome:"Vibe 2L", preco:11.60},
-
-{cat:"Destilados", nome:"Whisky White Horse 1L", preco:99.99},
-{cat:"Destilados", nome:"Whisky Ballantines 1L", preco:99.99},
-{cat:"Destilados", nome:"Whisky Red Label 1L", preco:99.99},
-{cat:"Destilados", nome:"Gin Eternity 900ml", preco:25.90},
-{cat:"Destilados", nome:"Smirnoff 1L", preco:42.50},
-
-{cat:"Gelo & Extras", nome:"Gelo", preco:18},
-{cat:"Gelo & Extras", nome:"Carvão", preco:18},
-
-{cat:"Porções", nome:"Porção Mista", preco:25},
-{cat:"Batata Frita", nome:"Batata Frita Média", preco:18},
-{cat:"Salgadinhos", nome:"Coxinha", preco:6},
-{cat:"Açaí", nome:"Açaí 500ml", preco:15}
-];
-
-let carrinho = {};
-
-function render() {
-  const container = document.getElementById("products");
-  container.innerHTML = "";
-  const categorias = [...new Set(produtos.map(p=>p.cat))];
-  categorias.forEach(cat=>{
-    container.innerHTML += `<div class="category"><h2>${cat}</h2></div>`;
-    produtos.filter(p=>p.cat===cat).forEach(p=>{
-      container.innerHTML += `
-      <div class="product">
-        <img>
-        <div class="product-info">
-          <p>${p.nome}</p>
-          <p>R$ ${p.preco.toFixed(2)}</p>
-        </div>
-        <button onclick="add('${p.nome}',${p.preco})">Adicionar</button>
-      </div>`;
-    });
-  });
+function render(cat,id){
+ produtos[cat].forEach(p=>{
+  document.getElementById(id).innerHTML+=
+  `<div class="product"><span>${p[0]}<br>R$ ${p[1].toFixed(2)}</span>
+  <button onclick="add('${p[0]}',${p[1]})">Adicionar</button></div>`;
+ });
 }
 
-function add(nome, preco){
-  carrinho[nome] = carrinho[nome] || {q:0, p:preco};
-  carrinho[nome].q++;
-  updateCart();
+render("cervejas","cervejas");
+render("energeticos","energeticos");
+render("refrigerantes","refrigerantes");
+render("destilados","destilados");
+render("extras","extras");
+
+function add(nome,preco){
+ cart.push({nome,preco});
+ total+=preco;
+ update();
 }
 
-function updateCart(){
-  let total = 0;
-  let count = 0;
-  const div = document.getElementById("cart-items");
-  div.innerHTML = "";
-  for(let i in carrinho){
-    total += carrinho[i].q * carrinho[i].p;
-    count += carrinho[i].q;
-    div.innerHTML += `
-    <div class="cart-item">
-      ${i} x${carrinho[i].q}
-      <span>
-        <button onclick="carrinho['${i}'].q--; if(carrinho['${i}'].q<=0) delete carrinho['${i}']; updateCart()">-</button>
-        <button onclick="carrinho['${i}'].q++; updateCart()">+</button>
-      </span>
-    </div>`;
-  }
-  document.getElementById("total").innerText = total.toFixed(2);
-  document.getElementById("cart-count").innerText = count;
+function update(){
+ document.getElementById("cartItems").innerHTML=cart.map(i=>`<div class="cart-item">${i.nome} - R$ ${i.preco.toFixed(2)}</div>`).join("");
+ document.getElementById("total").innerText=`Total: R$ ${total.toFixed(2)}`;
+ document.getElementById("cartCount").innerText=cart.length;
 }
 
-function openCart(){ document.getElementById("cart").classList.add("active"); }
-function closeCart(){ document.getElementById("cart").classList.remove("active"); }
+function toggleCart(){
+ document.getElementById("cart").classList.toggle("open");
+}
 
 function finalizar(){
-  const total = parseFloat(document.getElementById("total").innerText);
-  if(total < minPedido) return alert("Pedido mínimo R$ 20,00");
-  if(!payment.value || !name.value || !address.value || !number.value || !cpf.value)
-    return alert("Preencha todos os campos obrigatórios.");
-
-  let msg = "Pedido Adega GS Oficial:%0A";
-  for(let i in carrinho){
-    msg += `${i} x${carrinho[i].q}%0A`;
-  }
-  msg += `Total: R$ ${total.toFixed(2)}%0A`;
-  msg += `Pagamento: ${payment.value}%0A`;
-  msg += `Nome: ${name.value}%0AEndereço: ${address.value}, Nº ${number.value}%0ACPF: ${cpf.value}%0AObs: ${obs.value}`;
-  window.open(`https://wa.me/${whatsapp}?text=${msg}`);
+ if(total<20) return alert("Pedido mínimo R$ 20,00");
+ if(!nome.value||!endereco.value||!numero.value||!cpf.value||!pagamento.value)
+  return alert("Preencha todos os campos obrigatórios");
+ alert("Pedido enviado com sucesso!");
 }
-
-render();
 </script>
 
 </body>
