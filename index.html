@@ -1,287 +1,141 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Adega.GS.Oficial</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Adega GS Oficial</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f4f4;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+    }
 
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: #111;
-  color: #fff;
-  padding: 12px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 1000;
-}
+    header {
+      background: #000;
+      padding: 20px;
+      text-align: center;
+    }
 
-header h1 {
-  font-size: 18px;
-  margin: 0;
-}
+    header h1 {
+      margin: 0;
+      color: #c49b63;
+      font-size: 28px;
+    }
 
-header button {
-  background: #25d366;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-weight: bold;
-}
+    header p {
+      margin-top: 5px;
+      font-size: 14px;
+      color: #ccc;
+    }
 
-.container {
-  padding: 90px 16px 16px;
-}
+    .container {
+      padding: 20px;
+    }
 
-.products {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 16px;
-}
+    .produtos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 15px;
+    }
 
-.card {
-  background: #fff;
-  border-radius: 10px;
-  padding: 10px;
-  text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,.1);
-}
+    .produto {
+      background: #1c1c1c;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+    }
 
-.card img {
-  width: 100%;
-  height: 120px;
-  object-fit: contain;
-}
+    .produto img {
+      width: 100%;
+      border-radius: 8px;
+    }
 
-.card h3 {
-  font-size: 15px;
-}
+    .produto h3 {
+      font-size: 16px;
+      margin: 10px 0 5px;
+    }
 
-.price {
-  font-size: 18px;
-  font-weight: bold;
-  margin: 6px 0;
-}
+    .produto span {
+      color: #c49b63;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 10px;
+    }
 
-.card button {
-  background: #25d366;
-  border: none;
-  padding: 8px;
-  width: 100%;
-  border-radius: 6px;
-  font-weight: bold;
-}
+    .produto a {
+      background: #25d366;
+      color: #000;
+      padding: 10px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      display: block;
+    }
 
-#cart {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 320px;
-  height: 100%;
-  background: #fff;
-  box-shadow: -2px 0 10px rgba(0,0,0,.3);
-  padding: 15px;
-  overflow-y: auto;
-  transition: .3s;
-  z-index: 2000;
-}
+    .whatsapp-fixo {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25d366;
+      color: #000;
+      padding: 15px;
+      border-radius: 50%;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: bold;
+    }
 
-#cart.active {
-  right: 0;
-}
-
-.cart-item {
-  display: flex;
-  justify-content: space-between;
-  margin: 6px 0;
-  font-size: 14px;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 8px;
-  margin-top: 6px;
-  margin-bottom: 6px;
-}
-
-.total {
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 8px;
-}
-
-.apply {
-  background: #111;
-  color: #fff;
-  padding: 6px;
-  width: 100%;
-  border: none;
-  border-radius: 6px;
-}
-
-.finalizar {
-  background: #25d366;
-  border: none;
-  padding: 10px;
-  width: 100%;
-  font-weight: bold;
-  margin-top: 10px;
-  border-radius: 6px;
-}
-</style>
-
-<script>
-let cart = [];
-let desconto = 0;
-let cupomUsado = "";
-
-// 🔐 VOCÊ CONTROLA OS CUPONS AQUI
-const cupons = {
-  "CUPOM3": { tipo: "fixo", valor: 3 },
-  "OFF3": { tipo: "percentual", valor: 3 }
-};
-
-function toggleCart() {
-  document.getElementById("cart").classList.toggle("active");
-}
-
-function addItem(nome, preco) {
-  let item = cart.find(i => i.nome === nome);
-  if (item) {
-    item.qtd++;
-  } else {
-    cart.push({ nome, preco, qtd: 1 });
-  }
-  render();
-}
-
-function render() {
-  let html = "";
-  let subtotal = 0;
-
-  cart.forEach(i => {
-    subtotal += i.preco * i.qtd;
-    html += `<div class="cart-item">${i.qtd}x ${i.nome}<span>R$ ${(i.preco * i.qtd).toFixed(2)}</span></div>`;
-  });
-
-  let total = subtotal - desconto;
-  if (total < 0) total = 0;
-
-  document.getElementById("items").innerHTML = html;
-  document.getElementById("subtotal").innerText = subtotal.toFixed(2);
-  document.getElementById("desconto").innerText = desconto.toFixed(2);
-  document.getElementById("total").innerText = total.toFixed(2);
-}
-
-function aplicarCupom() {
-  let codigo = document.getElementById("cupom").value.toUpperCase();
-  if (!cupons[codigo]) {
-    alert("Cupom inválido");
-    return;
-  }
-
-  let subtotal = cart.reduce((s, i) => s + i.preco * i.qtd, 0);
-  let cupom = cupons[codigo];
-
-  desconto = cupom.tipo === "fixo"
-    ? cupom.valor
-    : subtotal * (cupom.valor / 100);
-
-  cupomUsado = codigo;
-  render();
-  alert("Cupom aplicado com sucesso");
-}
-
-function finalizar() {
-  let nome = document.getElementById("nome").value;
-  let cpf = document.getElementById("cpf").value;
-  let endereco = document.getElementById("endereco").value;
-  let obs = document.getElementById("obs").value;
-
-  if (!nome || !cpf) {
-    alert("Nome e CPF são obrigatórios");
-    return;
-  }
-
-  let msg = `🛒 Pedido Adega.GS.Oficial\n\nCliente: ${nome}\nCPF: ${cpf}\n\n`;
-
-  cart.forEach(i => {
-    msg += `${i.qtd}x ${i.nome} – R$ ${(i.preco * i.qtd).toFixed(2)}\n`;
-  });
-
-  msg += `\nSubtotal: R$ ${document.getElementById("subtotal").innerText}`;
-  if (cupomUsado) msg += `\nCupom ${cupomUsado}: -R$ ${desconto.toFixed(2)}`;
-  msg += `\nTotal: R$ ${document.getElementById("total").innerText}`;
-
-  msg += `\n\nEndereço:\n${endereco}`;
-  if (obs) msg += `\nObs: ${obs}`;
-
-  window.open("https://wa.me/5511981654980?text=" + encodeURIComponent(msg));
-}
-</script>
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 12px;
+      color: #aaa;
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-<h1>🍻 Adega.GS.Oficial</h1>
-<button onclick="toggleCart()">🛒 Carrinho</button>
+  <h1>Adega.GS.Oficial 🍷</h1>
+  <p>Bebidas geladas • Entrega rápida • Qualidade garantida</p>
 </header>
 
 <div class="container">
-<div class="products">
+  <h2>🔥 Destaques</h2>
 
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Heineken_bottle.png">
-<h3>Heineken Lata</h3>
-<div class="price">R$ 5,50</div>
-<button onclick="addItem('Heineken Lata',5.5)">Adicionar</button>
+  <div class="produtos">
+    <div class="produto">
+      <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38" alt="Cerveja">
+      <h3>Cerveja Heineken 600ml</h3>
+      <span>R$ 12,00</span>
+      <a href="https://wa.me/5599999999999" target="_blank">Pedir no WhatsApp</a>
+    </div>
+
+    <div class="produto">
+      <img src="https://images.unsplash.com/photo-1564758866819-5f1c3b0d5d48" alt="Whisky">
+      <h3>Whisky Red Label</h3>
+      <span>R$ 119,90</span>
+      <a href="https://wa.me/5599999999999" target="_blank">Pedir no WhatsApp</a>
+    </div>
+
+    <div class="produto">
+      <img src="https://images.unsplash.com/photo-1544145945-f90425340c7e" alt="Vinho">
+      <h3>Vinho Tinto Seco</h3>
+      <span>R$ 39,90</span>
+      <a href="https://wa.me/5599999999999" target="_blank">Pedir no WhatsApp</a>
+    </div>
+  </div>
 </div>
 
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Charcoal_briquettes.jpg">
-<h3>Carvão</h3>
-<div class="price">R$ 15,00</div>
-<button onclick="addItem('Carvão',15)">Adicionar</button>
-</div>
+<a class="whatsapp-fixo" href="https://wa.me/5599999999999" target="_blank">💬</a>
 
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Ice_cubes_openphoto.jpg">
-<h3>Gelo 5kg</h3>
-<div class="price">R$ 17,00</div>
-<button onclick="addItem('Gelo 5kg',17)">Adicionar</button>
-</div>
-
-</div>
-</div>
-
-<div id="cart">
-<h3>Carrinho</h3>
-<div id="items"></div>
-
-Subtotal: R$ <span id="subtotal">0.00</span><br>
-Desconto: R$ <span id="desconto">0.00</span>
-<div class="total">Total: R$ <span id="total">0.00</span></div>
-
-<input id="cupom" placeholder="Cupom de desconto">
-<button class="apply" onclick="aplicarCupom()">Aplicar cupom</button>
-
-<input id="nome" placeholder="Nome completo (obrigatório)">
-<input id="cpf" placeholder="CPF (obrigatório)">
-<textarea id="endereco" placeholder="Endereço completo"></textarea>
-<textarea id="obs" placeholder="Observações"></textarea>
-
-<button class="finalizar" onclick="finalizar()">Finalizar pedido no WhatsApp</button>
-</div>
+<footer>
+  © 2025 Adega.GS.Oficial • Todos os direitos reservados
+</footer>
 
 </body>
 </html>
