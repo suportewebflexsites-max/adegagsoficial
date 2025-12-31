@@ -7,15 +7,17 @@
 
 <style>
 body{margin:0;font-family:Arial;background:#0f0f0f;color:#fff}
-header{background:#000;padding:12px;border-bottom:2px solid #d4af37;text-align:center}
+header{background:#000;padding:15px;border-bottom:2px solid #d4af37;text-align:center}
+header img{height:80px;margin-bottom:5px}
 header h1{color:#d4af37;margin:5px 0}
-header p{color:#ccc;font-size:14px;margin:0}
+header p{color:#ccc;font-size:14px;margin:2px 0}
+
 .container{max-width:1200px;margin:auto;padding:15px}
 h2{color:#d4af37;margin:25px 0 10px}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:15px}
 .card{background:#1a1a1a;border-radius:10px;padding:10px;text-align:center;position:relative}
-.card img{width:100%;height:130px;object-fit:cover;border-radius:8px}
+.card img{width:100%;height:130px;object-fit:contain;border-radius:8px;background:#000}
 .card h4{margin:8px 0 2px;font-size:14px}
 .preco{color:#d4af37;font-weight:bold;margin-bottom:8px}
 .card button{background:#25d366;border:none;padding:8px;width:100%;border-radius:5px;font-weight:bold;cursor:pointer}
@@ -66,14 +68,23 @@ input,textarea{
   font-size:12px;border-radius:50%;
   padding:3px 7px
 }
+
+.links-entrega a{
+  display:block;
+  text-decoration:none;
+  color:#25d366;
+  margin-bottom:6px;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>Adega.GS.Oficial </h1>
-<p>📍 Rua Plácido Parreira Lima, 142 • 🕒 11:00 às 04:00</p>
+  <img src="logo.png">
+  <h1>Adega GS Oficial</h1>
+  <p>📍 Rua Plácido Parreira Lima, 142</p>
+  <p>🕒 11:00 às 04:00</p>
 </header>
 
 <div class="container">
@@ -84,7 +95,18 @@ input,textarea{
 <div id="cart">
 <h3>🧾 Resumo do Pedido</h3>
 <div id="itens"></div>
-<p class="total">Total: R$ <span id="total">0.00</span></p>
+
+<p class="total">Produtos: R$ <span id="total">0.00</span></p>
+
+<h4>🚚 Entrega</h4>
+<div class="links-entrega">
+<a href="https://m.uber.com/ul/?action=setPickup&dropoff[formatted_address]=Rua+Plácido+Parreira+Lima+142" target="_blank">🚕 Calcular no Uber Moto</a>
+<a href="https://99app.com/go/ride?destination=Rua+Plácido+Parreira+Lima+142" target="_blank">🚖 Calcular na 99 Moto</a>
+</div>
+
+<input id="entrega" placeholder="Valor da entrega (Uber/99) *">
+
+<p class="total">Total geral: R$ <span id="totalGeral">0.00</span></p>
 <small>Pedido mínimo: R$ 20,00</small>
 
 <h3>👤 Dados do Cliente</h3>
@@ -103,58 +125,16 @@ input,textarea{
 const whatsapp="5511981654980";
 const pedidoMinimo=20;
 
-// ícone genérico usado para todos os produtos
-const IMG_PADRAO = "https://upload.wikimedia.org/wikipedia/commons/8/84/Wine_glass_icon.svg";
+const IMG="logo.png";
 
 const produtos=[
- // FARDOS
- {n:"Amstel lata 269ml c/12 uni",p:34,img:IMG_PADRAO},
- {n:"Heineken lata 269ml c/8 uni",p:41.60,img:IMG_PADRAO},
- {n:"Original lata 269ml c/8 uni",p:32,img:IMG_PADRAO},
- {n:"Skol Beats Senses lata 269ml c/8 uni",p:48,img:IMG_PADRAO},
- {n:"Skol Beats Red Mix lata 269ml c/8 uni",p:48,img:IMG_PADRAO},
- {n:"Skol Beats GT lata 269ml c/8 uni",p:48,img:IMG_PADRAO},
- {n:"Brahma Duplo Malte 350ml c/12 uni",p:54,img:IMG_PADRAO},
- {n:"Budweiser lata 269ml c/8 uni",p:56,img:IMG_PADRAO},
- {n:"Skol lata 269ml c/15 uni",p:56,img:IMG_PADRAO},
-
- // UNITÁRIOS
- {n:"Guaraná Antártica lata 350ml",p:4,img:IMG_PADRAO},
- {n:"Guaraná Antártica 2L",p:12,img:IMG_PADRAO},
- {n:"Whisky White Horse 1L",p:99.99,img:IMG_PADRAO},
- {n:"Corona Long Neck 330ml",p:8,img:IMG_PADRAO},
- {n:"Budweiser Long Neck 330ml",p:8,img:IMG_PADRAO},
- {n:"Budweiser Lata 269ml",p:9,img:IMG_PADRAO},
- {n:"Brahma Duplo Malte 350ml",p:4.5,img:IMG_PADRAO},
- {n:"Red Bull 250ml",p:10,img:IMG_PADRAO},
- {n:"Baly Melancia 2L",p:10.50,img:IMG_PADRAO},
- {n:"Baly Tropical 2L",p:12.35,img:IMG_PADRAO},
- {n:"Baly Maçã Verde 2L",p:12.35,img:IMG_PADRAO},
- {n:"Baly Morango e Pêssego 2L",p:12.35,img:IMG_PADRAO},
- {n:"Vibe 2L",p:11.60,img:IMG_PADRAO},
- {n:"Gin Eternity 900ml",p:25.90,img:IMG_PADRAO},
- {n:"Pitu Lata 350ml",p:6,img:IMG_PADRAO},
- {n:"Velho Barreiro 910ml",p:18,img:IMG_PADRAO},
- {n:"Ice Smirnoff 275ml",p:8,img:IMG_PADRAO},
- {n:"Coca-Cola 2L",p:12.50,img:IMG_PADRAO},
- {n:"Coca-Cola Lata 350ml",p:4,img:IMG_PADRAO},
- {n:"Heineken Long Neck 330ml",p:8,img:IMG_PADRAO},
- {n:"Amstel Lata 269ml",p:9,img:IMG_PADRAO},
- {n:"Heineken 269ml",p:5.20,img:IMG_PADRAO},
- {n:"Original Lata 269ml",p:4,img:IMG_PADRAO},
- {n:"Skol Lata 269ml",p:4,img:IMG_PADRAO},
- {n:"Skol Beats Senses 269ml",p:6,img:IMG_PADRAO},
- {n:"Skol Beats Red Mix 269ml",p:6,img:IMG_PADRAO},
- {n:"Skol Beats GT 269ml",p:6,img:IMG_PADRAO},
- {n:"Smirnoff 1L",p:42.50,img:IMG_PADRAO},
- {n:"Whisky Ballantines 1L",p:99.99,img:IMG_PADRAO},
- {n:"Whisky Red Label 1L",p:99.99,img:IMG_PADRAO},
- {n:"Cerveja Império 210ml",p:6,img:IMG_PADRAO},
- {n:"Cerveja Spaten 269ml",p:4.50,img:IMG_PADRAO},
-
- // EXTRAS
- {n:"Carvão",p:18,img:IMG_PADRAO},
- {n:"Saco de Gelo",p:18,img:IMG_PADRAO}
+ {n:"Guaraná Antártica lata 350ml",p:4,img:IMG},
+ {n:"Guaraná Antártica 2L",p:12,img:IMG},
+ {n:"Heineken 269ml",p:5.20,img:IMG},
+ {n:"Amstel Lata 269ml",p:9,img:IMG},
+ {n:"Skol Lata 269ml",p:4,img:IMG},
+ {n:"Carvão",p:18,img:IMG},
+ {n:"Saco de Gelo",p:18,img:IMG}
 ];
 
 let cart={};
@@ -197,35 +177,43 @@ function atualizar(){
   }
   document.getElementById("itens").innerHTML=html;
   document.getElementById("total").innerText=total.toFixed(2);
+
+  const entrega=parseFloat(document.getElementById("entrega").value)||0;
+  document.getElementById("totalGeral").innerText=(total+entrega).toFixed(2);
+
   document.getElementById("count").innerText=count;
   render();
 }
 
 function menos(n){cart[n]--;if(cart[n]<=0)delete cart[n];atualizar()}
 function mais(n){cart[n]++;atualizar()}
+function toggleCart(){document.getElementById("cart").classList.toggle("open")}
 
-function toggleCart(){
-  document.getElementById("cart").classList.toggle("open");
-}
+document.getElementById("entrega").addEventListener("input",atualizar);
 
 function finalizar(){
-  const total=Object.keys(cart).reduce((s,n)=>{
-    const p=produtos.find(x=>x.n===n);
-    return s+p.p*cart[n];
-  },0);
+  const entrega=parseFloat(entregaInput.value||entrega.value)||0;
+  const total=parseFloat(document.getElementById("total").innerText);
+  const totalGeral=total+entrega;
 
-  if(total<pedidoMinimo){
-    alert("Pedido mínimo R$ "+pedidoMinimo.toFixed(2));
-    return;
-  }
-  if(!nome.value||!endereco.value||!cpf.value){
-    alert("Preencha nome, endereço e CPF");
+  if(total<pedidoMinimo){alert("Pedido mínimo R$ 20,00");return;}
+  if(!nome.value||!endereco.value||!cpf.value||!entrega.value){
+    alert("Preencha todos os dados e o valor da entrega");
     return;
   }
 
-  let msg="Pedido:%0A";
-  for(let n in cart) msg+=`- ${n} x${cart[n]}%0A`;
-  msg+=`%0ATotal: R$ ${total.toFixed(2)}%0A%0ANome: ${nome.value}%0AEndereço: ${endereco.value}%0ACPF: ${cpf.value}%0AObs: ${obs.value}`;
+  let msg="🛒 *Pedido - Adega GS Oficial*%0A%0A";
+  for(let n in cart){msg+=`• ${n} x${cart[n]}%0A`;}
+  msg+=`
+%0A💰 Produtos: R$ ${total.toFixed(2)}
+%0A🚗 Entrega: R$ ${entrega.toFixed(2)}
+%0A💵 Total: R$ ${totalGeral.toFixed(2)}
+%0A%0A👤 Nome: ${nome.value}
+%0A🏠 Endereço: ${endereco.value}
+%0A🪪 CPF: ${cpf.value}
+%0A📝 Obs: ${obs.value}
+%0A🌐 https://suportewebflexsites-max.github.io/adegagsoficial/
+`;
   window.open(`https://wa.me/${whatsapp}?text=${msg}`);
 }
 </script>
