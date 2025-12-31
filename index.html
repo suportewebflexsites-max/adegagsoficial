@@ -6,185 +6,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:#0f0f0f;
-  color:#fff;
+body{margin:0;font-family:Arial;background:#0f0f0f;color:#fff}
+header{background:#000;padding:15px;display:flex;justify-content:space-between;align-items:center}
+header h1{margin:0;font-size:22px}
+.cart-icon{cursor:pointer;font-size:18px}
+.container{padding:15px}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:15px}
+.card{background:#1a1a1a;border-radius:12px;padding:10px;text-align:center}
+.card img{width:100%;height:120px;object-fit:contain}
+.price{font-size:18px;font-weight:bold;margin:5px 0}
+.card button{background:#25d366;border:none;padding:8px;width:100%;border-radius:8px;font-weight:bold;cursor:pointer}
+
+#cartPanel{
+position:fixed;top:0;right:-100%;width:320px;height:100%;
+background:#000;padding:15px;transition:.3s;overflow:auto;z-index:999
 }
-header{
-  background:#000;
-  padding:15px;
-  text-align:center;
-}
-header h1{margin:0;font-size:28px;}
-header p{color:#bbb;margin-top:5px;}
-
-.container{padding:15px;}
-
-.products{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:15px;
-}
-
-.card{
-  background:#1a1a1a;
-  border-radius:12px;
-  padding:10px;
-  text-align:center;
-}
-.card img{
-  width:100%;
-  height:120px;
-  object-fit:contain;
-}
-.card h3{margin:8px 0 5px;}
-.card p{font-size:14px;color:#ccc;}
-.price{font-size:18px;font-weight:bold;margin:5px 0;}
-.card button{
-  background:#25d366;
-  border:none;
-  color:#000;
-  padding:8px;
-  width:100%;
-  border-radius:8px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.cart{
-  position:fixed;
-  right:10px;
-  bottom:10px;
-  background:#000;
-  border:2px solid #25d366;
-  border-radius:12px;
-  padding:10px;
-  width:280px;
-  max-height:60vh;
-  overflow:auto;
-}
-.cart h2{margin-top:0;font-size:18px;}
-.cart-item{
-  display:flex;
-  justify-content:space-between;
-  font-size:14px;
-  margin-bottom:5px;
-}
-.total{
-  font-size:18px;
-  margin-top:10px;
-  border-top:1px solid #333;
-  padding-top:5px;
-}
-.cart button{
-  margin-top:10px;
-  width:100%;
-  padding:10px;
-  background:#25d366;
-  border:none;
-  font-weight:bold;
-  cursor:pointer;
-}
-</style>
-
-<script>
-let cart = [];
-
-function addItem(name, price){
-  cart.push({name, price});
-  renderCart();
-}
-
-function renderCart(){
-  let list = document.getElementById("cartItems");
-  list.innerHTML = "";
-  let total = 0;
-  cart.forEach((item, index)=>{
-    total += item.price;
-    list.innerHTML += `
-      <div class="cart-item">
-        <span>${item.name}</span>
-        <span>R$ ${item.price.toFixed(2)}</span>
-      </div>
-    `;
-  });
-  document.getElementById("total").innerText = total.toFixed(2);
-}
-
-function finalizarPedido(){
-  let text = "🛒 *Pedido Adega.GS.Oficial*%0A%0A";
-  let total = 0;
-  cart.forEach(i=>{
-    text += `- ${i.name} – R$ ${i.price.toFixed(2)}%0A`;
-    total += i.price;
-  });
-  text += `%0A💰 *Total:* R$ ${total.toFixed(2)}`;
-  window.open("https://wa.me/5511981654980?text=" + text);
-}
-</script>
-</head>
-
-<body>
-
-<header>
-  <h1>🍻 Adega.GS.Oficial</h1>
-  <p>Conveniência • Delivery rápido</p>
-</header>
-
-<div class="container">
-<div class="products">
-
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Heineken_bottle.png">
-<h3>Heineken Lata</h3>
-<p>Puro malte</p>
-<div class="price">R$ 5,50</div>
-<button onclick="addItem('Heineken Lata',5.5)">Adicionar</button>
-</div>
-
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/8/86/Skol_lata.png">
-<h3>Skol Lata</h3>
-<p>Cerveja leve</p>
-<div class="price">R$ 5,00</div>
-<button onclick="addItem('Skol Lata',5)">Adicionar</button>
-</div>
-
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Red_Bull_can.png">
-<h3>Red Bull</h3>
-<p>Energético</p>
-<div class="price">R$ 11,00</div>
-<button onclick="addItem('Red Bull',11)">Adicionar</button>
-</div>
-
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Charcoal_briquettes.jpg">
-<h3>Carvão</h3>
-<p>Ideal para churrasco</p>
-<div class="price">R$ 15,00</div>
-<button onclick="addItem('Carvão',15)">Adicionar</button>
-</div>
-
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/7/7f/Ice_cubes_openphoto.jpg">
-<h3>Saco de Gelo 5kg</h3>
-<p>Gelo filtrado</p>
-<div class="price">R$ 17,00</div>
-<button onclick="addItem('Saco de Gelo 5kg',17)">Adicionar</button>
-</div>
-
-</div>
-</div>
-
-<div class="cart">
-<h2>🛒 Carrinho</h2>
-<div id="cartItems"></div>
-<div class="total">Total: R$ <span id="total">0.00</span></div>
-<button onclick="finalizarPedido()">Finalizar Pedido</button>
-</div>
-
-</body>
-</html>
+#cartPanel.active{right:0}
+.cart-item{display:flex;justify-content:space-between;margin-bottom:6px}
+input,textarea{width:100%;padding:8px;margin:6px 0;border-radius:6px;border:none}
+.total{font-size:18px;ma
