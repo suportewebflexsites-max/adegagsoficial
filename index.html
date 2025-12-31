@@ -3,40 +3,129 @@
 <head>
 <meta charset="UTF-8">
 <title>Adega GS Oficial</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body{margin:0;font-family:Arial;background:#0f0f0f;color:#fff}
-header{background:#000;padding:15px;text-align:center;border-bottom:2px solid #d4af37}
-header img{height:90px}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#0b0b0b;
+  color:#fff;
+}
+header{
+  background:#000;
+  border-bottom:2px solid #d4af37;
+  text-align:center;
+  padding:15px;
+}
+header img{height:80px}
 header h1{color:#d4af37;margin:5px 0}
-header p{color:#ccc;font-size:14px;margin:0}
+header p{color:#aaa;font-size:14px}
 
-.container{padding:15px;max-width:1200px;margin:auto}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:15px}
+.container{max-width:1200px;margin:auto;padding:15px}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:15px;
+}
 
-.card{background:#1a1a1a;border-radius:10px;padding:10px;text-align:center;position:relative}
-.card img{width:100%;height:120px;object-fit:contain;background:#000;border-radius:8px}
+.card{
+  background:#161616;
+  border-radius:12px;
+  padding:10px;
+  text-align:center;
+  position:relative;
+}
+.card img{
+  width:100%;
+  height:120px;
+  object-fit:contain;
+  background:#000;
+  border-radius:8px;
+}
 .card h4{font-size:13px;margin:6px 0}
 .preco{color:#d4af37;font-weight:bold}
-.card button{background:#25d366;border:none;padding:8px;width:100%;border-radius:5px;font-weight:bold;margin-top:5px}
+.card button{
+  width:100%;
+  margin-top:6px;
+  padding:8px;
+  background:#25d366;
+  border:none;
+  border-radius:6px;
+  font-weight:bold;
+}
 
-.qtd{position:absolute;top:6px;right:6px;background:#25d366;color:#000;font-weight:bold;border-radius:50%;padding:4px 8px;font-size:12px}
+.qtd{
+  position:absolute;
+  top:6px;
+  right:6px;
+  background:#25d366;
+  color:#000;
+  border-radius:50%;
+  padding:4px 8px;
+  font-size:12px;
+}
 
-#cart{position:fixed;right:0;top:0;width:340px;height:100%;background:#000;padding:15px;border-left:2px solid #d4af37;overflow:auto;transform:translateX(100%);transition:.3s}
+#cart{
+  position:fixed;
+  top:0;
+  right:0;
+  width:340px;
+  height:100%;
+  background:#000;
+  padding:15px;
+  border-left:2px solid #d4af37;
+  overflow:auto;
+  transform:translateX(100%);
+  transition:.3s;
+}
 #cart.open{transform:translateX(0)}
 
-.open-cart{position:fixed;bottom:20px;right:20px;background:#25d366;color:#000;padding:15px;border-radius:50%;font-size:20px}
-.badge{position:absolute;top:-5px;right:-5px;background:red;color:#fff;border-radius:50%;padding:3px 7px;font-size:12px}
+.open-cart{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25d366;
+  color:#000;
+  padding:15px;
+  border-radius:50%;
+  font-size:20px;
+}
+.badge{
+  position:absolute;
+  top:-5px;
+  right:-5px;
+  background:red;
+  color:#fff;
+  border-radius:50%;
+  padding:3px 7px;
+  font-size:12px;
+}
 
-.cart-item{font-size:14px;margin-bottom:5px}
-.cart-item button{background:#333;color:#fff;border:none;padding:3px 6px}
+.cart-item{
+  font-size:14px;
+  margin-bottom:6px;
+}
+.cart-item button{
+  background:#222;
+  color:#fff;
+  border:none;
+  padding:3px 7px;
+  margin-left:4px;
+}
 
-input,textarea{width:100%;padding:8px;margin-bottom:6px;border-radius:5px;border:none}
+input,textarea{
+  width:100%;
+  padding:8px;
+  margin-bottom:6px;
+  border-radius:6px;
+  border:none;
+}
 
 .total{color:#25d366;font-weight:bold;margin:8px 0}
 
-label{display:block;margin-bottom:4px}
+h3{color:#d4af37;margin-top:10px}
+small{color:#aaa}
 </style>
 </head>
 
@@ -58,21 +147,11 @@ label{display:block;margin-bottom:4px}
 
 <p class="total">Produtos: R$ <span id="total">0.00</span></p>
 
-<h4>🚚 Entrega</h4>
-<a href="https://m.uber.com/ul/?action=setPickup&dropoff[formatted_address]=Rua+Plácido+Parreira+Lima+142" target="_blank">Uber Moto</a><br>
-<a href="https://99app.com/go/ride?destination=Rua+Plácido+Parreira+Lima+142" target="_blank">99 Moto</a>
-<input id="entrega" placeholder="Valor da entrega *">
+<h3>💳 Pagamento</h3>
+<small>Formas aceitas: PIX • Débito • Crédito<br>
+(Link será enviado após o pedido)</small>
 
-<h4>💳 Pagamento</h4>
-<label><input type="radio" name="pagamento" value="PIX"> PIX</label>
-<label><input type="radio" name="pagamento" value="Débito"> Débito</label>
-<label><input type="radio" name="pagamento" value="Crédito"> Crédito</label>
-
-<div id="pixBox" style="display:none;border:1px solid #25d366;padding:6px;margin:6px 0">
-PIX: <strong>61888559000194</strong>
-</div>
-
-<h4>👤 Cliente</h4>
+<h3>👤 Cliente</h3>
 <input id="nome" placeholder="Nome *">
 <input id="endereco" placeholder="Endereço *">
 <input id="cpf" placeholder="CPF *">
@@ -140,8 +219,6 @@ const produtos=[
 
 let cart={};
 
-const produtosDiv=document.getElementById("produtos");
-
 function render(){
 produtosDiv.innerHTML="";
 produtos.forEach((p,i)=>{
@@ -156,7 +233,6 @@ ${q?`<div class="qtd">${q}</div>`:""}
 </div>`;
 });
 }
-render();
 
 function add(i){cart[produtos[i][0]]=(cart[produtos[i][0]]||0)+1;update();}
 function menos(n){cart[n]--;if(cart[n]<=0)delete cart[n];update();}
@@ -167,33 +243,35 @@ let t=0,c=0,html="";
 for(let n in cart){
 const p=produtos.find(x=>x[0]==n);
 t+=p[1]*cart[n];c+=cart[n];
-html+=`${n} x${cart[n]} <button onclick="menos('${n}')">-</button><button onclick="mais('${n}')">+</button><br>`;
+html+=`${n} x${cart[n]} <button onclick="menos('${n}')">−</button><button onclick="mais('${n}')">+</button><br>`;
 }
 itens.innerHTML=html;
 total.innerText=t.toFixed(2);
-totalGeral.innerText=(t+(+entrega.value||0)).toFixed(2);
+totalGeral.innerText=t.toFixed(2);
 count.innerText=c;
 render();
 }
 
-document.querySelectorAll("input[name=pagamento]").forEach(e=>{
-e.onchange=()=>pixBox.style.display=e.value=="PIX"?"block":"none";
-});
-
 function toggleCart(){cartDiv.classList.toggle("open");}
 
 function finalizar(){
-const pag=document.querySelector("input[name=pagamento]:checked");
-if(total.innerText<pedidoMin||!pag||!nome.value||!endereco.value||!cpf.value||!entrega.value){
-alert("Preencha tudo corretamente");return;
+if(total.innerText<pedidoMin||!nome.value||!endereco.value||!cpf.value){
+alert("Preencha os dados corretamente. Pedido mínimo R$ 20,00");return;
 }
-let msg="Pedido Adega GS%0A";
+let msg="🛒 Pedido Adega GS%0A";
 for(let n in cart){msg+=`• ${n} x${cart[n]}%0A`;}
-msg+=`Total: R$ ${totalGeral.innerText}%0APagamento: ${pag.value}`;
+msg+=`%0ATotal: R$ ${totalGeral.innerText}`;
+msg+=`%0APagamento: PIX / Débito / Crédito`;
+msg+=`%0A%0ANome: ${nome.value}`;
+msg+=`%0AEndereço: ${endereco.value}`;
+msg+=`%0ACPF: ${cpf.value}`;
+msg+=`%0AObs: ${obs.value}`;
 window.open(`https://wa.me/${whatsapp}?text=${msg}`);
 }
 
+const produtosDiv=document.getElementById("produtos");
 const cartDiv=document.getElementById("cart");
+render();
 </script>
 
 </body>
