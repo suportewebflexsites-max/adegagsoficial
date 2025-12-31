@@ -6,112 +6,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#0f0f0f;
-  color:#fff;
-}
-header{
-  background:#000;
-  padding:25px;
-  text-align:center;
-  border-bottom:2px solid #d4af37;
-}
-header h1{color:#d4af37;margin:0;}
-header p{color:#ccc;font-size:14px;}
-
-.notice{
-  background:#1a1a1a;
-  padding:15px;
-  text-align:center;
-  border-bottom:1px solid #333;
-}
-.notice strong{color:#25d366;}
-
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
-}
-
-h2{
-  color:#d4af37;
-  margin-top:35px;
-}
-
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
-}
-
-.card{
-  background:#1a1a1a;
-  border-radius:10px;
-  padding:15px;
-  text-align:center;
-}
-
-.card img{
-  width:100%;
-  height:180px;
-  object-fit:cover;
-  border-radius:8px;
-}
-
-.price{
-  color:#d4af37;
-  font-weight:bold;
-  margin:8px 0;
-}
-
-.btn{
-  display:block;
-  background:#25d366;
-  color:#000;
-  padding:12px;
-  border-radius:6px;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-table{
-  width:100%;
-  border-collapse:collapse;
-  background:#1a1a1a;
-  margin-top:20px;
-}
-
-th,td{
-  padding:12px;
-  border-bottom:1px solid #333;
-}
-
-th{
-  background:#000;
-  color:#d4af37;
-}
-
-.whats{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#25d366;
-  color:#000;
-  padding:15px;
-  border-radius:50%;
-  font-size:22px;
-  text-decoration:none;
-}
-
-footer{
-  background:#000;
-  text-align:center;
-  padding:15px;
-  font-size:12px;
-  color:#aaa;
-}
+body{margin:0;font-family:Arial;background:#0f0f0f;color:#fff}
+header{background:#000;padding:15px;text-align:center;border-bottom:2px solid #d4af37}
+h1{color:#d4af37;margin:0}
+.container{padding:15px;max-width:1100px;margin:auto}
+.produtos{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}
+.card{background:#1a1a1a;border-radius:10px;padding:10px;text-align:center}
+.card img{width:100%;height:150px;object-fit:cover;border-radius:8px}
+.preco{color:#d4af37;font-weight:bold;margin:5px 0}
+button{background:#25d366;border:none;padding:10px;border-radius:5px;font-weight:bold;cursor:pointer}
+button:disabled{background:#555;color:#aaa}
+.carrinho{position:fixed;top:0;right:0;background:#000;width:100%;max-width:350px;height:100%;padding:15px;display:none;overflow:auto}
+.carrinho h3{color:#d4af37}
+.whats{position:fixed;bottom:20px;right:20px;background:#25d366;color:#000;padding:15px;border-radius:50%;font-size:20px;text-decoration:none}
+input,textarea{width:100%;padding:8px;margin-bottom:8px;border-radius:5px;border:none}
 </style>
 </head>
 
@@ -119,63 +27,115 @@ footer{
 
 <header>
 <h1>Adega.GS.Oficial 🍷</h1>
-<p>Bebidas geladas • Entrega rápida • Qualidade garantida</p>
+<p>📍 Rua Plácido Parreira Lima, 142 • 🕒 11:00 às 04:00</p>
 </header>
 
-<div class="notice">
-<strong>Pedido mínimo: R$ 30,00</strong> • Cupom de desconto: <strong>OFF5</strong>
-</div>
-
 <div class="container">
-
-<h2>🍺 Bebidas</h2>
-
-<div class="cards">
-
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Heineken_bottle.jpg">
-<h3>Heineken 600ml</h3>
-<div class="price">R$ 12,00</div>
-<a class="btn" href="https://wa.me/5511981654980?text=Olá,%20quero%20Heineken%20600ml%20-%20R$12,00.%20Cupom%20OFF5" target="_blank">
-Pedir no WhatsApp
-</a>
+<h2>🛒 Produtos</h2>
+<div class="produtos" id="lista"></div>
 </div>
 
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Johnnie_Walker_Red_Label.jpg">
-<h3>Whisky Red Label</h3>
-<div class="price">R$ 119,90</div>
-<a class="btn" href="https://wa.me/5511981654980?text=Olá,%20quero%20Whisky%20Red%20Label%20-%20R$119,90.%20Cupom%20OFF5" target="_blank">
-Pedir no WhatsApp
-</a>
+<div class="carrinho" id="carrinho">
+<h3>🛒 Carrinho</h3>
+<div id="itens"></div>
+<p><strong>Total: R$ <span id="total">0</span></strong></p>
+
+<h3>🧾 Dados</h3>
+<input id="nome" placeholder="Nome completo">
+<input id="endereco" placeholder="Endereço completo">
+<input id="cpf" placeholder="CPF">
+<textarea id="obs" placeholder="Observação"></textarea>
+
+<button onclick="finalizar()">Finalizar no WhatsApp</button>
+<button onclick="fechar()">Fechar</button>
 </div>
 
-<div class="card">
-<img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Red_wine_glass.jpg">
-<h3>Vinho Tinto Seco</h3>
-<div class="price">R$ 39,90</div>
-<a class="btn" href="https://wa.me/5511981654980?text=Olá,%20quero%20Vinho%20Tinto%20Seco%20-%20R$39,90.%20Cupom%20OFF5" target="_blank">
-Pedir no WhatsApp
-</a>
-</div>
+<a class="whats" onclick="abrir()">🛒</a>
 
-</div>
+<script>
+/* ===== CONFIGURAÇÃO DA ADEGA ===== */
+const pedidoMinimo = 30;
+const whatsapp = "5511981654980";
 
-<h2>🧊 Complementos</h2>
+const produtos = [
+  {
+    nome:"Heineken 600ml",
+    preco:12,
+    imagem:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Heineken_bottle.jpg",
+    estoque:true
+  },
+  {
+    nome:"Whisky Red Label",
+    preco:119.90,
+    imagem:"https://upload.wikimedia.org/wikipedia/commons/4/4f/Johnnie_Walker_Red_Label.jpg",
+    estoque:true
+  },
+  {
+    nome:"Vinho Tinto Seco",
+    preco:39.90,
+    imagem:"https://upload.wikimedia.org/wikipedia/commons/1/12/Red_wine_glass.jpg",
+    estoque:false
+  },
+  {
+    nome:"Carvão",
+    preco:17,
+    imagem:"https://upload.wikimedia.org/wikipedia/commons/2/2f/Charcoal.jpg",
+    estoque:true
+  },
+  {
+    nome:"Gelo 5kg",
+    preco:18,
+    imagem:"https://upload.wikimedia.org/wikipedia/commons/3/3a/Ice_cubes.jpg",
+    estoque:true
+  }
+];
+/* ================================= */
 
-<table>
-<tr><th>Produto</th><th>Descrição</th><th>Preço</th></tr>
-<tr><td>Carvão</td><td>Saco tradicional</td><td>R$ 17,00</td></tr>
-<tr><td>Gelo</td><td>Saco 5kg</td><td>R$ 18,00</td></tr>
-</table>
+let carrinho = [];
 
-</div>
+function render(){
+  const lista = document.getElementById("lista");
+  lista.innerHTML="";
+  produtos.forEach((p,i)=>{
+    lista.innerHTML+=`
+      <div class="card">
+        <img src="${p.imagem}">
+        <h4>${p.nome}</h4>
+        <div class="preco">R$ ${p.preco.toFixed(2)}</div>
+        <button ${!p.estoque?"disabled":""} onclick="add(${i})">
+          ${p.estoque?"Adicionar":"Esgotado"}
+        </button>
+      </div>`;
+  });
+}
+render();
 
-<a class="whats" href="https://wa.me/5511981654980?text=Olá,%20quero%20fazer%20um%20pedido.%20Cupom%20OFF5" target="_blank">💬</a>
+function add(i){
+  carrinho.push(produtos[i]);
+  atualizar();
+  abrir();
+}
 
-<footer>
-© 2025 Adega GS Oficial • Venda responsável
-</footer>
+function atualizar(){
+  let html="",total=0;
+  carrinho.forEach(p=>{
+    total+=p.preco;
+    html+=`<p>${p.nome} - R$ ${p.preco.toFixed(2)}</p>`;
+  });
+  document.getElementById("itens").innerHTML=html;
+  document.getElementById("total").innerText=total.toFixed(2);
+}
+
+function abrir(){document.getElementById("carrinho").style.display="block"}
+function fechar(){document.getElementById("carrinho").style.display="none"}
+
+function finalizar(){
+  const total = carrinho.reduce((s,p)=>s+p.preco,0);
+  if(total<pedidoMinimo){alert("Pedido mínimo R$ "+pedidoMinimo);return;}
+  const msg = `Pedido:%0A${carrinho.map(p=>"- "+p.nome).join("%0A")}%0ATotal: R$ ${total.toFixed(2)}%0A%0ANome: ${nome.value}%0AEndereço: ${endereco.value}%0ACPF: ${cpf.value}%0AObs: ${obs.value}`;
+  window.open(`https://wa.me/${whatsapp}?text=${msg}`);
+}
+</script>
 
 </body>
 </html>
