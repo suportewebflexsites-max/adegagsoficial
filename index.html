@@ -12,57 +12,51 @@ body{
   background:#0f0f0f;
   color:#fff;
 }
-
 header{
   background:#000;
   padding:15px;
   text-align:center;
   border-bottom:2px solid #d4af37;
 }
-
-header h1{
-  margin:0;
-  color:#d4af37;
-}
-
-header p{
-  margin:5px 0 0;
-  font-size:14px;
-  color:#ccc;
-}
+header h1{margin:0;color:#d4af37}
+header p{margin:5px 0 0;color:#ccc;font-size:14px}
 
 .container{
-  padding:15px;
-  max-width:900px;
+  max-width:1100px;
   margin:auto;
+  padding:15px;
 }
 
-h2{
-  color:#d4af37;
-  margin:20px 0 10px;
+h2{color:#d4af37}
+
+.produtos{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
 }
 
-/* TABELA */
-table{
-  width:100%;
-  border-collapse:collapse;
+.card{
   background:#1a1a1a;
+  border-radius:10px;
+  padding:10px;
+  text-align:center;
 }
-
-th,td{
-  padding:12px;
-  border-bottom:1px solid #333;
+.card img{
+  width:100%;
+  height:140px;
+  object-fit:cover;
+  border-radius:8px;
 }
-
-th{
-  background:#000;
+.preco{
   color:#d4af37;
+  font-weight:bold;
+  margin:6px 0;
 }
-
-button{
+.card button{
   background:#25d366;
   border:none;
-  padding:8px 12px;
+  padding:8px;
+  width:100%;
   border-radius:5px;
   font-weight:bold;
   cursor:pointer;
@@ -71,32 +65,38 @@ button{
 /* CARRINHO */
 #cart{
   position:fixed;
-  top:0;
   right:0;
+  top:0;
   width:320px;
   height:100%;
   background:#000;
-  padding:15px;
   border-left:2px solid #d4af37;
+  padding:15px;
+  transform:translateX(100%);
+  transition:.3s;
   overflow:auto;
 }
-
-#cart h3{
-  color:#d4af37;
-}
+#cart.open{transform:translateX(0)}
 
 .cart-item{
   font-size:14px;
-  margin-bottom:6px;
+  margin-bottom:8px;
+}
+.cart-item button{
+  background:#333;
+  color:#fff;
+  border:none;
+  padding:3px 6px;
+  margin:0 4px;
 }
 
 .total{
-  font-weight:bold;
   color:#25d366;
+  font-weight:bold;
   margin:10px 0;
 }
 
-input, textarea{
+input,textarea{
   width:100%;
   padding:8px;
   margin-bottom:8px;
@@ -104,12 +104,27 @@ input, textarea{
   border:none;
 }
 
-footer{
-  text-align:center;
-  font-size:12px;
-  color:#aaa;
+.cart-btn{
+  background:#25d366;
+  color:#000;
+  border:none;
+  padding:10px;
+  width:100%;
+  border-radius:5px;
+  font-weight:bold;
+  margin-bottom:8px;
+}
+
+.open-cart{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25d366;
+  color:#000;
   padding:15px;
-  margin-top:20px;
+  border-radius:50%;
+  font-size:20px;
+  cursor:pointer;
 }
 </style>
 </head>
@@ -122,74 +137,103 @@ footer{
 </header>
 
 <div class="container">
-<h2>🧾 Produtos (Unitário)</h2>
+<h2>🛒 Produtos</h2>
 
-<table>
-<tr>
-  <th>Produto</th>
-  <th>Preço</th>
-  <th></th>
-</tr>
-
-<tr><td>Guaraná Antártica 350ml</td><td>R$ 5,00</td><td><button onclick="add('Guaraná Antártica 350ml',5)">Adicionar</button></td></tr>
-<tr><td>Guaraná Antártica 2L</td><td>R$ 12,00</td><td><button onclick="add('Guaraná Antártica 2L',12)">Adicionar</button></td></tr>
-<tr><td>Whisky White Horse 1L</td><td>R$ 97,86</td><td><button onclick="add('Whisky White Horse 1L',97.86)">Adicionar</button></td></tr>
-<tr><td>Corona Long Neck</td><td>R$ 9,00</td><td><button onclick="add('Corona Long Neck',9)">Adicionar</button></td></tr>
-<tr><td>Budweiser Long Neck</td><td>R$ 9,00</td><td><button onclick="add('Budweiser Long Neck',9)">Adicionar</button></td></tr>
-<tr><td>Budweiser Lata 269ml</td><td>R$ 4,00</td><td><button onclick="add('Budweiser Lata 269ml',4)">Adicionar</button></td></tr>
-<tr><td>Brahma Duplo Malte 350ml</td><td>R$ 4,50</td><td><button onclick="add('Brahma Duplo Malte 350ml',4.5)">Adicionar</button></td></tr>
-<tr><td>Red Bull 250ml</td><td>R$ 10,50</td><td><button onclick="add('Red Bull 250ml',10.5)">Adicionar</button></td></tr>
-<tr><td>Smirnoff Ice</td><td>R$ 9,00</td><td><button onclick="add('Smirnoff Ice',9)">Adicionar</button></td></tr>
-<tr><td>Coca-Cola 2L</td><td>R$ 13,50</td><td><button onclick="add('Coca-Cola 2L',13.5)">Adicionar</button></td></tr>
-<tr><td>Heineken Long Neck</td><td>R$ 9,00</td><td><button onclick="add('Heineken Long Neck',9)">Adicionar</button></td></tr>
-
-</table>
+<div class="produtos" id="produtos"></div>
 </div>
 
 <!-- CARRINHO -->
 <div id="cart">
-<h3>🛒 Resumo do Pedido</h3>
-<div id="items"></div>
+<h3>🧾 Resumo do Pedido</h3>
+<div id="itens"></div>
 <p class="total">Total: R$ <span id="total">0.00</span></p>
 
-<h3>🧾 Dados do Cliente</h3>
+<h3>👤 Dados do Cliente</h3>
 <input id="nome" placeholder="Nome completo">
 <input id="endereco" placeholder="Endereço completo">
 <input id="cpf" placeholder="CPF">
 <textarea id="obs" placeholder="Observações"></textarea>
 
-<button onclick="finalizar()">Finalizar no WhatsApp</button>
+<button class="cart-btn" onclick="finalizar()">Finalizar no WhatsApp</button>
+<button class="cart-btn" onclick="toggleCart()">Continuar comprando</button>
 </div>
 
-<footer>
-© 2025 Adega GS Oficial • Venda responsável
-</footer>
+<div class="open-cart" onclick="toggleCart()">🛒</div>
 
 <script>
-const whatsapp = "5511981654980";
-let carrinho = [];
+const whatsapp="5511981654980";
 
-function add(nome, preco){
-  carrinho.push({nome,preco});
+/* ===== PRODUTOS (VOCÊ CONTROLA AQUI) ===== */
+const produtos=[
+ {nome:"Guaraná Antártica 350ml",preco:5,img:"https://upload.wikimedia.org/wikipedia/commons/4/4c/Guarana_Antarctica_can.jpg"},
+ {nome:"Whisky White Horse 1L",preco:97.86,img:"https://upload.wikimedia.org/wikipedia/commons/0/02/White_Horse_whisky.jpg"},
+ {nome:"Heineken Long Neck",preco:9,img:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Heineken_bottle.jpg"},
+ {nome:"Red Bull 250ml",preco:10.5,img:"https://upload.wikimedia.org/wikipedia/commons/5/5c/Red_Bull_can.jpg"}
+];
+/* ======================================= */
+
+let cart={};
+
+function renderProdutos(){
+  const p=document.getElementById("produtos");
+  p.innerHTML="";
+  produtos.forEach((i,idx)=>{
+    p.innerHTML+=`
+    <div class="card">
+      <img src="${i.img}">
+      <h4>${i.nome}</h4>
+      <div class="preco">R$ ${i.preco.toFixed(2)}</div>
+      <button onclick="add(${idx})">Adicionar</button>
+    </div>`;
+  });
+}
+renderProdutos();
+
+function add(i){
+  cart[i]=(cart[i]||0)+1;
   atualizar();
 }
 
 function atualizar(){
-  let html = "";
-  let total = 0;
-  carrinho.forEach(i=>{
-    html += `<div class="cart-item">• ${i.nome} - R$ ${i.preco.toFixed(2)}</div>`;
-    total += i.preco;
-  });
-  document.getElementById("items").innerHTML = html;
-  document.getElementById("total").innerText = total.toFixed(2);
+  let html="",total=0;
+  for(let i in cart){
+    const p=produtos[i];
+    total+=p.preco*cart[i];
+    html+=`
+    <div class="cart-item">
+      ${p.nome} <br>
+      <button onclick="menos(${i})">-</button>
+      ${cart[i]}
+      <button onclick="add(${i})">+</button>
+      <button onclick="remover(${i})">🗑️</button>
+    </div>`;
+  }
+  document.getElementById("itens").innerHTML=html;
+  document.getElementById("total").innerText=total.toFixed(2);
+}
+
+function menos(i){
+  cart[i]--;
+  if(cart[i]<=0) delete cart[i];
+  atualizar();
+}
+function remover(i){
+  delete cart[i];
+  atualizar();
+}
+
+function toggleCart(){
+  document.getElementById("cart").classList.toggle("open");
 }
 
 function finalizar(){
-  let total = carrinho.reduce((s,i)=>s+i.preco,0);
-  let msg = `Pedido:%0A`;
-  carrinho.forEach(i=>msg+=`- ${i.nome}%0A`);
-  msg += `%0ATotal: R$ ${total.toFixed(2)}%0A%0ANome: ${nome.value}%0AEndereço: ${endereco.value}%0ACPF: ${cpf.value}%0AObs: ${obs.value}`;
+  let msg="Pedido:%0A";
+  let total=0;
+  for(let i in cart){
+    msg+=`- ${produtos[i].nome} x${cart[i]}%0A`;
+    total+=produtos[i].preco*cart[i];
+  }
+  msg+=`%0ATotal: R$ ${total.toFixed(2)}%0A%0ANome: ${nome.value}%0AEndereço: ${endereco.value}%0ACPF: ${cpf.value}%0AObs: ${obs.value}`;
   window.open(`https://wa.me/${whatsapp}?text=${msg}`);
 }
 </script>
