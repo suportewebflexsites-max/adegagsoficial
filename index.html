@@ -2,181 +2,155 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Adega GS Oficial</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{
+body {
   margin:0;
-  font-family:Arial, sans-serif;
-  background:#0b0b0b;
+  font-family: Arial, sans-serif;
+  background:#0e0e0e;
   color:#fff;
 }
-header{
-  padding:15px;
+header {
   text-align:center;
+  padding:15px;
   border-bottom:2px solid #c9a24d;
 }
-h1{margin:0;color:#c9a24d}
-.section{padding:15px}
-.category{margin-top:25px}
-.category h2{color:#c9a24d;border-bottom:1px solid #333}
-
-.product{
-  background:#161616;
-  border-radius:10px;
-  padding:10px;
-  margin:8px 0;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+header h1 {
+  color:#c9a24d;
+  margin:0;
 }
-.product small{color:#aaa}
-.product button{
+.category {
+  padding:12px;
+}
+.category h2 {
+  color:#c9a24d;
+  border-bottom:1px solid #333;
+  padding-bottom:5px;
+}
+.product {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:#1a1a1a;
+  margin:8px 0;
+  padding:10px;
+  border-radius:8px;
+}
+.product img {
+  width:60px;
+  height:60px;
+  border-radius:6px;
+  object-fit:cover;
+  background:#333;
+}
+.product-info {
+  flex:1;
+  margin-left:10px;
+}
+.product-info p {
+  margin:3px 0;
+}
+.product button {
   background:#2ecc71;
   border:none;
-  padding:8px 14px;
-  border-radius:8px;
+  padding:8px 12px;
+  border-radius:6px;
+  cursor:pointer;
   font-weight:bold;
 }
-
-.cart-btn{
+#cart-btn {
   position:fixed;
   bottom:20px;
   right:20px;
   background:#2ecc71;
+  color:#000;
   width:60px;
   height:60px;
   border-radius:50%;
+  font-size:20px;
   border:none;
-  font-size:24px;
 }
-.cart-count{
-  position:absolute;
-  top:-5px;
-  right:-5px;
-  background:red;
-  color:#fff;
-  border-radius:50%;
-  padding:3px 7px;
-  font-size:12px;
-}
-
-#cart{
+#cart {
   position:fixed;
   top:0;
   right:-100%;
   width:100%;
-  max-width:420px;
   height:100%;
-  background:#0f0f0f;
-  transition:.3s;
-  overflow:auto;
+  background:#111;
   padding:15px;
+  overflow:auto;
+  transition:.3s;
 }
-#cart.active{right:0}
-
-.cart-item{
+#cart.active {
+  right:0;
+}
+.cart-item {
   display:flex;
   justify-content:space-between;
-  margin-bottom:6px;
-  font-size:14px;
+  margin:8px 0;
 }
-
-input, select, textarea{
+.cart-item button {
+  margin:0 5px;
+}
+input, select, textarea {
   width:100%;
-  padding:10px;
-  margin-top:8px;
-  border-radius:6px;
+  padding:8px;
+  margin:6px 0;
+  border-radius:5px;
   border:none;
 }
-
-button.full{
+.btn {
   width:100%;
+  padding:12px;
   margin-top:10px;
-  padding:14px;
-  font-weight:bold;
   border:none;
-  border-radius:8px;
+  border-radius:6px;
+  font-size:16px;
 }
-.green{background:#2ecc71}
-.gray{background:#444;color:#fff}
+.btn-green {
+  background:#2ecc71;
+  color:#000;
+}
+.btn-gray {
+  background:#444;
+  color:#fff;
+}
+.notice {
+  font-size:14px;
+  color:#ccc;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>Adega GS Oficial</h1>
+<h1>🍷 Adega GS Oficial</h1>
 </header>
 
-<div class="section">
+<div id="products"></div>
 
-<!-- CERVEJAS -->
-<div class="category">
-<h2>Cervejas</h2>
-<div class="product"><div>Amstel Lata 269ml <small>R$ 9,00</small></div><button onclick="add('Amstel Lata 269ml',9)">Adicionar</button></div>
-<div class="product"><div>Heineken 269ml <small>R$ 5,20</small></div><button onclick="add('Heineken 269ml',5.2)">Adicionar</button></div>
-<div class="product"><div>Brahma Duplo Malte 350ml <small>R$ 4,50</small></div><button onclick="add('Brahma Duplo Malte 350ml',4.5)">Adicionar</button></div>
-<div class="product"><div>Corona Long Neck 330ml <small>R$ 8,00</small></div><button onclick="add('Corona Long Neck 330ml',8)">Adicionar</button></div>
-<div class="product"><div>Budweiser Long Neck 330ml <small>R$ 8,00</small></div><button onclick="add('Budweiser Long Neck 330ml',8)">Adicionar</button></div>
-<div class="product"><div>Spaten 269ml <small>R$ 4,50</small></div><button onclick="add('Cerveja Spaten 269ml',4.5)">Adicionar</button></div>
-<div class="product"><div>Skol Lata 269ml <small>R$ 4,00</small></div><button onclick="add('Skol Lata 269ml',4)">Adicionar</button></div>
-</div>
-
-<!-- ENERGÉTICOS -->
-<div class="category">
-<h2>Energéticos</h2>
-<div class="product"><div>Red Bull 250ml <small>R$ 10,00</small></div><button onclick="add('Red Bull 250ml',10)">Adicionar</button></div>
-<div class="product"><div>Baly Melancia 2L <small>R$ 10,50</small></div><button onclick="add('Baly Melancia 2L',10.5)">Adicionar</button></div>
-<div class="product"><div>Baly Tropical 2L <small>R$ 12,35</small></div><button onclick="add('Baly Tropical 2L',12.35)">Adicionar</button></div>
-<div class="product"><div>Baly Maçã Verde 2L <small>R$ 12,35</small></div><button onclick="add('Baly Maçã Verde 2L',12.35)">Adicionar</button></div>
-<div class="product"><div>Baly Morango e Pêssego 2L <small>R$ 12,35</small></div><button onclick="add('Baly Morango e Pêssego 2L',12.35)">Adicionar</button></div>
-<div class="product"><div>Vibe 2L <small>R$ 11,60</small></div><button onclick="add('Vibe 2L',11.6)">Adicionar</button></div>
-</div>
-
-<!-- DESTILADOS -->
-<div class="category">
-<h2>Destilados</h2>
-<div class="product"><div>Whisky White Horse 1L <small>R$ 99,99</small></div><button onclick="add('Whisky White Horse 1L',99.99)">Adicionar</button></div>
-<div class="product"><div>Whisky Ballantines 1L <small>R$ 99,99</small></div><button onclick="add('Whisky Ballantines 1L',99.99)">Adicionar</button></div>
-<div class="product"><div>Whisky Red Label 1L <small>R$ 99,99</small></div><button onclick="add('Whisky Red Label 1L',99.99)">Adicionar</button></div>
-<div class="product"><div>Gin Eternity 900ml <small>R$ 25,90</small></div><button onclick="add('Gin Eternity 900ml',25.9)">Adicionar</button></div>
-<div class="product"><div>Smirnoff 1L <small>R$ 42,50</small></div><button onclick="add('Smirnoff 1L',42.5)">Adicionar</button></div>
-<div class="product"><div>Velho Barreiro 910ml <small>R$ 18,00</small></div><button onclick="add('Velho Barreiro 910ml',18)">Adicionar</button></div>
-<div class="product"><div>Pitu Lata 350ml <small>R$ 6,00</small></div><button onclick="add('Pitu Lata 350ml',6)">Adicionar</button></div>
-</div>
-
-<!-- GELO -->
-<div class="category">
-<h2>Gelo & Extras</h2>
-<div class="product"><div>Gelo sabor Melancia <small>R$ 4,50</small></div><button onclick="add('Gelo sabor Melancia',4.5)">Adicionar</button></div>
-<div class="product"><div>Gelo sabor Coco <small>R$ 4,50</small></div><button onclick="add('Gelo sabor Coco',4.5)">Adicionar</button></div>
-<div class="product"><div>Carvão <small>R$ 18,00</small></div><button onclick="add('Carvão',18)">Adicionar</button></div>
-<div class="product"><div>Saco de Gelo <small>R$ 18,00</small></div><button onclick="add('Saco de Gelo',18)">Adicionar</button></div>
-</div>
-
-</div>
-
-<button class="cart-btn" onclick="toggleCart()">🛒<span class="cart-count" id="count">0</span></button>
+<button id="cart-btn" onclick="openCart()">🛒 <span id="cart-count">0</span></button>
 
 <div id="cart">
 <h2>Resumo do Pedido</h2>
-<div id="items"></div>
-<p><b>Total: R$ <span id="total">0.00</span></b></p>
+<div id="cart-items"></div>
+
+<p><strong>Total: R$ <span id="total">0.00</span></strong></p>
+<p class="notice">Pedido mínimo: R$ 20,00</p>
 
 <h3>Forma de Pagamento *</h3>
-<select id="payment">
+<select id="payment" required>
 <option value="">Selecione</option>
 <option>PIX</option>
 <option>Débito</option>
 <option>Crédito</option>
 </select>
 
-<p style="font-size:13px;color:#aaa">
-O link de pagamento será enviado junto com o valor do frete.<br>
-Após pagamento confirmado, o pedido será preparado e encaminhado.
-</p>
+<label>Enviar comprovante (Foto ou PDF)</label>
+<input type="file" accept="image/*,.pdf">
 
 <h3>Dados do Cliente</h3>
 <input id="name" placeholder="Nome *">
@@ -185,48 +159,115 @@ Após pagamento confirmado, o pedido será preparado e encaminhado.
 <input id="cpf" placeholder="CPF *">
 <textarea id="obs" placeholder="Observações (opcional)"></textarea>
 
-<button class="full green" onclick="send()">Finalizar no WhatsApp</button>
-<button class="full gray" onclick="toggleCart()">Continuar comprando</button>
+<p class="notice">
+O link de pagamento será enviado junto com o valor do frete.<br>
+Após pagamento confirmado, o pedido será preparado e encaminhado.
+</p>
+
+<button class="btn btn-green" onclick="finalizar()">Finalizar no WhatsApp</button>
+<button class="btn btn-gray" onclick="closeCart()">Continuar comprando</button>
 </div>
 
 <script>
-let cart=[]
-let total=0
+const minPedido = 20;
+const whatsapp = "55SEUNUMEROAQUI";
 
-function toggleCart(){
-  document.getElementById('cart').classList.toggle('active')
+const produtos = [
+{cat:"Cervejas", nome:"Amstel Lata 269ml", preco:9},
+{cat:"Cervejas", nome:"Heineken 269ml", preco:5.20},
+{cat:"Cervejas", nome:"Brahma Duplo Malte 350ml", preco:4.50},
+{cat:"Cervejas", nome:"Corona Long Neck 330ml", preco:8},
+{cat:"Cervejas", nome:"Budweiser Long Neck 330ml", preco:8},
+{cat:"Cervejas", nome:"Skol Lata 269ml", preco:4},
+
+{cat:"Energéticos", nome:"Red Bull 250ml", preco:10},
+{cat:"Energéticos", nome:"Baly 2L", preco:12.35},
+{cat:"Energéticos", nome:"Vibe 2L", preco:11.60},
+
+{cat:"Destilados", nome:"Whisky White Horse 1L", preco:99.99},
+{cat:"Destilados", nome:"Whisky Ballantines 1L", preco:99.99},
+{cat:"Destilados", nome:"Whisky Red Label 1L", preco:99.99},
+{cat:"Destilados", nome:"Gin Eternity 900ml", preco:25.90},
+{cat:"Destilados", nome:"Smirnoff 1L", preco:42.50},
+
+{cat:"Gelo & Extras", nome:"Gelo", preco:18},
+{cat:"Gelo & Extras", nome:"Carvão", preco:18},
+
+{cat:"Porções", nome:"Porção Mista", preco:25},
+{cat:"Batata Frita", nome:"Batata Frita Média", preco:18},
+{cat:"Salgadinhos", nome:"Coxinha", preco:6},
+{cat:"Açaí", nome:"Açaí 500ml", preco:15}
+];
+
+let carrinho = {};
+
+function render() {
+  const container = document.getElementById("products");
+  container.innerHTML = "";
+  const categorias = [...new Set(produtos.map(p=>p.cat))];
+  categorias.forEach(cat=>{
+    container.innerHTML += `<div class="category"><h2>${cat}</h2></div>`;
+    produtos.filter(p=>p.cat===cat).forEach(p=>{
+      container.innerHTML += `
+      <div class="product">
+        <img>
+        <div class="product-info">
+          <p>${p.nome}</p>
+          <p>R$ ${p.preco.toFixed(2)}</p>
+        </div>
+        <button onclick="add('${p.nome}',${p.preco})">Adicionar</button>
+      </div>`;
+    });
+  });
 }
 
-function add(name,price){
-  cart.push({name,price})
-  total+=price
-  document.getElementById('count').innerText=cart.length
-  render()
+function add(nome, preco){
+  carrinho[nome] = carrinho[nome] || {q:0, p:preco};
+  carrinho[nome].q++;
+  updateCart();
 }
 
-function render(){
-  const items=document.getElementById('items')
-  items.innerHTML=''
-  cart.forEach(i=>{
-    items.innerHTML+=`<div class="cart-item"><span>${i.name}</span><span>R$ ${i.price.toFixed(2)}</span></div>`
-  })
-  document.getElementById('total').innerText=total.toFixed(2)
-}
-
-function send(){
-  if(total<20){alert('Pedido mínimo R$ 20,00');return}
-  if(!name.value||!address.value||!number.value||!cpf.value||!payment.value){
-    alert('Preencha todos os campos obrigatórios');return
+function updateCart(){
+  let total = 0;
+  let count = 0;
+  const div = document.getElementById("cart-items");
+  div.innerHTML = "";
+  for(let i in carrinho){
+    total += carrinho[i].q * carrinho[i].p;
+    count += carrinho[i].q;
+    div.innerHTML += `
+    <div class="cart-item">
+      ${i} x${carrinho[i].q}
+      <span>
+        <button onclick="carrinho['${i}'].q--; if(carrinho['${i}'].q<=0) delete carrinho['${i}']; updateCart()">-</button>
+        <button onclick="carrinho['${i}'].q++; updateCart()">+</button>
+      </span>
+    </div>`;
   }
-
-  let msg='Pedido Adega GS Oficial:%0A'
-  cart.forEach(i=>msg+=`- ${i.name}%0A`)
-  msg+=`Total: R$ ${total.toFixed(2)}%0A`
-  msg+=`Pagamento: ${payment.value}%0A`
-  msg+=`Nome: ${name.value}%0AEndereço: ${address.value}, Nº ${number.value}%0ACPF: ${cpf.value}%0AObs: ${obs.value}`
-
-  window.open(`https://wa.me/5511981654980?text=${msg}`)
+  document.getElementById("total").innerText = total.toFixed(2);
+  document.getElementById("cart-count").innerText = count;
 }
+
+function openCart(){ document.getElementById("cart").classList.add("active"); }
+function closeCart(){ document.getElementById("cart").classList.remove("active"); }
+
+function finalizar(){
+  const total = parseFloat(document.getElementById("total").innerText);
+  if(total < minPedido) return alert("Pedido mínimo R$ 20,00");
+  if(!payment.value || !name.value || !address.value || !number.value || !cpf.value)
+    return alert("Preencha todos os campos obrigatórios.");
+
+  let msg = "Pedido Adega GS Oficial:%0A";
+  for(let i in carrinho){
+    msg += `${i} x${carrinho[i].q}%0A`;
+  }
+  msg += `Total: R$ ${total.toFixed(2)}%0A`;
+  msg += `Pagamento: ${payment.value}%0A`;
+  msg += `Nome: ${name.value}%0AEndereço: ${address.value}, Nº ${number.value}%0ACPF: ${cpf.value}%0AObs: ${obs.value}`;
+  window.open(`https://wa.me/${whatsapp}?text=${msg}`);
+}
+
+render();
 </script>
 
 </body>
