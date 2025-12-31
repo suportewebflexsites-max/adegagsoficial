@@ -48,18 +48,19 @@ header p{color:#aaa;font-size:14px}
 .card button{
   width:100%;
   margin-top:6px;
-  padding:8px;
-  background:#25d366;
+  padding:10px;
+  background:#1db954;
   border:none;
   border-radius:6px;
   font-weight:bold;
+  font-size:15px;
 }
 
 .qtd{
   position:absolute;
   top:6px;
   right:6px;
-  background:#25d366;
+  background:#1db954;
   color:#000;
   border-radius:50%;
   padding:4px 8px;
@@ -70,7 +71,7 @@ header p{color:#aaa;font-size:14px}
   position:fixed;
   top:0;
   right:0;
-  width:340px;
+  width:360px;
   height:100%;
   background:#000;
   padding:15px;
@@ -85,20 +86,20 @@ header p{color:#aaa;font-size:14px}
   position:fixed;
   bottom:20px;
   right:20px;
-  background:#25d366;
+  background:#1db954;
   color:#000;
-  padding:15px;
+  padding:16px;
   border-radius:50%;
-  font-size:20px;
+  font-size:22px;
 }
 .badge{
   position:absolute;
-  top:-5px;
-  right:-5px;
+  top:-6px;
+  right:-6px;
   background:red;
   color:#fff;
   border-radius:50%;
-  padding:3px 7px;
+  padding:4px 8px;
   font-size:12px;
 }
 
@@ -110,22 +111,41 @@ header p{color:#aaa;font-size:14px}
   background:#222;
   color:#fff;
   border:none;
-  padding:3px 7px;
+  padding:4px 8px;
   margin-left:4px;
+  border-radius:4px;
 }
 
 input,textarea{
   width:100%;
-  padding:8px;
-  margin-bottom:6px;
+  padding:10px;
+  margin-bottom:8px;
   border-radius:6px;
   border:none;
 }
 
-.total{color:#25d366;font-weight:bold;margin:8px 0}
+.total{color:#1db954;font-weight:bold;margin:10px 0}
 
-h3{color:#d4af37;margin-top:10px}
-small{color:#aaa}
+h3{color:#d4af37;margin-top:12px}
+
+.pagamento-box{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:8px;
+}
+.pagamento-item{
+  padding:6px 12px;
+  border-radius:6px;
+  background:#1a1a1a;
+  border:1px solid #333;
+  font-size:13px;
+  font-weight:bold;
+}
+.pagamento-item.pix{
+  background:#1db954;
+  color:#000;
+}
 </style>
 </head>
 
@@ -148,8 +168,18 @@ small{color:#aaa}
 <p class="total">Produtos: R$ <span id="total">0.00</span></p>
 
 <h3>💳 Pagamento</h3>
-<small>Formas aceitas: PIX • Débito • Crédito<br>
-(Link será enviado após o pedido)</small>
+<div class="pagamento-box">
+  <div class="pagamento-item pix">PIX</div>
+  <div class="pagamento-item">VISA</div>
+  <div class="pagamento-item">MASTER</div>
+  <div class="pagamento-item">ELO</div>
+  <div class="pagamento-item">AMEX</div>
+</div>
+
+<small>
+O link de pagamento será encaminhado junto com o valor do frete.<br>
+Pagamento confirmado → pedido preparado e enviado.
+</small>
 
 <h3>👤 Cliente</h3>
 <input id="nome" placeholder="Nome *">
@@ -160,7 +190,9 @@ small{color:#aaa}
 <p class="total">Total geral: R$ <span id="totalGeral">0.00</span></p>
 
 <button onclick="finalizar()">Finalizar no WhatsApp</button>
-<button onclick="toggleCart()">Continuar comprando</button>
+<button onclick="toggleCart()" style="background:#2a2a2a;color:#d4af37">
+Continuar comprando
+</button>
 </div>
 
 <div class="open-cart" onclick="toggleCart()">🛒<span class="badge" id="count">0</span></div>
@@ -256,16 +288,18 @@ function toggleCart(){cartDiv.classList.toggle("open");}
 
 function finalizar(){
 if(total.innerText<pedidoMin||!nome.value||!endereco.value||!cpf.value){
-alert("Preencha os dados corretamente. Pedido mínimo R$ 20,00");return;
+alert("Preencha os dados corretamente. Pedido mínimo R$ 20,00");
+return;
 }
-let msg="🛒 Pedido Adega GS%0A";
+let msg="🛒 Pedido Adega GS Oficial%0A";
 for(let n in cart){msg+=`• ${n} x${cart[n]}%0A`;}
-msg+=`%0ATotal: R$ ${totalGeral.innerText}`;
-msg+=`%0APagamento: PIX / Débito / Crédito`;
-msg+=`%0A%0ANome: ${nome.value}`;
-msg+=`%0AEndereço: ${endereco.value}`;
-msg+=`%0ACPF: ${cpf.value}`;
-msg+=`%0AObs: ${obs.value}`;
+msg+=`%0A💰 Total: R$ ${totalGeral.innerText}`;
+msg+=`%0A%0A📦 Status do pedido:%0A✅ Pedido recebido%0A🕒 Será preparado e encaminhado após a confirmação do pagamento.`;
+msg+=`%0A%0A💳 Pagamento: PIX / Débito / Crédito`;
+msg+=`%0A%0A👤 Nome: ${nome.value}`;
+msg+=`%0A🏠 Endereço: ${endereco.value}`;
+msg+=`%0A🪪 CPF: ${cpf.value}`;
+msg+=`%0A📝 Obs: ${obs.value}`;
 window.open(`https://wa.me/${whatsapp}?text=${msg}`);
 }
 
