@@ -12,25 +12,35 @@ h1{color:#d4af37;margin:0}
 header p{color:#ccc;font-size:14px;margin:5px 0}
 .container{max-width:1100px;margin:auto;padding:15px}
 h2{color:#d4af37;margin-top:25px}
-.produtos{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}
-.card{background:#1a1a1a;border-radius:10px;padding:10px;text-align:center}
-.card img{width:100%;height:140px;object-fit:cover;border-radius:8px}
-.preco{color:#d4af37;font-weight:bold;margin:6px 0}
-.card button{background:#25d366;border:none;padding:8px;width:100%;border-radius:5px;font-weight:bold;cursor:pointer}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:15px}
+.card{background:#1a1a1a;border-radius:10px;padding:10px;text-align:center;position:relative}
+.card img{width:100%;height:130px;object-fit:cover;border-radius:8px}
+.preco{color:#d4af37;font-weight:bold;margin:5px 0}
+.qtd{position:absolute;top:8px;right:8px;background:#25d366;color:#000;
+  font-weight:bold;border-radius:50%;padding:4px 8px;font-size:12px}
+.card button{background:#25d366;border:none;padding:8px;width:100%;
+  border-radius:5px;font-weight:bold;cursor:pointer}
 
 #cart{
-  position:fixed;right:0;top:0;width:320px;height:100%;
+  position:fixed;right:0;top:0;width:330px;height:100%;
   background:#000;border-left:2px solid #d4af37;
   padding:15px;overflow:auto;transform:translateX(100%);
   transition:.3s
 }
 #cart.open{transform:translateX(0)}
-.cart-item{font-size:14px;margin-bottom:8px}
-.cart-item button{background:#333;color:#fff;border:none;padding:3px 6px;margin:0 4px}
+.cart-item{font-size:14px;margin-bottom:6px}
+.cart-item button{background:#333;color:#fff;border:none;padding:3px 6px;margin:0 3px}
 .total{color:#25d366;font-weight:bold;margin:10px 0}
 input,textarea{width:100%;padding:8px;margin-bottom:8px;border-radius:5px;border:none}
-.cart-btn{background:#25d366;color:#000;border:none;padding:10px;width:100%;border-radius:5px;font-weight:bold;margin-bottom:8px}
-.open-cart{position:fixed;bottom:20px;right:20px;background:#25d366;color:#000;padding:15px;border-radius:50%;font-size:20px;cursor:pointer}
+.cart-btn{background:#25d366;color:#000;border:none;padding:10px;width:100%;
+  border-radius:5px;font-weight:bold;margin-bottom:8px}
+.open-cart{
+  position:fixed;bottom:20px;right:20px;
+  background:#25d366;color:#000;padding:15px;
+  border-radius:50%;font-size:20px;cursor:pointer
+}
+small{color:#aaa}
 </style>
 </head>
 
@@ -43,23 +53,22 @@ input,textarea{width:100%;padding:8px;margin-bottom:8px;border-radius:5px;border
 
 <div class="container">
 
-<h2>🧾 Produtos Unitários</h2>
-<div class="produtos" id="unitarios"></div>
-
-<h2>📦 Produtos em Fardo</h2>
-<div class="produtos" id="fardos"></div>
+<h2>🛒 Produtos</h2>
+<div class="grid" id="produtos"></div>
 
 </div>
 
+<!-- CARRINHO -->
 <div id="cart">
 <h3>🧾 Resumo do Pedido</h3>
 <div id="itens"></div>
 <p class="total">Total: R$ <span id="total">0.00</span></p>
+<small>Pedido mínimo: R$ 20,00</small>
 
 <h3>👤 Dados do Cliente</h3>
-<input id="nome" placeholder="Nome completo">
-<input id="endereco" placeholder="Endereço completo">
-<input id="cpf" placeholder="CPF">
+<input id="nome" placeholder="Nome completo *">
+<input id="endereco" placeholder="Endereço completo *">
+<input id="cpf" placeholder="CPF *">
 <textarea id="obs" placeholder="Observações"></textarea>
 
 <button class="cart-btn" onclick="finalizar()">Finalizar no WhatsApp</button>
@@ -69,48 +78,54 @@ input,textarea{width:100%;padding:8px;margin-bottom:8px;border-radius:5px;border
 <div class="open-cart" onclick="toggleCart()">🛒</div>
 
 <script>
-const whatsapp="5511981654980";
-
-/* ===== PRODUTOS DO PDF ===== */
-const unitarios=[
- {n:"Guaraná Antártica 350ml",p:5,img:"https://upload.wikimedia.org/wikipedia/commons/4/4c/Guarana_Antarctica_can.jpg"},
- {n:"Guaraná Antártica 2L",p:12,img:"https://upload.wikimedia.org/wikipedia/commons/7/7a/Guarana_Antarctica_2L.jpg"},
- {n:"Whisky White Horse 1L",p:97.86,img:"https://upload.wikimedia.org/wikipedia/commons/0/02/White_Horse_whisky.jpg"},
- {n:"Corona Long Neck",p:9,img:"https://upload.wikimedia.org/wikipedia/commons/6/63/Corona_Extra_bottle.jpg"},
- {n:"Budweiser Long Neck",p:9,img:"https://upload.wikimedia.org/wikipedia/commons/5/55/Budweiser_bottle.jpg"},
- {n:"Budweiser Lata 269ml",p:4,img:"https://upload.wikimedia.org/wikipedia/commons/1/11/Budweiser_can.jpg"},
- {n:"Brahma Duplo Malte 350ml",p:4.5,img:"https://upload.wikimedia.org/wikipedia/commons/7/7e/Brahma_Duplo_Malte.jpg"},
- {n:"Red Bull 250ml",p:10.5,img:"https://upload.wikimedia.org/wikipedia/commons/5/5c/Red_Bull_can.jpg"},
- {n:"Coca-Cola 2L",p:13.5,img:"https://upload.wikimedia.org/wikipedia/commons/2/2f/Coca-Cola_2L.jpg"},
- {n:"Heineken Long Neck",p:9,img:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Heineken_bottle.jpg"}
-];
-
-const fardos=[
- {n:"Amstel lata 269ml (12 un)",p:38,img:"https://upload.wikimedia.org/wikipedia/commons/3/3a/Amstel_can.jpg"},
- {n:"Heineken lata 269ml (8 un)",p:41.6,img:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Heineken_bottle.jpg"},
- {n:"Original lata 269ml (8 un)",p:32,img:"https://upload.wikimedia.org/wikipedia/commons/6/6e/Original_beer_can.jpg"},
- {n:"Brahma Duplo Malte 350ml (12 un)",p:54,img:"https://upload.wikimedia.org/wikipedia/commons/7/7e/Brahma_Duplo_Malte.jpg"}
-];
-/* =========================== */
+/* ================= ADMIN ================= */
+const ADMIN = {
+  whatsapp:"5511981654980",
+  pedidoMinimo:20,
+  cupomAtivo:false,
+  cupom:"PROMO10",
+  desconto:10, // %
+  produtos:[
+    {n:"Guaraná Antártica 350ml",p:5,img:"https://upload.wikimedia.org/wikipedia/commons/4/4c/Guarana_Antarctica_can.jpg",on:true},
+    {n:"Guaraná Antártica 2L",p:12,img:"https://upload.wikimedia.org/wikipedia/commons/7/7a/Guarana_Antarctica_2L.jpg",on:true},
+    {n:"Whisky White Horse 1L",p:97.86,img:"https://upload.wikimedia.org/wikipedia/commons/0/02/White_Horse_whisky.jpg",on:true},
+    {n:"Corona Long Neck 330ml",p:9,img:"https://upload.wikimedia.org/wikipedia/commons/6/63/Corona_Extra_bottle.jpg",on:true},
+    {n:"Budweiser Long Neck 330ml",p:9,img:"https://upload.wikimedia.org/wikipedia/commons/5/55/Budweiser_bottle.jpg",on:true},
+    {n:"Budweiser Lata 269ml",p:4,img:"https://upload.wikimedia.org/wikipedia/commons/1/11/Budweiser_can.jpg",on:true},
+    {n:"Brahma Duplo Malte 350ml",p:4.5,img:"https://upload.wikimedia.org/wikipedia/commons/7/7e/Brahma_Duplo_Malte.jpg",on:true},
+    {n:"Red Bull 250ml",p:10.5,img:"https://upload.wikimedia.org/wikipedia/commons/5/5c/Red_Bull_can.jpg",on:true},
+    {n:"Coca-Cola 2L",p:13.5,img:"https://upload.wikimedia.org/wikipedia/commons/2/2f/Coca-Cola_2L.jpg",on:true},
+    {n:"Coca-Cola Lata 350ml",p:5,img:"https://upload.wikimedia.org/wikipedia/commons/0/0f/Coca-Cola_can.jpg",on:true},
+    {n:"Heineken Long Neck",p:9,img:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Heineken_bottle.jpg",on:true},
+    {n:"Amstel Lata 269ml",p:4,img:"https://upload.wikimedia.org/wikipedia/commons/3/3a/Amstel_can.jpg",on:true},
+    {n:"Skol Lata 269ml",p:4,img:"https://upload.wikimedia.org/wikipedia/commons/6/6b/Skol_can.jpg",on:true},
+    {n:"Ice Smirnoff 275ml",p:9,img:"https://upload.wikimedia.org/wikipedia/commons/0/08/Smirnoff_Ice.jpg",on:true}
+  ]
+};
+/* ======================================= */
 
 let cart={};
 
-function render(lista,el){
-  el.innerHTML="";
-  lista.forEach((i,idx)=>{
-    el.innerHTML+=`
-    <div class="card">
-      <img src="${i.img}">
-      <h4>${i.n}</h4>
-      <div class="preco">R$ ${i.p.toFixed(2)}</div>
-      <button onclick="add('${i.n}',${i.p})">Adicionar</button>
-    </div>`;
+function render(){
+  const div=document.getElementById("produtos");
+  div.innerHTML="";
+  ADMIN.produtos.forEach((p,i)=>{
+    if(!p.on) return;
+    const qtd=cart[p.n]||0;
+    div.innerHTML+=`
+      <div class="card">
+        ${qtd>0?`<div class="qtd">${qtd}</div>`:""}
+        <img src="${p.img}">
+        <h4>${p.n}</h4>
+        <div class="preco">R$ ${p.p.toFixed(2)}</div>
+        <button onclick="add(${i})">Adicionar</button>
+      </div>`;
   });
 }
-render(unitarios,document.getElementById("unitarios"));
-render(fardos,document.getElementById("fardos"));
+render();
 
-function add(n,p){
+function add(i){
+  const n=ADMIN.produtos[i].n;
   cart[n]=(cart[n]||0)+1;
   atualizar();
 }
@@ -118,30 +133,46 @@ function add(n,p){
 function atualizar(){
   let html="",total=0;
   for(let n in cart){
-    let preco=0;
-    [...unitarios,...fardos].forEach(p=>{if(p.n===n)preco=p.p});
-    total+=preco*cart[n];
-    html+=`${n} x${cart[n]}<br>`;
+    const p=ADMIN.produtos.find(x=>x.n===n);
+    total+=p.p*cart[n];
+    html+=`
+      <div class="cart-item">
+        ${n} x${cart[n]}
+        <button onclick="menos('${n}')">-</button>
+        <button onclick="mais('${n}')">+</button>
+      </div>`;
   }
   document.getElementById("itens").innerHTML=html;
   document.getElementById("total").innerText=total.toFixed(2);
+  render();
 }
+
+function menos(n){cart[n]--;if(cart[n]<=0)delete cart[n];atualizar()}
+function mais(n){cart[n]++;atualizar()}
 
 function toggleCart(){
   document.getElementById("cart").classList.toggle("open");
 }
 
 function finalizar(){
-  let msg="Pedido:%0A";
-  let total=0;
-  for(let n in cart){
-    let preco=0;
-    [...unitarios,...fardos].forEach(p=>{if(p.n===n)preco=p.p});
-    msg+=`- ${n} x${cart[n]}%0A`;
-    total+=preco*cart[n];
+  const total=Object.keys(cart).reduce((s,n)=>{
+    const p=ADMIN.produtos.find(x=>x.n===n);
+    return s+p.p*cart[n];
+  },0);
+
+  if(total<ADMIN.pedidoMinimo){
+    alert("Pedido mínimo R$ "+ADMIN.pedidoMinimo.toFixed(2));
+    return;
   }
+  if(!nome.value||!endereco.value||!cpf.value){
+    alert("Preencha nome, endereço e CPF");
+    return;
+  }
+
+  let msg="Pedido:%0A";
+  for(let n in cart) msg+=`- ${n} x${cart[n]}%0A`;
   msg+=`%0ATotal: R$ ${total.toFixed(2)}%0A%0ANome: ${nome.value}%0AEndereço: ${endereco.value}%0ACPF: ${cpf.value}%0AObs: ${obs.value}`;
-  window.open(`https://wa.me/${whatsapp}?text=${msg}`);
+  window.open(`https://wa.me/${ADMIN.whatsapp}?text=${msg}`);
 }
 </script>
 
