@@ -11,169 +11,103 @@ body{background:#0e0e0e;color:#fff;overflow-x:hidden}
 
 /* ===== MODAL 18+ ===== */
 #ageModal{
-  position:fixed;inset:0;
-  background:#000;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  position:fixed;inset:0;background:#000;
+  display:flex;align-items:center;justify-content:center;
   z-index:9999;
 }
 .age-box{
-  background:#111;
-  padding:25px;
-  border-radius:12px;
-  max-width:360px;
-  text-align:center;
+  background:#111;padding:28px;border-radius:14px;
+  max-width:380px;text-align:center;
 }
-.age-box h2{color:#d4af37;margin-bottom:10px}
-.age-box p{font-size:14px;color:#ccc;margin:6px 0}
-.age-box button{
-  margin-top:15px;
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  background:#2ecc71;
-  font-weight:bold;
-  cursor:pointer;
+.age-box h2{color:#d4af37;margin-bottom:12px}
+.age-box p{color:#ccc;font-size:14px;margin:6px 0}
+.age-actions{display:flex;gap:10px;margin-top:18px}
+.age-actions button{
+  flex:1;padding:12px;border:none;border-radius:8px;
+  font-weight:bold;cursor:pointer
 }
+.btn-yes{background:#2ecc71;color:#000}
+.btn-no{background:#444;color:#fff}
 
 /* ===== HEADER ===== */
-header{
-  text-align:center;
-  padding:20px;
-  border-bottom:1px solid #222;
-}
-header h1{color:#d4af37}
-header p{font-size:14px;color:#aaa}
+header{text-align:center;padding:20px;border-bottom:1px solid #222}
+header h1{color:#d4af37;font-size:26px}
+header p{color:#aaa;font-size:14px}
 
 /* ===== CONTAINER ===== */
-.container{
-  max-width:900px;
-  margin:auto;
-  padding:15px;
-}
+.container{max-width:900px;margin:auto;padding:18px}
 
 /* ===== CATEGORIA ===== */
-.category{margin-top:30px}
+.category{margin-top:32px}
 .category h2{
-  color:#d4af37;
-  margin-bottom:12px;
-  border-bottom:1px solid #222;
-  padding-bottom:6px;
+  color:#d4af37;border-bottom:1px solid #222;
+  padding-bottom:6px;margin-bottom:14px
 }
 
 /* ===== PRODUTO ===== */
 .product{
-  background:#1a1a1a;
-  padding:12px;
-  border-radius:10px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:10px;
+  background:#1a1a1a;padding:14px;border-radius:12px;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:12px;gap:12px
 }
-.product span{font-size:14px}
-.product strong{color:#2ecc71}
+.product img{
+  width:60px;height:60px;border-radius:8px;
+  object-fit:contain;background:#000
+}
+.product-info{flex:1}
+.product-info span{display:block}
+.product-info strong{color:#2ecc71}
 .product button{
-  background:#2ecc71;
-  border:none;
-  padding:8px 14px;
-  border-radius:8px;
-  font-weight:bold;
-  cursor:pointer;
+  background:#2ecc71;border:none;
+  padding:8px 16px;border-radius:8px;
+  font-weight:bold;cursor:pointer
 }
 
 /* ===== BOTÃO CARRINHO ===== */
 .cart-btn{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  width:56px;
-  height:56px;
-  background:#2ecc71;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:22px;
-  cursor:pointer;
-  z-index:1000;
+  position:fixed;bottom:20px;right:20px;
+  width:58px;height:58px;background:#2ecc71;
+  border-radius:50%;display:flex;
+  align-items:center;justify-content:center;
+  font-size:22px;cursor:pointer;z-index:1000
 }
 .cart-count{
-  position:absolute;
-  top:-6px;
-  right:-6px;
-  background:red;
-  color:#fff;
-  width:20px;
-  height:20px;
-  border-radius:50%;
-  font-size:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  position:absolute;top:-6px;right:-6px;
+  background:red;color:#fff;
+  width:20px;height:20px;
+  border-radius:50%;font-size:12px;
+  display:flex;align-items:center;justify-content:center
 }
 
 /* ===== CARRINHO ===== */
 #overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.85);
-  display:none;
-  z-index:2000;
+  position:fixed;inset:0;background:rgba(0,0,0,.85);
+  display:none;z-index:2000
 }
 #cart{
-  background:#111;
-  height:100%;
-  width:100%;
-  max-width:420px;
-  margin-left:auto;
-  padding:20px;
-  overflow-y:auto;
+  background:#111;height:100%;
+  width:100%;max-width:420px;
+  margin-left:auto;padding:22px;overflow-y:auto
 }
-.cart-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-.cart-item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:10px 0;
-}
+.cart-header{display:flex;justify-content:space-between;align-items:center}
+.cart-item{display:flex;justify-content:space-between;align-items:center;margin:12px 0}
 .controls button{
-  background:#333;
-  color:#fff;
-  border:none;
-  padding:4px 8px;
-  margin:0 4px;
-  border-radius:4px;
+  background:#333;color:#fff;border:none;
+  padding:4px 8px;margin:0 4px;border-radius:4px
 }
-.total{font-size:18px;margin:10px 0}
+.total{font-size:18px;margin:14px 0}
 .min{color:#d4af37;font-size:14px}
 
 input,select,textarea{
-  width:100%;
-  margin:6px 0;
-  padding:10px;
-  border-radius:6px;
-  border:none;
+  width:100%;margin:8px 0;padding:12px;
+  border-radius:8px;border:none
 }
 textarea{resize:none}
 
-.actions{
-  display:flex;
-  gap:10px;
-  margin-top:10px;
-}
+.actions{display:flex;gap:12px;margin-top:14px}
 .actions button{
-  flex:1;
-  padding:12px;
-  border:none;
-  border-radius:8px;
-  font-weight:bold;
+  flex:1;padding:14px;border:none;
+  border-radius:10px;font-weight:bold
 }
 .primary{background:#2ecc71;color:#000}
 .secondary{background:#444;color:#fff}
@@ -182,14 +116,16 @@ textarea{resize:none}
 
 <body>
 
-<!-- MODAL 18+ -->
 <div id="ageModal">
   <div class="age-box">
     <h2>🔞 Aviso de Maioridade</h2>
-    <p>Venda proibida para menores de 18 anos.</p>
-    <p><strong>Horário:</strong> 11:00 às 04:00</p>
-    <p><strong>Endereço:</strong><br>Rua Plácido Parreira Lima, 142</p>
-    <button onclick="confirmAge()">Sou maior de 18 anos</button>
+    <p>Você é maior de 18 anos?</p>
+    <p><b>Horário:</b> 11:00 às 04:00</p>
+    <p><b>Endereço:</b><br>Rua Plácido Parreira Lima, 142</p>
+    <div class="age-actions">
+      <button class="btn-yes" onclick="setAge(true)">SIM</button>
+      <button class="btn-no" onclick="setAge(false)">NÃO</button>
+    </div>
   </div>
 </div>
 
@@ -200,8 +136,8 @@ textarea{resize:none}
 
 <div class="container" id="products"></div>
 
-<div class="cart-btn" onclick="openCart()">
-🛒<div class="cart-count" id="cartCount">0</div>
+<div class="cart-btn" onclick="openCart()">🛒
+  <div class="cart-count" id="cartCount">0</div>
 </div>
 
 <div id="overlay">
@@ -223,6 +159,8 @@ textarea{resize:none}
       <option>Crédito</option>
     </select>
 
+    <input placeholder="Cupom (opcional)">
+
     <p style="font-size:13px;color:#ccc;margin:10px 0">
       O link de pagamento será enviado junto com o valor do frete.<br>
       Após o pagamento confirmado, o pedido será preparado e enviado.
@@ -234,7 +172,7 @@ textarea{resize:none}
     <input id="endereco" placeholder="Endereço *">
     <input id="numero" placeholder="Número da casa *">
     <input id="cpf" placeholder="CPF *">
-    <textarea placeholder="Observações (opcional)"></textarea>
+    <textarea id="obs" placeholder="Observações (opcional)"></textarea>
 
     <div class="actions">
       <button class="secondary" onclick="closeCart()">Continuar comprando</button>
@@ -244,90 +182,124 @@ textarea{resize:none}
 </div>
 
 <script>
-function confirmAge(){document.getElementById("ageModal").style.display="none"}
-
-const categorias={
-"Fardos":[
-["Amstel c/12",34],["Heineken c/8",41.60],["Original c/8",32],
-["Skol Beats Senses c/8",48],["Skol Beats Red Mix c/8",48],
-["Skol Beats GT c/8",48],["Brahma Duplo Malte c/12",54],
-["Budweiser c/8",56],["Skol c/15",56]
-],
-"Cervejas Unitárias":[
-["Amstel 269ml",9],["Heineken 269ml",5.20],["Original 269ml",4],
-["Skol 269ml",4],["Brahma Duplo Malte 350ml",4.50],
-["Corona Long Neck 330ml",8],["Budweiser Long Neck 330ml",8],
-["Budweiser Lata 269ml",9],["Spaten 269ml",4.50],
-["Cerveja Império 210ml",6]
-],
-"Energéticos":[
-["Red Bull 250ml",10],["Baly Melancia 2L",10.50],
-["Baly Tropical 2L",12.35],["Baly Maçã Verde 2L",12.35],
-["Baly Morango e Pêssego 2L",12.35],["Vibe 2L",11.60]
-],
-"Refrigerantes":[
-["Guaraná Antártica 350ml",4],["Guaraná Antártica 2L",12],
-["Coca-Cola Lata 350ml",4],["Coca-Cola 2L",12.50]
-],
-"Destilados":[
-["Whisky White Horse 1L",99.99],["Whisky Ballantines 1L",99.99],
-["Whisky Red Label 1L",99.99],["Gin Eternity 900ml",25.90],
-["Smirnoff 1L",42.50],["Velho Barreiro 910ml",18],
-["Pitu Lata 350ml",6],["Ice Smirnoff 275ml",8]
-],
-"Gelo & Extras":[
-["Gelo sabor Melancia",4.50],["Gelo sabor Coco",4.50],
-["Carvão",18],["Saco de Gelo",18]
-]
-};
-
+const WHATSAPP_NUMERO = "5511999999999";
+let isAdult=false;
 let cart={};
 
-const productsDiv=document.getElementById("products");
-for(let cat in categorias){
-  productsDiv.innerHTML+=`<div class="category"><h2>${cat}</h2></div>`;
-  categorias[cat].forEach(p=>{
-    productsDiv.innerHTML+=`
-    <div class="product">
-      <span>${p[0]} — <strong>R$ ${p[1].toFixed(2)}</strong></span>
-      <button onclick="add('${p[0]}',${p[1]})">Adicionar</button>
-    </div>`;
+const categorias={
+ "Fardos":[
+  ["Amstel c/12",34,true],["Heineken c/8",41.6,true],
+  ["Original c/8",32,true],["Skol Beats Senses c/8",48,true],
+  ["Skol Beats Red Mix c/8",48,true],["Skol Beats GT c/8",48,true],
+  ["Brahma Duplo Malte c/12",54,true],["Budweiser c/8",56,true],
+  ["Skol c/15",56,true]
+ ],
+ "Cervejas":[
+  ["Amstel 269ml",9,true],["Heineken 269ml",5.2,true],
+  ["Original 269ml",4,true],["Skol 269ml",4,true],
+  ["Brahma Duplo Malte 350ml",4.5,true],
+  ["Corona Long Neck 330ml",8,true],
+  ["Budweiser Long Neck 330ml",8,true],
+  ["Budweiser Lata 269ml",9,true],
+  ["Spaten 269ml",4.5,true],
+  ["Cerveja Império 210ml",6,true]
+ ],
+ "Energéticos":[
+  ["Red Bull 250ml",10,false],["Baly Melancia 2L",10.5,false],
+  ["Baly Tropical 2L",12.35,false],["Baly Maçã Verde 2L",12.35,false],
+  ["Baly Morango e Pêssego 2L",12.35,false],["Vibe 2L",11.6,false]
+ ],
+ "Refrigerantes":[
+  ["Guaraná Antártica 350ml",4,false],["Guaraná Antártica 2L",12,false],
+  ["Coca-Cola Lata 350ml",4,false],["Coca-Cola 2L",12.5,false]
+ ],
+ "Destilados":[
+  ["Whisky White Horse 1L",99.99,true],["Whisky Ballantines 1L",99.99,true],
+  ["Whisky Red Label 1L",99.99,true],["Gin Eternity 900ml",25.9,true],
+  ["Smirnoff 1L",42.5,true],["Velho Barreiro 910ml",18,true],
+  ["Pitu Lata 350ml",6,true],["Ice Smirnoff 275ml",8,true]
+ ],
+ "Gelo & Extras":[
+  ["Gelo sabor Melancia",4.5,false],["Gelo sabor Coco",4.5,false],
+  ["Carvão",18,false],["Saco de Gelo",18,false]
+ ]
+};
+
+function setAge(adult){
+ isAdult=adult;
+ document.getElementById("ageModal").style.display="none";
+ renderProducts();
+}
+
+function renderProducts(){
+ const div=document.getElementById("products");
+ div.innerHTML="";
+ for(let cat in categorias){
+  const items=categorias[cat].filter(p=>isAdult||!p[2]);
+  if(items.length===0)continue;
+  div.innerHTML+=`<div class="category"><h2>${cat}</h2></div>`;
+  items.forEach(p=>{
+   div.innerHTML+=`
+   <div class="product">
+    <img src="https://via.placeholder.com/60?text=IMG">
+    <div class="product-info">
+      <span>${p[0]}</span>
+      <strong>R$ ${p[1].toFixed(2)}</strong>
+    </div>
+    <button onclick="add('${p[0]}',${p[1]})">Adicionar</button>
+   </div>`;
   });
+ }
 }
 
 function add(nome,preco){
-  cart[nome]?cart[nome].q++:cart[nome]={preco,q:1};
-  updateCart();
+ cart[nome]?cart[nome].q++:cart[nome]={preco,q:1};
+ updateCart();
 }
+
 function updateCart(){
-  const items=document.getElementById("cartItems");
-  items.innerHTML="";
-  let total=0,count=0;
-  for(let k in cart){
-    const i=cart[k];
-    total+=i.preco*i.q;
-    count+=i.q;
-    items.innerHTML+=`
-    <div class="cart-item">
-      <span>${k}</span>
-      <div class="controls">
-        <button onclick="chg('${k}',-1)">−</button>${i.q}
-        <button onclick="chg('${k}',1)">+</button>
-      </div>
-    </div>`;
-  }
-  document.getElementById("total").innerText=total.toFixed(2);
-  document.getElementById("cartCount").innerText=count;
+ const items=document.getElementById("cartItems");
+ items.innerHTML="";
+ let total=0,count=0;
+ for(let k in cart){
+  const i=cart[k];
+  total+=i.preco*i.q;
+  count+=i.q;
+  items.innerHTML+=`
+   <div class="cart-item">
+    <span>${k}</span>
+    <div class="controls">
+     <button onclick="chg('${k}',-1)">−</button>${i.q}
+     <button onclick="chg('${k}',1)">+</button>
+    </div>
+   </div>`;
+ }
+ document.getElementById("total").innerText=total.toFixed(2);
+ document.getElementById("cartCount").innerText=count;
 }
+
 function chg(k,v){cart[k].q+=v;if(cart[k].q<=0)delete cart[k];updateCart()}
 function openCart(){document.getElementById("overlay").style.display="block"}
 function closeCart(){document.getElementById("overlay").style.display="none"}
+
 function finalizar(){
-  const total=parseFloat(document.getElementById("total").innerText);
-  if(total<20)return alert("Pedido mínimo R$ 20,00");
-  if(!pagamento.value||!nome.value||!endereco.value||!numero.value||!cpf.value)
-    return alert("Preencha todos os campos obrigatórios");
-  alert("Pedido pronto para envio no WhatsApp");
+ const total=parseFloat(document.getElementById("total").innerText);
+ if(total<20)return alert("Pedido mínimo R$ 20,00");
+ if(!pagamento.value||!nome.value||!endereco.value||!numero.value||!cpf.value)
+  return alert("Preencha todos os campos obrigatórios");
+
+ let msg="🛒 Pedido - Adega GS Oficial\n\n";
+ for(let k in cart){
+  msg+=`• ${k} x${cart[k].q} — R$ ${(cart[k].preco*cart[k].q).toFixed(2)}\n`;
+ }
+ msg+=`\n💰 Total: R$ ${total.toFixed(2)}\n`;
+ msg+=`💳 Pagamento: ${pagamento.value}\n`;
+ msg+=`📍 Endereço: ${endereco.value}, Nº ${numero.value}\n`;
+ msg+=`👤 Nome: ${nome.value}\n🪪 CPF: ${cpf.value}\n`;
+ if(obs.value) msg+=`\n📝 Obs: ${obs.value}\n`;
+ msg+=`\n📌 O link de pagamento será enviado junto com o valor do frete.\nApós o pagamento confirmado, o pedido será preparado e enviado.`;
+
+ window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(msg)}`,"_blank");
 }
 </script>
 
