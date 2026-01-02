@@ -3,332 +3,299 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adega GS Oficial</title>
 
-<title>Adega GS Oficial | Delivery</title>
-
-<!-- PREVIEW WHATSAPP / GOOGLE -->
+<!-- PREVIEW DO LINK (WHATSAPP / GOOGLE) -->
 <meta property="og:title" content="Adega GS Oficial">
-<meta property="og:description" content="Delivery de bebidas • Pedido via WhatsApp • 11h às 04h">
-<meta property="og:image" content="https://via.placeholder.com/600x400?text=ADEGA+GS+OFICIAL">
+<meta property="og:description" content="Delivery de bebidas • 11h às 04h">
+<meta property="og:image" content="https://www.adegagsoficial.com.br/logo.png">
+<meta property="og:url" content="https://www.adegagsoficial.com.br">
 <meta property="og:type" content="website">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#0e0e0e;color:#fff;overflow-x:hidden}
+img{max-width:100%}
 
-/* ===== MODAL 18+ ===== */
-#ageModal{
-  position:fixed;inset:0;background:#000;
-  display:flex;align-items:center;justify-content:center;
-  z-index:9999
+/* LOGO */
+.logo{max-width:140px;margin-bottom:10px}
+
+/* MODAL */
+.modal{
+ position:fixed;inset:0;background:#000;
+ display:flex;align-items:center;justify-content:center;
+ z-index:9999
 }
-.age-box{
-  background:#111;padding:26px;border-radius:16px;
-  max-width:380px;text-align:center
+.modal-box{
+ background:#111;padding:25px;border-radius:14px;
+ max-width:360px;text-align:center
 }
-.age-box h2{color:#d4af37;margin-bottom:10px}
-.age-box p{color:#ccc;font-size:14px;margin:6px 0}
-.age-actions{display:flex;gap:12px;margin-top:18px}
-.age-actions button{
-  flex:1;padding:14px;border:none;border-radius:10px;
-  font-weight:bold;cursor:pointer
+.modal-box h2{color:#d4af37;margin-bottom:10px}
+.modal-box p{color:#ccc;font-size:14px;margin:6px 0}
+.modal-box button{
+ width:100%;padding:12px;margin-top:12px;
+ border:none;border-radius:8px;font-weight:bold;cursor:pointer
 }
 .btn-yes{background:#2ecc71;color:#000}
 .btn-no{background:#444;color:#fff}
 
-/* ===== HEADER ===== */
+/* HEADER */
 header{text-align:center;padding:20px;border-bottom:1px solid #222}
-header img{width:120px;margin-bottom:10px}
-header h1{color:#d4af37;font-size:26px}
-header p{color:#aaa;font-size:14px;line-height:1.4}
+header h1{color:#d4af37}
 
-/* ===== CONTAINER ===== */
+/* CONTAINER */
 .container{max-width:900px;margin:auto;padding:18px}
 
-/* ===== CATEGORIA ===== */
-.category{margin-top:32px}
-.category h2{
-  color:#d4af37;border-bottom:1px solid #222;
-  padding-bottom:6px;margin-bottom:14px
-}
+/* CATEGORIA */
+.category{margin-top:30px}
+.category h2{color:#d4af37;border-bottom:1px solid #222;margin-bottom:12px}
 
-/* ===== PRODUTO ===== */
+/* PRODUTO */
 .product{
-  background:#1a1a1a;padding:14px;border-radius:14px;
-  display:flex;align-items:center;gap:12px;
-  margin-bottom:12px
+ background:#1a1a1a;padding:12px;border-radius:12px;
+ display:flex;gap:12px;align-items:center;margin-bottom:10px
 }
 .product img{
-  width:60px;height:60px;border-radius:10px;
-  background:#000;object-fit:contain
+ width:60px;height:60px;border-radius:8px;
+ background:#000;object-fit:contain
 }
 .product-info{flex:1}
 .product-info strong{color:#2ecc71}
 .product button{
-  background:#2ecc71;border:none;
-  padding:8px 16px;border-radius:8px;
-  font-weight:bold;cursor:pointer
+ background:#2ecc71;border:none;padding:8px 14px;
+ border-radius:8px;font-weight:bold;cursor:pointer
 }
 
-/* ===== BOTÃO CARRINHO ===== */
+/* CARRINHO BOTÃO */
 .cart-btn{
-  position:fixed;bottom:20px;right:20px;
-  width:58px;height:58px;background:#2ecc71;
-  border-radius:50%;display:flex;
-  align-items:center;justify-content:center;
-  font-size:22px;cursor:pointer;z-index:1000
+ position:fixed;bottom:20px;right:20px;
+ width:60px;height:60px;background:#2ecc71;
+ border-radius:50%;display:flex;align-items:center;
+ justify-content:center;font-size:22px;z-index:1000
 }
 .cart-count{
-  position:absolute;top:-6px;right:-6px;
-  background:red;color:#fff;
-  width:20px;height:20px;
-  border-radius:50%;font-size:12px;
-  display:flex;align-items:center;justify-content:center
+ position:absolute;top:-6px;right:-6px;
+ background:red;width:20px;height:20px;
+ border-radius:50%;display:flex;
+ align-items:center;justify-content:center;font-size:12px
 }
 
-/* ===== CARRINHO ===== */
+/* OVERLAY */
 #overlay{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.85);
-  display:none;z-index:2000
+ position:fixed;inset:0;background:rgba(0,0,0,.85);
+ display:none;z-index:2000
 }
 #cart{
-  background:#111;height:100%;
-  width:100%;max-width:420px;
-  margin-left:auto;padding:22px;
-  overflow-y:auto
-}
-.cart-header{
-  display:flex;justify-content:space-between;align-items:center
+ background:#111;height:100%;width:100%;
+ max-width:420px;margin-left:auto;
+ padding:20px;overflow-y:auto
 }
 .cart-item{
-  display:flex;justify-content:space-between;
-  align-items:center;margin:10px 0
+ display:flex;justify-content:space-between;
+ align-items:center;margin:10px 0
 }
 .controls button{
-  background:#333;color:#fff;border:none;
-  padding:4px 8px;margin:0 4px;border-radius:4px
+ background:#333;color:#fff;border:none;
+ padding:4px 8px;border-radius:4px;margin:0 4px
 }
-.total{font-size:18px;margin:14px 0}
-.min{color:#d4af37;font-size:14px}
+.total{font-size:18px;margin-top:10px}
+.min{color:#d4af37;font-size:13px}
 
 input,select,textarea{
-  width:100%;margin:8px 0;padding:12px;
-  border-radius:8px;border:none
+ width:100%;margin-top:8px;padding:10px;
+ border-radius:8px;border:none
 }
 textarea{resize:none}
 
-.actions{display:flex;gap:12px;margin-top:14px}
+.actions{display:flex;gap:10px;margin-top:14px}
 .actions button{
-  flex:1;padding:14px;border:none;
-  border-radius:10px;font-weight:bold
+ flex:1;padding:14px;border:none;
+ border-radius:10px;font-weight:bold
 }
 .primary{background:#2ecc71;color:#000}
 .secondary{background:#444;color:#fff}
+
+/* PRINT */
+@media print{
+ body *{visibility:hidden}
+ #printArea,#printArea *{visibility:visible}
+ #printArea{width:58mm;font-size:12px}
+}
 </style>
 </head>
 
 <body>
 
-<!-- MODAL 18+ -->
-<div id="ageModal">
-  <div class="age-box">
-    <h2>🔞 Aviso de Maioridade</h2>
-    <p>Você é maior de 18 anos?</p>
-    <p><b>Horário:</b> 11:00 às 00:00<br>00:00 às 04:00</p>
-    <p><b>Endereço:</b><br>Rua Plácido Parreira Lima, 142</p>
-    <div class="age-actions">
-      <button class="btn-yes" onclick="setAge(true)">SIM</button>
-      <button class="btn-no" onclick="setAge(false)">NÃO</button>
-    </div>
-  </div>
+<!-- MAIORIDADE -->
+<div class="modal" id="ageModal">
+ <div class="modal-box">
+  <img src="logo.png" class="logo">
+  <h2>🔞 Aviso de Maioridade</h2>
+  <p>Você é maior de 18 anos?</p>
+  <p>Rua Plácido Parreira Lima, 142</p>
+  <p>11:00 às 04:00 • Todos os dias</p>
+  <button class="btn-yes" onclick="setAge(true)">SIM</button>
+  <button class="btn-no" onclick="alert('Acesso não permitido')">NÃO</button>
+ </div>
+</div>
+
+<!-- GPS -->
+<div class="modal" id="gpsModal" style="display:none">
+ <div class="modal-box">
+  <h2>📍 Localização</h2>
+  <p>Precisamos do GPS para calcular o frete.</p>
+  <button class="btn-yes" onclick="getLocation()">Permitir localização</button>
+ </div>
 </div>
 
 <header>
-  <img src="https://via.placeholder.com/300x300?text=LOGO" alt="Adega GS Oficial">
-  <h1>Adega GS Oficial</h1>
-  <p>📍 Rua Plácido Parreira Lima, 142</p>
-  <p>⏰ 11:00 às 04:00 • Todos os dias</p>
+ <img src="logo.png" class="logo">
+ <h1>Adega GS Oficial</h1>
+ <p>Rua Plácido Parreira Lima, 142 • 11h às 04h</p>
 </header>
 
 <div class="container" id="products"></div>
 
 <div class="cart-btn" onclick="openCart()">🛒
-  <div class="cart-count" id="cartCount">0</div>
+ <div class="cart-count" id="cartCount">0</div>
 </div>
 
 <div id="overlay">
-  <div id="cart">
-    <div class="cart-header">
-      <h2>Meu Carrinho</h2>
-      <span onclick="closeCart()" style="cursor:pointer">✖</span>
-    </div>
+ <div id="cart">
+  <h2>Meu Carrinho</h2>
+  <div id="cartItems"></div>
 
-    <div id="cartItems"></div>
+  <p>📍 Distância: <span id="distancia">0</span> km</p>
+  <p>🚚 Frete: R$ <span id="frete">0.00</span></p>
+  <div class="total">Total: R$ <span id="total">0.00</span></div>
+  <div class="min">Pedido mínimo: R$ 20,00</div>
 
-    <div class="total">Total: R$ <span id="total">0.00</span></div>
-    <div class="min">Pedido mínimo: R$ 20,00</div>
+  <select id="pagamento">
+   <option value="">Forma de pagamento *</option>
+   <option>PIX</option>
+   <option>Débito</option>
+   <option>Crédito</option>
+  </select>
 
-    <select id="pagamento">
-      <option value="">Forma de pagamento *</option>
-      <option>PIX</option>
-      <option>Débito</option>
-      <option>Crédito</option>
-    </select>
+  <input placeholder="Cupom (opcional)">
+  <p style="font-size:12px;color:#ccc;margin-top:8px">
+   O link de pagamento será enviado junto com o valor do frete.<br>
+   Após o pagamento confirmado, o pedido será preparado e enviado.
+  </p>
 
-    <input placeholder="Cupom (opcional)">
+  <input type="file" accept="image/*,.pdf">
 
-    <p style="font-size:13px;color:#ccc;margin:10px 0">
-      O link de pagamento será enviado junto com o valor do frete.<br>
-      Após o pagamento confirmado, o pedido será preparado e enviado.
-    </p>
+  <input id="nome" placeholder="Nome *">
+  <input id="endereco" placeholder="Endereço *">
+  <input id="numero" placeholder="Número *">
+  <input id="cpf" placeholder="CPF *">
+  <textarea id="obs" placeholder="Observações (opcional)"></textarea>
 
-    <input type="file" accept="image/*,.pdf">
-
-    <input id="nome" placeholder="Nome *">
-    <input id="endereco" placeholder="Endereço *">
-    <input id="numero" placeholder="Número da casa *">
-    <input id="cpf" placeholder="CPF *">
-    <textarea id="obs" placeholder="Observações (opcional)"></textarea>
-
-    <div class="actions">
-      <button class="secondary" onclick="closeCart()">Continuar comprando</button>
-      <button class="primary" onclick="finalizar()">Finalizar pedido</button>
-    </div>
+  <div class="actions">
+   <button class="secondary" onclick="closeCart()">Continuar comprando</button>
+   <button class="primary" onclick="finalizar()">Finalizar pedido</button>
   </div>
+ </div>
+</div>
+
+<!-- AREA IMPRESSÃO -->
+<div id="printArea">
+ <img src="logo.png" style="max-width:120px">
+ <p><b>ADEGA GS OFICIAL</b><br>
+ Rua Plácido Parreira Lima, 142<br>
+ 11h às 04h</p>
+ <hr>
+ <div id="printContent"></div>
 </div>
 
 <script>
-const WHATSAPP_NUMERO="5511981654980";
-let isAdult=false;
-let cart={};
+const WHATSAPP="5511981654980";
+const ADEGA_LAT=-23.5235, ADEGA_LNG=-46.4743;
+let isAdult=false, cart={}, distancia=0, frete=0;
 
-const categorias={
- "Fardos":[
-  ["Amstel c/12",34,true],["Heineken c/8",41.6,true],
-  ["Original c/8",32,true],["Skol Beats Senses c/8",48,true],
-  ["Skol Beats Red Mix c/8",48,true],["Skol Beats GT c/8",48,true],
-  ["Brahma Duplo Malte c/12",54,true],["Budweiser c/8",56,true],
-  ["Skol c/15",56,true]
- ],
- "Cervejas":[
-  ["Amstel 269ml",9,true],["Heineken 269ml",5.2,true],
-  ["Original 269ml",4,true],["Skol 269ml",4,true],
-  ["Brahma Duplo Malte 350ml",4.5,true],
-  ["Corona Long Neck 330ml",8,true],
-  ["Budweiser Long Neck 330ml",8,true],
-  ["Budweiser Lata 269ml",9,true],
-  ["Spaten 269ml",4.5,true],
-  ["Cerveja Império 210ml",6,true]
- ],
- "Energéticos":[
-  ["Red Bull 250ml",10,false],
-  ["Baly Melancia 2L",10.5,false],
-  ["Baly Tropical 2L",12.35,false],
-  ["Baly Maçã Verde 2L",12.35,false],
-  ["Baly Morango e Pêssego 2L",12.35,false],
-  ["Vibe 2L",11.6,false]
- ],
- "Refrigerantes":[
-  ["Guaraná Antártica 350ml",4,false],
-  ["Guaraná Antártica 2L",12,false],
-  ["Coca-Cola Lata 350ml",4,false],
-  ["Coca-Cola 2L",12.5,false]
- ],
- "Destilados":[
-  ["Whisky White Horse 1L",99.99,true],
-  ["Whisky Ballantines 1L",99.99,true],
-  ["Whisky Red Label 1L",99.99,true],
-  ["Gin Eternity 900ml",25.9,true],
-  ["Smirnoff 1L",42.5,true],
-  ["Velho Barreiro 910ml",18,true],
-  ["Pitu Lata 350ml",6,true],
-  ["Ice Smirnoff 275ml",8,true]
- ],
- "Gelo & Extras":[
-  ["Gelo sabor Melancia",4.5,false],
-  ["Gelo sabor Coco",4.5,false],
-  ["Carvão",18,false],
-  ["Saco de Gelo",18,false]
- ]
+const produtos={
+ "Cervejas":[["Amstel 269ml",9],["Heineken 269ml",5.2],["Skol 269ml",4]],
+ "Energéticos":[["Red Bull 250ml",10],["Vibe 2L",11.6]],
+ "Gelo & Extras":[["Carvão",18],["Saco de Gelo",18]]
 };
 
-function setAge(a){
- isAdult=a;
- document.getElementById("ageModal").style.display="none";
- renderProducts();
+function setAge(v){isAdult=v;document.getElementById("ageModal").style.display="none";document.getElementById("gpsModal").style.display="flex"}
+
+function getLocation(){
+ navigator.geolocation.getCurrentPosition(p=>{
+  const d=calcDist(ADEGA_LAT,ADEGA_LNG,p.coords.latitude,p.coords.longitude);
+  distancia=d.toFixed(1);
+  frete=calcFrete(d);
+  document.getElementById("gpsModal").style.display="none";
+  render();
+ });
 }
 
-function renderProducts(){
- const d=document.getElementById("products");
- d.innerHTML="";
- for(let c in categorias){
-  const items=categorias[c].filter(p=>isAdult||!p[2]);
-  if(!items.length)continue;
-  d.innerHTML+=`<div class="category"><h2>${c}</h2></div>`;
-  items.forEach(p=>{
-   d.innerHTML+=`
+function calcDist(a,b,c,d){
+ const R=6371, x=(c-a)*Math.PI/180, y=(d-b)*Math.PI/180;
+ return R*2*Math.atan2(Math.sqrt(Math.sin(x/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(y/2)**2),Math.sqrt(1));
+}
+
+function calcFrete(k){
+ if(k<=3)return 4.99;
+ if(k<=5)return 6.99;
+ if(k<=7)return 8.99;
+ if(k<=10)return 9.99;
+ if(k<=15)return 12.99;
+ if(k<=20)return 16.99;
+ if(k<=30)return 22.99;
+ if(k<=40)return 27.99;
+ if(k<=50)return 32.99;
+ return 0;
+}
+
+function render(){
+ let html="";
+ for(let c in produtos){
+  html+=`<div class="category"><h2>${c}</h2></div>`;
+  produtos[c].forEach(p=>{
+   html+=`
    <div class="product">
-    <img src="https://via.placeholder.com/60?text=IMG">
+    <img src="https://via.placeholder.com/60">
     <div class="product-info">
-      ${p[0]}<br><strong>R$ ${p[1].toFixed(2)}</strong>
+     <span>${p[0]}</span>
+     <strong>R$ ${p[1].toFixed(2)}</strong>
     </div>
     <button onclick="add('${p[0]}',${p[1]})">Adicionar</button>
    </div>`;
   });
  }
+ document.getElementById("products").innerHTML=html;
 }
 
 function add(n,p){
- cart[n]?cart[n].q++:cart[n]={preco:p,q:1};
+ cart[n]?cart[n].q++:cart[n]={p,q:1};
  updateCart();
 }
 
 function updateCart(){
- let t=0,c=0;
- cartItems.innerHTML="";
+ let t=0,c=0,html="";
  for(let k in cart){
-  let i=cart[k];
-  t+=i.preco*i.q;
-  c+=i.q;
-  cartItems.innerHTML+=`
-   <div class="cart-item">
-    <span>${k}</span>
-    <div class="controls">
-     <button onclick="chg('${k}',-1)">−</button>${i.q}
-     <button onclick="chg('${k}',1)">+</button>
-    </div>
-   </div>`;
+  t+=cart[k].p*cart[k].q;c+=cart[k].q;
+  html+=`<div class="cart-item">${k} x${cart[k].q}</div>`;
  }
- total.innerText=t.toFixed(2);
- cartCount.innerText=c;
+ document.getElementById("cartItems").innerHTML=html;
+ document.getElementById("cartCount").innerText=c;
+ document.getElementById("frete").innerText=frete.toFixed(2);
+ document.getElementById("distancia").innerText=distancia;
+ document.getElementById("total").innerText=(t+frete).toFixed(2);
 }
 
-function chg(k,v){
- cart[k].q+=v;
- if(cart[k].q<=0)delete cart[k];
- updateCart();
-}
-
-function openCart(){overlay.style.display="block"}
-function closeCart(){overlay.style.display="none"}
+function openCart(){document.getElementById("overlay").style.display="block"}
+function closeCart(){document.getElementById("overlay").style.display="none"}
 
 function finalizar(){
- if(parseFloat(total.innerText)<20)return alert("Pedido mínimo R$ 20,00");
+ if(parseFloat(total.innerText)<20)return alert("Pedido mínimo R$20");
  if(!pagamento.value||!nome.value||!endereco.value||!numero.value||!cpf.value)
   return alert("Preencha os campos obrigatórios");
-
- let msg="🛒 *PEDIDO – ADEGA GS OFICIAL*\n\n";
- for(let k in cart)msg+=`• ${k} x${cart[k].q}\n`;
- msg+=`\n💰 Total: R$ ${total.innerText}`;
- msg+=`\n💳 Pagamento: ${pagamento.value}`;
- msg+=`\n📍 Endereço: ${endereco.value}, ${numero.value}`;
- msg+=`\n👤 Nome: ${nome.value}`;
- msg+=`\nCPF: ${cpf.value}`;
- if(obs.value)msg+=`\nObs: ${obs.value}`;
- msg+=`\n\n📌 O link de pagamento será enviado junto com o valor do frete.`;
-
- window.open(`https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(msg)}`);
+ window.open(`https://wa.me/${WHATSAPP}`,"_blank");
+ document.getElementById("printContent").innerHTML=document.getElementById("cartItems").innerHTML;
+ window.print();
 }
 </script>
 
