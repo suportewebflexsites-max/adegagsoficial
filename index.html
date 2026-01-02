@@ -6,214 +6,224 @@
 <title>Adega GS Oficial</title>
 
 <style>
-body{margin:0;font-family:Arial;background:#0e0e0e;color:#fff}
-header{padding:15px;border-bottom:1px solid #222;display:flex;gap:12px;align-items:center}
-header img{width:60px;height:60px;border-radius:8px}
-header h1{margin:0;color:#d4af37;font-size:22px}
-header p{margin:4px 0 0;color:#aaa;font-size:13px}
-
-.banner{background:#2ecc71;color:#000;padding:10px;text-align:center;font-weight:bold}
-
-.container{max-width:900px;margin:auto;padding:16px}
-
-.category h2{color:#d4af37;border-bottom:1px solid #222;padding-bottom:6px;margin-top:30px}
-
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:#000;
+  color:#fff;
+}
+header{
+  padding:15px;
+  border-bottom:1px solid #222;
+}
+h1{color:#d4af37;margin:0}
+.badge{
+  background:#2ecc71;
+  padding:10px;
+  text-align:center;
+  font-weight:bold;
+}
+.section{padding:15px}
 .product{
-background:#1a1a1a;
-padding:14px;
-border-radius:12px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-margin-bottom:12px
+  background:#111;
+  border-radius:10px;
+  padding:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
 }
-.product img{width:60px;height:60px;border-radius:8px;background:#000}
-.product-info{flex:1;margin-left:10px}
-.product-info strong{color:#2ecc71}
-.product button{
-background:#2ecc71;
-border:none;
-padding:8px 14px;
-border-radius:8px;
-font-weight:bold
+button{
+  background:#2ecc71;
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  color:#000;
+  font-weight:bold;
 }
-
-.cart-btn{
-position:fixed;
-bottom:20px;
-right:20px;
-background:#2ecc71;
-width:58px;height:58px;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:22px;
-z-index:999
+#cart{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#2ecc71;
+  color:#000;
+  border-radius:50%;
+  width:60px;
+  height:60px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
 }
-.cart-count{
-position:absolute;
-top:-6px;right:-6px;
-background:red;color:#fff;
-width:20px;height:20px;
-border-radius:50%;
-font-size:12px;
-display:flex;
-align-items:center;
-justify-content:center
+#cartModal{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:none;
+  padding:20px;
+  overflow:auto;
 }
-
-#overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;z-index:2000}
-#cart{background:#111;width:100%;max-width:420px;height:100%;margin-left:auto;padding:20px;overflow-y:auto}
-
-.progress-box{margin:10px 0}
-.progress-text{font-size:13px;color:#f1c40f}
-.progress-bar{height:8px;background:#333;border-radius:6px;overflow:hidden;margin-top:4px}
-.progress-fill{height:100%;background:#2ecc71;width:0%}
-
-input,select,textarea{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:none}
-button{cursor:pointer}
+input,select{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border-radius:8px;
+  border:none;
+}
+.progress{
+  height:10px;
+  background:#333;
+  border-radius:10px;
+  overflow:hidden;
+}
+.progress div{
+  height:100%;
+  background:#2ecc71;
+}
 </style>
 </head>
 
 <body>
 
-<header>
-<img src="logo.png">
-<div>
-<h1>Adega GS Oficial</h1>
-<p>Rua Plácido Parreira Lima, 142<br>11:00 às 00:00 • 00:00 às 04:00</p>
+<!-- 🔞 MAIORIDADE -->
+<div id="ageModal" style="position:fixed;inset:0;background:#000;z-index:9999;display:flex;align-items:center;justify-content:center">
+  <div style="background:#111;padding:20px;border-radius:10px;text-align:center">
+    <h2>🔞 Aviso Legal</h2>
+    <p>Você é maior de 18 anos?</p>
+    <button onclick="confirmAge(true)">SIM</button>
+    <button onclick="confirmAge(false)">NÃO</button>
+  </div>
 </div>
+
+<header>
+  <h1>Adega GS Oficial</h1>
+  <small>Rua Plácido Parreira Lima, 142<br>11:00 às 00:00 · 00:00 às 04:00</small>
 </header>
 
-<div class="banner">🎁 Frete GRÁTIS para pedidos acima de R$ 120,00</div>
+<div class="badge">🎁 Frete GRÁTIS para pedidos acima de R$ 120,00</div>
 
-<div class="container" id="products"></div>
+<div class="section" id="products"></div>
 
-<div class="cart-btn" onclick="openCart()">🛒
-<div class="cart-count" id="cartCount">0</div>
-</div>
+<div id="cart" onclick="openCart()">🛒</div>
 
-<div id="overlay">
-<div id="cart">
-<h2>Meu Carrinho</h2>
-<div id="cartItems"></div>
+<div id="cartModal">
+  <h2>Meu Carrinho</h2>
+  <div id="cartItems"></div>
 
-<div class="progress-box">
-<div class="progress-text" id="freeText"></div>
-<div class="progress-bar"><div class="progress-fill" id="freeBar"></div></div>
-</div>
+  <p><b>Total:</b> R$ <span id="total">0.00</span></p>
 
-<p id="distanceInfo"></p>
-<p id="freteInfo"></p>
+  <div id="freteInfo"></div>
+  <div class="progress"><div id="freteBar"></div></div>
 
-<h3>Total: R$ <span id="total">0.00</span></h3>
-<p style="color:#d4af37">Pedido mínimo: R$ 20,00</p>
+  <p>Pedido mínimo: R$ 20,00</p>
 
-<select id="pagamento">
-<option value="">Forma de pagamento *</option>
-<option>PIX</option>
-<option>Crédito</option>
-<option>Débito</option>
-</select>
+  <select id="pagamento">
+    <option value="">Forma de pagamento</option>
+    <option value="PIX">PIX</option>
+    <option value="CREDITO">Crédito</option>
+    <option value="DEBITO">Débito</option>
+  </select>
 
-<input placeholder="Cupom (opcional)">
-<input type="file">
-<input placeholder="Nome *">
-<input placeholder="Endereço *">
-<input placeholder="Número *">
-<input placeholder="CPF *">
-<textarea placeholder="Observações (opcional)"></textarea>
+  <input placeholder="Nome">
+  <input placeholder="Endereço">
+  <input placeholder="Número">
+  <input placeholder="CPF">
+  <textarea placeholder="Observações"></textarea>
 
-<button style="width:100%;background:#2ecc71;padding:14px;border:none;border-radius:10px;margin-top:10px" onclick="finalizar()">Finalizar pedido</button>
-<button style="width:100%;background:#444;color:#fff;padding:14px;border:none;border-radius:10px;margin-top:8px" onclick="closeCart()">Continuar comprando</button>
-</div>
+  <button onclick="finalizar()">Finalizar pedido</button>
+  <button onclick="closeCart()">Continuar comprando</button>
 </div>
 
 <script>
-const WHATSAPP="5511981654980";
-const FREE_LIMIT=120;
-const storeLat=-23.6687;
-const storeLng=-46.4613;
+const PIX_CHAVE = "61.888.559/0001-94";
+const WHATS = "5511981654980";
+const FRETE_GRATIS = 120;
+const ADEGA = {lat:-23.55052, lon:-46.633308};
 
-let cart={},userLat=null,userLng=null;
+let cart = {};
+let userKM = 0;
 
-const produtos={
-"Cervejas":[
-["Amstel 269ml",9],["Heineken 269ml",5.2],["Original 269ml",4],["Skol 269ml",4],
-["Brahma Duplo Malte 350ml",4.5],["Corona Long Neck",8],["Budweiser Long Neck",8],
-["Budweiser Lata 269ml",9],["Spaten 269ml",4.5],["Cerveja Império 210ml",6]
-],
-"Fardos":[
-["Amstel c/12",34],["Heineken c/8",41.6],["Original c/8",32],
-["Skol Beats Senses c/8",48],["Skol Beats Red Mix c/8",48],
-["Skol Beats GT c/8",48],["Brahma Duplo Malte c/12",54],
-["Budweiser c/8",56],["Skol c/15",56]
-],
-"Energéticos":[
-["Red Bull 250ml",10],["Baly Melancia 2L",10.5],["Baly Tropical 2L",12.35],
-["Baly Maçã Verde 2L",12.35],["Baly Morango e Pêssego 2L",12.35],["Vibe 2L",11.6]
-],
-"Destilados":[
-["Whisky White Horse 1L",99.99],["Whisky Ballantines 1L",99.99],
-["Whisky Red Label 1L",99.99],["Gin Eternity 900ml",25.9],
-["Smirnoff 1L",42.5],["Velho Barreiro 910ml",18],["Ice Smirnoff 275ml",8]
-],
-"Extras":[
-["Gelo sabor Melancia",4.5],["Gelo sabor Coco",4.5],["Carvão",18],["Saco de Gelo",18]
-]
-};
+const produtos = [
+["Amstel 269ml",9],["Heineken 269ml",5.2],["Original 269ml",4],
+["Skol 269ml",4],["Red Bull 250ml",10],["Carvão",18],
+["Saco de Gelo",18],["Whisky Red Label 1L",99.99],
+["Whisky Ballantines 1L",99.99],["Smirnoff 1L",42.5]
+];
 
-function render(){
-const div=document.getElementById("products");
-for(let c in produtos){
-div.innerHTML+=`<div class="category"><h2>${c}</h2></div>`;
-produtos[c].forEach(p=>{
-div.innerHTML+=`
-<div class="product">
-<img src="https://via.placeholder.com/60">
-<div class="product-info">
-<span>${p[0]}</span><br>
-<strong>R$ ${p[1].toFixed(2)}</strong>
-</div>
-<button onclick="add('${p[0]}',${p[1]})">Adicionar</button>
-</div>`;
-});
+function renderProducts(){
+  const p = document.getElementById("products");
+  produtos.forEach(([n,v])=>{
+    p.innerHTML += `
+      <div class="product">
+        <div>${n}<br><small>R$ ${v.toFixed(2)}</small></div>
+        <button onclick="add('${n}',${v})">Adicionar</button>
+      </div>`;
+  });
 }
-}
-render();
 
-function add(n,p){cart[n]?cart[n].q++:cart[n]={p,q:1};update()}
-function update(){
-let t=0,c=0,html="";
-for(let k in cart){t+=cart[k].p*cart[k].q;c+=cart[k].q;
-html+=`${k} x${cart[k].q}<br>`;
+function add(n,v){
+  cart[n]=(cart[n]||0)+v;
+  updateCart();
 }
-document.getElementById("cartItems").innerHTML=html;
-document.getElementById("total").innerText=t.toFixed(2);
-document.getElementById("cartCount").innerText=c;
-updateFree(t);
-}
-function updateFree(total){
-let falta=FREE_LIMIT-total;
-let pct=Math.min(100,(total/FREE_LIMIT)*100);
-document.getElementById("freeBar").style.width=pct+"%";
-document.getElementById("freeText").innerText=
-falta>0?`Faltam R$ ${falta.toFixed(2)} para frete grátis`:"🎉 Frete grátis garantido!";
-}
-function openCart(){document.getElementById("overlay").style.display="block"}
-function closeCart(){document.getElementById("overlay").style.display="none"}
 
-navigator.geolocation.getCurrentPosition(p=>{
-userLat=p.coords.latitude;
-userLng=p.coords.longitude;
-});
+function updateCart(){
+  let t=0;
+  const ci=document.getElementById("cartItems");
+  ci.innerHTML="";
+  for(let i in cart){t+=cart[i];ci.innerHTML+=`<p>${i}</p>`}
+  document.getElementById("total").innerText=t.toFixed(2);
+  updateFrete(t);
+}
+
+function updateFrete(total){
+  let bar=document.getElementById("freteBar");
+  let info=document.getElementById("freteInfo");
+  if(total>=FRETE_GRATIS){
+    bar.style.width="100%";
+    info.innerHTML="🎉 Frete grátis aplicado";
+  }else{
+    let f=(FRETE_GRATIS-total).toFixed(2);
+    bar.style.width=(total/FRETE_GRATIS*100)+"%";
+    info.innerHTML=`🚚 Faltam R$ ${f} para frete grátis`;
+  }
+}
+
+function openCart(){document.getElementById("cartModal").style.display="block"}
+function closeCart(){document.getElementById("cartModal").style.display="none"}
+
+function confirmAge(ok){
+  if(!ok){alert("Acesso negado");location.reload()}
+  document.getElementById("ageModal").style.display="none";
+  getGPS();
+}
+
+function getGPS(){
+  navigator.geolocation.getCurrentPosition(pos=>{
+    userKM = calcKm(pos.coords.latitude,pos.coords.longitude);
+  },()=>alert("GPS obrigatório"));
+}
+
+function calcKm(lat,lon){
+  const R=6371;
+  const dLat=(lat-ADEGA.lat)*Math.PI/180;
+  const dLon=(lon-ADEGA.lon)*Math.PI/180;
+  const a=Math.sin(dLat/2)**2+
+  Math.cos(ADEGA.lat*Math.PI/180)*
+  Math.cos(lat*Math.PI/180)*
+  Math.sin(dLon/2)**2;
+  return R*(2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a)));
+}
 
 function finalizar(){
-if(!userLat) return alert("Ative o GPS para calcular o frete");
-window.open(`https://wa.me/${WHATSAPP}`,"_blank");
+  const pag=document.getElementById("pagamento").value;
+  if(!pag){alert("Escolha pagamento");return}
+  let msg=`Pedido Adega GS\nTotal R$ ${document.getElementById("total").innerText}\n`;
+  if(pag==="PIX") msg+=`PIX: ${PIX_CHAVE}`;
+  else msg+="Pagamento via link (Crédito/Débito)";
+  window.open(`https://wa.me/${WHATS}?text=${encodeURIComponent(msg)}`);
 }
-</script>
 
+renderProducts();
+</script>
 </body>
 </html>
