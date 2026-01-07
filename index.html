@@ -1,10 +1,109 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Adega GS Oficial</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/estilo.css">
+<meta charset="UTF-8">
+<title>Adega GS Oficial</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#0f0f0f;
+  color:#fff;
+}
+header{
+  background:#000;
+  padding:20px;
+  text-align:center;
+}
+header h1{margin:0;font-size:30px;color:#ffd700;}
+header p{color:#bbb;margin-top:5px;}
+
+.container{padding:20px;}
+
+.category{margin-top:30px;}
+.category h2{
+  border-bottom:2px solid #25d366;
+  padding-bottom:5px;
+  color:#ffd700;
+}
+
+.product{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:12px 0;
+  border-bottom:1px solid #333;
+  padding-bottom:8px;
+}
+
+.product span{
+  display:block;
+}
+
+.preco{
+  color:#00ff7f;
+  font-weight:bold;
+}
+
+button{
+  background:#25d366;
+  border:none;
+  color:#000;
+  padding:6px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+textarea{
+  width:100%;
+  margin-top:15px;
+  padding:10px;
+  border-radius:8px;
+}
+
+.whatsapp{
+  margin-top:25px;
+  background:#25d366;
+  padding:15px;
+  text-align:center;
+  border-radius:12px;
+  font-size:18px;
+}
+.whatsapp a{
+  text-decoration:none;
+  color:#000;
+  font-weight:bold;
+}
+</style>
+
+<script>
+let pedido = [];
+
+function addProduto(nome, preco){
+  pedido.push(`${nome} - R$ ${preco}`);
+  alert(nome + " adicionado ao pedido");
+}
+
+function enviarPedido(){
+  if(pedido.length === 0){
+    alert("Adicione pelo menos um produto");
+    return;
+  }
+
+  let texto = "🛒 *Pedido Adega GS Oficial*%0A%0A";
+  pedido.forEach(p => texto += "- " + p + "%0A");
+
+  const obs = document.getElementById("obs").value;
+  if(obs){
+    texto += "%0A📝 Observações:%0A" + obs;
+  }
+
+  window.open("https://wa.me/5511981654980?text=" + texto);
+}
+</script>
 </head>
 
 <body>
@@ -12,19 +111,122 @@
 <header>
   <h1>🍺 Adega GS Oficial</h1>
   <p>Conveniência • Delivery rápido</p>
-  <div id="icone-carrinho">
-    🛒 <span id="contador-carrinho">0</span>
-  </div>
 </header>
 
-<main class="container">
-  <h2 class="categoria-titulo">Cervejas</h2>
-  <div id="lista-produtos"></div>
-</main>
+<div class="container">
 
-<script src="js/produtos.js"></script>
-<script src="js/carrinho.js"></script>
-<script src="js/checkout.js"></script>
+<!-- CERVEJAS -->
+<div class="category">
+<h2>🍺 Cervejas</h2>
+
+<div class="product">
+  <span>Skol 269ml <span class="preco">R$ 4,00</span></span>
+  <button onclick="addProduto('Skol 269ml','4,00')">Adicionar</button>
+</div>
+
+<div class="product">
+  <span>Original 269ml <span class="preco">R$ 4,00</span></span>
+  <button onclick="addProduto('Original 269ml','4,00')">Adicionar</button>
+</div>
+
+<div class="product">
+  <span>Heineken 269ml <span class="preco">R$ 5,20</span></span>
+  <button onclick="addProduto('Heineken 269ml','5,20')">Adicionar</button>
+</div>
+
+<div class="product">
+  <span>Amstel 269ml <span class="preco">R$ 9,00</span></span>
+  <button onclick="addProduto('Amstel 269ml','9,00')">Adicionar</button>
+</div>
+
+<div class="product">
+  <span>Brahma Lata <span class="preco">R$ 5,00</span></span>
+  <button onclick="addProduto('Brahma Lata','5,00')">Adicionar</button>
+</div>
+
+<div class="product">
+  <span>Budweiser Lata <span class="preco">R$ 5,00</span></span>
+  <button onclick="addProduto('Budweiser Lata','5,00')">Adicionar</button>
+</div>
+
+<div class="product">
+  <span>Budweiser Long Neck <span class="preco">R$ 10,00</span></span>
+  <button onclick="addProduto('Budweiser Long Neck','10,00')">Adicionar</button>
+</div>
+
+<div class="product">
+  <span>Heineken Long Neck <span class="preco">R$ 9,00</span></span>
+  <button onclick="addProduto('Heineken Long Neck','9,00')">Adicionar</button>
+</div>
+
+<div class="product">
+  <span>Corona Long Neck <span class="preco">R$ 10,00</span></span>
+  <button onclick="addProduto('Corona Long Neck','10,00')">Adicionar</button>
+</div>
+</div>
+
+<!-- ENERGÉTICOS -->
+<div class="category">
+<h2>⚡ Energéticos</h2>
+
+<div class="product">
+  <span>Red Bull 250ml <span class="preco">R$ 10,00</span></span>
+  <button onclick="addProduto('Red Bull 250ml','10,00')">Adicionar</button>
+</div>
+
+<div class="product">
+  <span>Baly Energético <span class="preco">R$ 14,00</span></span>
+  <button onclick="addProduto('Baly Energético','14,00')">Adicionar</button>
+</div>
+
+<div class="product">
+  <span>Vibe Energético <span class="preco">R$ 12,50</span></span>
+  <button onclick="addProduto('Vibe Energético','12,50')">Adicionar</button>
+</div>
+</div>
+
+<!-- DESTILADOS -->
+<div class="category">
+<h2>🥃 Destilados</h2>
+
+<div class="product">
+  <span>Gin <span class="preco">R$ 26,00</span></span>
+  <button onclick="addProduto('Gin','26,00')">Adicionar</button>
+</div>
+
+<div class="product">
+  <span>Velho Barreiro <span class="preco">R$ 18,50</span></span>
+  <button onclick="addProduto('Velho Barreiro','18,50')">Adicionar</button>
+</div>
+
+<div class="product">
+  <span>Pitu Lata <span class="preco">R$ 7,00</span></span>
+  <button onclick="addProduto('Pitu Lata','7,00')">Adicionar</button>
+</div>
+</div>
+
+<!-- EXTRAS -->
+<div class="category">
+<h2>❄️ Gelo & Extras</h2>
+
+<div class="product">
+  <span>Carvão <span class="preco">R$ 15,00</span></span>
+  <button onclick="addProduto('Carvão','15,00')">Adicionar</button>
+</div>
+
+<div class="product">
+  <span>Saco de Gelo 5kg <span class="preco">R$ 17,00</span></span>
+  <button onclick="addProduto('Saco de Gelo 5kg','17,00')">Adicionar</button>
+</div>
+</div>
+
+<textarea id="obs" placeholder="Observações do pedido (opcional)"></textarea>
+
+<div class="whatsapp">
+  <a href="#" onclick="enviarPedido()">📲 FINALIZAR PEDIDO NO WHATSAPP</a>
+</div>
+
+</div>
 
 </body>
 </html>
