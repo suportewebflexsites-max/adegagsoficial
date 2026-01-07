@@ -27,10 +27,6 @@ const produtos = [
     preco: 9.00,
     categoria: "Cervejas",
     imagem: "https://via.placeholder.com/80"
-    <script src="js/produtos.js"></script>
-<script src="js/carrinho.js"></script>
-<script src="js/checkout.js"></script>
-</body>
 
   }
 ];
