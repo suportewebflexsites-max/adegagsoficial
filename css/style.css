@@ -1,1 +1,10 @@
+.btn-adicionar {
+  background: #00c853;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
 
