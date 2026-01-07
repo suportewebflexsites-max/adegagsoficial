@@ -1,146 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Adega.GS.Oficial</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<style>
-body{
-  margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  background:#0f0f0f;
-  color:#fff;
-}
-header{
-  background:#000;
-  padding:20px;
-  text-align:center;
-}
-header h1{margin:0;font-size:30px;}
-header p{color:#bbb;margin-top:5px;}
-
-.container{padding:20px;}
-
-.category{margin-top:30px;}
-.category h2{
-  border-bottom:2px solid #25d366;
-  padding-bottom:5px;
-}
-
-.product{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:12px 0;
-  border-bottom:1px solid #333;
-  padding-bottom:8px;
-}
-
-button{
-  background:#25d366;
-  border:none;
-  color:#000;
-  padding:6px 10px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-textarea{
-  width:100%;
-  margin-top:15px;
-  padding:10px;
-  border-radius:8px;
-}
-
-.whatsapp{
-  margin-top:25px;
-  background:#25d366;
-  padding:15px;
-  text-align:center;
-  border-radius:12px;
-  font-size:20px;
-}
-.whatsapp a{
-  text-decoration:none;
-  color:#000;
-  font-weight:bold;
-}
-</style>
-
-<script>
-let pedido = [];
-
-function addProduto(nome, preco){
-  pedido.push(`${nome} - R$ ${preco}`);
-  alert(nome + " adicionado ao pedido");
-}
-
-function enviarPedido(){
-  let texto = "🛒 *Pedido Adega.GS.Oficial*%0A%0A";
-  pedido.forEach(p => texto += "- " + p + "%0A");
-  texto += "%0A📝 Observações:%0A" + document.getElementById("obs").value;
-  window.open("https://wa.me/5511981654980?text=" + texto);
-}
-</script>
+  <meta charset="UTF-8">
+  <title>Adega GS Oficial</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/estilo.css">
 </head>
 
 <body>
 
 <header>
-  <h1>🍺 Adega.GS.Oficial</h1>
+  <h1>🍺 Adega GS Oficial</h1>
   <p>Conveniência • Delivery rápido</p>
+  <div id="icone-carrinho">
+    🛒 <span id="contador-carrinho">0</span>
+  </div>
 </header>
 
-<div class="container">
+<main class="container">
+  <h2 class="categoria-titulo">Cervejas</h2>
+  <div id="lista-produtos"></div>
+</main>
 
-<div class="category">
-<h2>🍺 Cervejas</h2>
-
-<div class="product"><span>Skol Lata</span><button onclick="addProduto('Skol Lata','5,00')">Adicionar</button></div>
-<div class="product"><span>Brahma Lata</span><button onclick="addProduto('Brahma Lata','5,00')">Adicionar</button></div>
-<div class="product"><span>Heineken Lata</span><button onclick="addProduto('Heineken Lata','5,50')">Adicionar</button></div>
-<div class="product"><span>Heineken Long Neck</span><button onclick="addProduto('Heineken Long Neck','9,00')">Adicionar</button></div>
-<div class="product"><span>Corona Long Neck</span><button onclick="addProduto('Corona Long Neck','10,00')">Adicionar</button></div>
-<div class="product"><span>Budweiser Long Neck</span><button onclick="addProduto('Budweiser Long Neck','10,00')">Adicionar</button></div>
-<div class="product"><span>Budweiser Lata</span><button onclick="addProduto('Budweiser Lata','5,00')">Adicionar</button></div>
-
-</div>
-
-<div class="category">
-<h2>⚡ Energéticos</h2>
-
-<div class="product"><span>Red Bull</span><button onclick="addProduto('Red Bull','11,00')">Adicionar</button></div>
-<div class="product"><span>Baly Energético</span><button onclick="addProduto('Baly Energético','14,00')">Adicionar</button></div>
-<div class="product"><span>Vibe Energético</span><button onclick="addProduto('Vibe Energético','12,50')">Adicionar</button></div>
-
-</div>
-
-<div class="category">
-<h2>🥃 Destilados</h2>
-
-<div class="product"><span>Gin</span><button onclick="addProduto('Gin','26,00')">Adicionar</button></div>
-<div class="product"><span>Velho Barreiro</span><button onclick="addProduto('Velho Barreiro','18,50')">Adicionar</button></div>
-<div class="product"><span>Pitu Lata</span><button onclick="addProduto('Pitu Lata','7,00')">Adicionar</button></div>
-
-</div>
-
-<div class="category">
-<h2>❄️ Gelo & Extras</h2>
-
-<div class="product"><span>Carvão</span><button onclick="addProduto('Carvão','15,00')">Adicionar</button></div>
-<div class="product"><span>Saco de Gelo 5kg</span><button onclick="addProduto('Saco de Gelo 5kg','17,00')">Adicionar</button></div>
-
-</div>
-
-<textarea id="obs" placeholder="Observações do pedido (opcional)"></textarea>
-
-<div class="whatsapp">
-<a href="#" onclick="enviarPedido()">📲 FINALIZAR PEDIDO NO WHATSAPP</a>
-</div>
-
-</div>
+<script src="js/produtos.js"></script>
+<script src="js/carrinho.js"></script>
+<script src="js/checkout.js"></script>
 
 </body>
 </html>
