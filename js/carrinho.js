@@ -1,7 +1,10 @@
-const listaProdutos = document.getElementById("lista-produtos");
+document.addEventListener("DOMContentLoaded", () => {
+  const listaProdutos = document.getElementById("lista-produtos");
 
-function carregarProdutos() {
-  listaProdutos.innerHTML = "";
+  if (!listaProdutos) {
+    console.error("Div lista-produtos não encontrada");
+    return;
+  }
 
   produtos.forEach(produto => {
     const card = document.createElement("div");
@@ -20,20 +23,9 @@ function carregarProdutos() {
         <strong>${produto.nome}</strong><br>
         <span style="color:#00ff7f">R$ ${produto.preco.toFixed(2)}</span>
       </div>
-      <button style="
-        background:#00c853;
-        border:none;
-        padding:10px 15px;
-        border-radius:8px;
-        cursor:pointer;
-      ">
-        Adicionar
-      </button>
+      <button class="btn-adicionar">Adicionar</button>
     `;
 
     listaProdutos.appendChild(card);
   });
-}
-
-document.addEventListener("DOMContentLoaded", carregarProdutos);
-
+});
