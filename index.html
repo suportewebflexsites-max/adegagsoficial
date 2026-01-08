@@ -49,8 +49,9 @@ input,select,textarea{
 width:100%;padding:10px;margin:6px 0;border-radius:6px;border:none
 }
 
-.total{font-size:18px;margin-top:10px}
+.total{font-size:16px;margin-top:10px;font-weight:bold}
 .close{background:#444;margin-bottom:10px}
+.freteBox{margin-top:10px;color:#25d366}
 </style>
 </head>
 
@@ -64,47 +65,49 @@ width:100%;padding:10px;margin:6px 0;border-radius:6px;border:none
 <!-- PRODUTOS -->
 <div class="section">
 <h2>🍺 Cervejas</h2>
-<div class="item"><span>Skol 269ml R$4,00</span><button onclick="add('Skol 269ml',4)">Adicionar</button></div>
-<div class="item"><span>Original 269ml R$4,00</span><button onclick="add('Original 269ml',4)">Adicionar</button></div>
-<div class="item"><span>Heineken 269ml R$5,20</span><button onclick="add('Heineken 269ml',5.2)">Adicionar</button></div>
-<div class="item"><span>Amstel 269ml R$9,00</span><button onclick="add('Amstel 269ml',9)">Adicionar</button></div>
+<div class="item"><span>Skol 269ml</span><button onclick="add('Skol 269ml',4)">R$4,00</button></div>
+<div class="item"><span>Original 269ml</span><button onclick="add('Original 269ml',4)">R$4,00</button></div>
+<div class="item"><span>Heineken 269ml</span><button onclick="add('Heineken 269ml',5.2)">R$5,20</button></div>
+<div class="item"><span>Amstel 269ml</span><button onclick="add('Amstel 269ml',9)">R$9,00</button></div>
 </div>
 
 <div class="section">
 <h2>🍟 Porções</h2>
-<div class="item"><span>Porção de Calabresa R$25,00</span><button onclick="add('Porção de Calabresa',25)">Adicionar</button></div>
-<div class="item"><span>Batata Frita R$22,00</span><button onclick="add('Batata Frita',22)">Adicionar</button></div>
+<div class="item"><span>Porção de Calabresa</span><button onclick="add('Porção de Calabresa',25)">R$25,00</button></div>
+<div class="item"><span>Batata Frita</span><button onclick="add('Batata Frita',22)">R$22,00</button></div>
 </div>
 
 <div class="section">
 <h2>🥟 Pastel</h2>
-<div class="item"><span>Pastel de Carne R$8,00</span><button onclick="add('Pastel de Carne',8)">Adicionar</button></div>
-<div class="item"><span>Pastel de Pizza R$8,00</span><button onclick="add('Pastel de Pizza',8)">Adicionar</button></div>
-<div class="item"><span>Pastel Frango com Catupiry R$9,00</span><button onclick="add('Pastel Frango com Catupiry',9)">Adicionar</button></div>
+<div class="item"><span>Pastel de Carne</span><button onclick="add('Pastel de Carne',8)">R$8,00</button></div>
+<div class="item"><span>Pastel de Pizza</span><button onclick="add('Pastel de Pizza',8)">R$8,00</button></div>
+<div class="item"><span>Pastel Frango c/ Catupiry</span><button onclick="add('Pastel Frango com Catupiry',9)">R$9,00</button></div>
 </div>
 
 <div class="section">
 <h2>🍫 Chocolates</h2>
-<div class="item"><span>Bis R$4,50</span><button onclick="add('Bis',4.5)">Adicionar</button></div>
+<div class="item"><span>Bis</span><button onclick="add('Bis',4.5)">R$4,50</button></div>
 </div>
 
 <div class="section">
 <h2>🥨 Salgadinhos</h2>
-<div class="item"><span>Torcidas Carne R$4,00</span><button onclick="add('Torcidas Carne',4)">Adicionar</button></div>
-<div class="item"><span>Torcidas Churrasco R$4,00</span><button onclick="add('Torcidas Churrasco',4)">Adicionar</button></div>
-<div class="item"><span>Torcidas Bacon R$4,00</span><button onclick="add('Torcidas Bacon',4)">Adicionar</button></div>
-<div class="item"><span>Torcidas Vinagrete R$4,00</span><button onclick="add('Torcidas Vinagrete',4)">Adicionar</button></div>
+<div class="item"><span>Torcidas Carne</span><button onclick="add('Torcidas Carne',4)">R$4,00</button></div>
+<div class="item"><span>Torcidas Churrasco</span><button onclick="add('Torcidas Churrasco',4)">R$4,00</button></div>
+<div class="item"><span>Torcidas Bacon</span><button onclick="add('Torcidas Bacon',4)">R$4,00</button></div>
+<div class="item"><span>Torcidas Vinagrete</span><button onclick="add('Torcidas Vinagrete',4)">R$4,00</button></div>
 </div>
 
-<!-- CARRINHO -->
+<!-- BOTÃO CARRINHO -->
 <div class="cart-btn" onclick="openCart()">🛒<span class="badge" id="qtd">0</span></div>
 
+<!-- CARRINHO -->
 <div id="cartBox">
 <button class="close" onclick="closeCart()">⬅ Voltar</button>
 
 <h2>🛒 Carrinho</h2>
 <div id="lista"></div>
-<p class="total" id="total"></p>
+<div class="total" id="total"></div>
+<div class="freteBox" id="freteBox"></div>
 
 <h2>📋 Dados do Cliente</h2>
 <input id="nome" placeholder="Nome *">
@@ -146,8 +149,7 @@ if(c.length < 8){
 frete=null;distancia=null;render();return;
 }
 
-// simulação de distância baseada no CEP
-distancia = (parseInt(c.substring(5,8)) % 15) + 1;
+distancia = (parseInt(c.slice(-3)) % 15) + 1;
 
 if(distancia <= 3) frete = 5;
 else if(distancia <= 6) frete = 8;
@@ -161,44 +163,43 @@ function render(){
 let lista=document.getElementById("lista");
 let subtotal=0;
 lista.innerHTML="";
+
 cart.forEach(i=>{
-lista.innerHTML+=`<p>${i.nome} - R$ ${i.preco.toFixed(2)}</p>`;
+lista.innerHTML+=`<p>• ${i.nome} - R$ ${i.preco.toFixed(2)}</p>`;
 subtotal+=i.preco;
 });
 
-let freteTxt="Frete a calcular";
-if(frete!==null){
-if(subtotal >= 120){
-frete = 0;
-freteTxt = "Frete grátis";
-}else{
-freteTxt = `Frete: R$ ${frete.toFixed(2)} (${distancia} km)`;
-}
-}
-
+let total = subtotal + (frete||0);
 document.getElementById("total").innerText =
-`Subtotal: R$ ${subtotal.toFixed(2)} | ${freteTxt} | Total: R$ ${(subtotal+(frete||0)).toFixed(2)}`;
+`Subtotal: R$ ${subtotal.toFixed(2)} | Total: R$ ${total.toFixed(2)}`;
+
+let freteTexto="🚚 Frete será calculado após informar o CEP";
+if(frete!==null){
+freteTexto =
+`🚚 Frete: R$ ${frete.toFixed(2)} (${distancia} km)`;
+}
+document.getElementById("freteBox").innerText = freteTexto;
 }
 
 function finalizar(){
 if(!nome.value || !endereco.value || !cep.value || !pagamento.value){
-alert("Preencha Nome, Endereço, CEP e Forma de pagamento");
+alert("Preencha todos os campos obrigatórios");
 return;
 }
-if(frete === null){
+if(frete===null){
 alert("Informe o CEP para calcular o frete");
 return;
 }
 
-let msg =
-`🛒 *PEDIDO – ADEGA GS OFICIAL*%0A%0A`;
+let subtotal = cart.reduce((s,i)=>s+i.preco,0);
+let total = subtotal + frete;
 
-cart.forEach(i=>msg+=`• ${i.nome}%0A`);
-
-msg +=
-`%0A📦 *Entrega:* ${distancia} km%0A`+
-`💰 *Frete:* ${frete===0?'GRÁTIS':'R$ '+frete.toFixed(2)}%0A`+
-`*Total:* R$ ${(cart.reduce((s,i)=>s+i.preco,0)+(frete||0)).toFixed(2)}%0A%0A`+
+let msg = `🛒 *PEDIDO – ADEGA GS OFICIAL*%0A%0A`;
+cart.forEach(i=>msg+=`• ${i.nome} - R$ ${i.preco.toFixed(2)}%0A`);
+msg+=
+`%0A📦 Subtotal: R$ ${subtotal.toFixed(2)}%0A`+
+`🚚 Frete: R$ ${frete.toFixed(2)} (${distancia} km)%0A`+
+`💰 *Total:* R$ ${total.toFixed(2)}%0A%0A`+
 `👤 ${nome.value}%0A📍 ${endereco.value}%0A`+
 `💳 ${pagamento.value}%0A`+
 `📝 ${obs.value||'-'}`;
