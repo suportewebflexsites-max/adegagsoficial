@@ -89,7 +89,21 @@ function enviarPedido(){
     return;
   }
 
-  let texto = "🛒 *Pedido Adega GS Oficial*%0A%0A";
+  let texto = "🛒<a href="checkout.html" style="
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25d366;
+  color:#000;
+  padding:14px 18px;
+  border-radius:50px;
+  font-weight:bold;
+  text-decoration:none;
+  box-shadow:0 4px 10px rgba(0,0,0,0.4);
+">
+🛒 Ver carrinho
+</a>
+ *Pedido Adega GS Oficial*%0A%0A";
   pedido.forEach(p => texto += "- " + p + "%0A");
 
   const obs = document.getElementById("obs").value;
