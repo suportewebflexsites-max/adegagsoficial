@@ -10,19 +10,16 @@ body{margin:0;font-family:Arial;background:#0f0f0f;color:#fff}
 header{text-align:center;padding:20px;background:#000}
 h1{color:#ffd700;margin:0}
 p{color:#bbb;margin:5px 0}
+.info{font-size:14px;color:#25d366}
 
 .section{padding:20px}
 h2{border-bottom:2px solid #25d366;color:#ffd700;padding-bottom:5px}
 
-.item{
-display:flex;justify-content:space-between;align-items:center;
-padding:10px 0;border-bottom:1px solid #333
-}
+.item{display:flex;justify-content:space-between;align-items:center;
+padding:10px 0;border-bottom:1px solid #333}
 
-button{
-background:#25d366;border:none;padding:6px 12px;
-border-radius:6px;font-weight:bold;cursor:pointer
-}
+button{background:#25d366;border:none;padding:6px 12px;
+border-radius:6px;font-weight:bold;cursor:pointer}
 
 .cart-btn{
 position:fixed;bottom:20px;right:20px;
@@ -35,23 +32,25 @@ font-size:22px;cursor:pointer
 
 .badge{
 position:absolute;top:-5px;right:-5px;
-background:red;color:#fff;
-border-radius:50%;font-size:12px;padding:2px 6px
+background:red;color:#fff;border-radius:50%;
+font-size:12px;padding:2px 6px
 }
 
 #cartBox{
 display:none;position:fixed;top:0;left:0;
 width:100%;height:100%;
-background:#000;overflow:auto;padding:20px;z-index:9999
+background:#000;overflow:auto;
+padding:20px;z-index:9999
 }
 
 input,select,textarea{
-width:100%;padding:10px;margin:6px 0;border-radius:6px;border:none
+width:100%;padding:10px;margin:6px 0;
+border-radius:6px;border:none
 }
 
-.total{font-size:16px;margin-top:10px;font-weight:bold}
+.total{font-size:18px;margin-top:10px}
 .close{background:#444;margin-bottom:10px}
-.freteBox{margin-top:10px;color:#25d366}
+.highlight{color:#25d366;font-weight:bold}
 </style>
 </head>
 
@@ -60,59 +59,60 @@ width:100%;padding:10px;margin:6px 0;border-radius:6px;border:none
 <header>
 <h1>🍺 Adega GS Oficial</h1>
 <p>Conveniência • Delivery rápido</p>
+<p class="info">🕒 Aberto das 11:00 às 04:00</p>
+<p class="info">📍 Rua Plácido Parreira Lima, 142</p>
 </header>
 
 <!-- PRODUTOS -->
 <div class="section">
 <h2>🍺 Cervejas</h2>
-<div class="item"><span>Skol 269ml</span><button onclick="add('Skol 269ml',4)">R$4,00</button></div>
-<div class="item"><span>Original 269ml</span><button onclick="add('Original 269ml',4)">R$4,00</button></div>
-<div class="item"><span>Heineken 269ml</span><button onclick="add('Heineken 269ml',5.2)">R$5,20</button></div>
-<div class="item"><span>Amstel 269ml</span><button onclick="add('Amstel 269ml',9)">R$9,00</button></div>
+<div class="item"><span>Skol 269ml R$4,00</span><button onclick="add('Skol 269ml',4)">Adicionar</button></div>
+<div class="item"><span>Original 269ml R$4,00</span><button onclick="add('Original 269ml',4)">Adicionar</button></div>
+<div class="item"><span>Heineken 269ml R$5,20</span><button onclick="add('Heineken 269ml',5.2)">Adicionar</button></div>
+<div class="item"><span>Amstel 269ml R$9,00</span><button onclick="add('Amstel 269ml',9)">Adicionar</button></div>
 </div>
 
 <div class="section">
 <h2>🍟 Porções</h2>
-<div class="item"><span>Porção de Calabresa</span><button onclick="add('Porção de Calabresa',25)">R$25,00</button></div>
-<div class="item"><span>Batata Frita</span><button onclick="add('Batata Frita',22)">R$22,00</button></div>
+<div class="item"><span>Porção de Calabresa R$25,00</span><button onclick="add('Porção de Calabresa',25)">Adicionar</button></div>
+<div class="item"><span>Batata Frita R$22,00</span><button onclick="add('Batata Frita',22)">Adicionar</button></div>
 </div>
 
 <div class="section">
 <h2>🥟 Pastel</h2>
-<div class="item"><span>Pastel de Carne</span><button onclick="add('Pastel de Carne',8)">R$8,00</button></div>
-<div class="item"><span>Pastel de Pizza</span><button onclick="add('Pastel de Pizza',8)">R$8,00</button></div>
-<div class="item"><span>Pastel Frango c/ Catupiry</span><button onclick="add('Pastel Frango com Catupiry',9)">R$9,00</button></div>
+<div class="item"><span>Pastel de Carne R$8,00</span><button onclick="add('Pastel de Carne',8)">Adicionar</button></div>
+<div class="item"><span>Pastel de Pizza R$8,00</span><button onclick="add('Pastel de Pizza',8)">Adicionar</button></div>
+<div class="item"><span>Pastel Frango com Catupiry R$9,00</span><button onclick="add('Pastel Frango com Catupiry',9)">Adicionar</button></div>
 </div>
 
 <div class="section">
 <h2>🍫 Chocolates</h2>
-<div class="item"><span>Bis</span><button onclick="add('Bis',4.5)">R$4,50</button></div>
+<div class="item"><span>Bis R$4,50</span><button onclick="add('Bis',4.5)">Adicionar</button></div>
 </div>
 
 <div class="section">
 <h2>🥨 Salgadinhos</h2>
-<div class="item"><span>Torcidas Carne</span><button onclick="add('Torcidas Carne',4)">R$4,00</button></div>
-<div class="item"><span>Torcidas Churrasco</span><button onclick="add('Torcidas Churrasco',4)">R$4,00</button></div>
-<div class="item"><span>Torcidas Bacon</span><button onclick="add('Torcidas Bacon',4)">R$4,00</button></div>
-<div class="item"><span>Torcidas Vinagrete</span><button onclick="add('Torcidas Vinagrete',4)">R$4,00</button></div>
+<div class="item"><span>Torcidas Carne R$4,00</span><button onclick="add('Torcidas Carne',4)">Adicionar</button></div>
+<div class="item"><span>Torcidas Churrasco R$4,00</span><button onclick="add('Torcidas Churrasco',4)">Adicionar</button></div>
+<div class="item"><span>Torcidas Bacon R$4,00</span><button onclick="add('Torcidas Bacon',4)">Adicionar</button></div>
+<div class="item"><span>Torcidas Vinagrete R$4,00</span><button onclick="add('Torcidas Vinagrete',4)">Adicionar</button></div>
 </div>
 
-<!-- BOTÃO CARRINHO -->
+<!-- CARRINHO -->
 <div class="cart-btn" onclick="openCart()">🛒<span class="badge" id="qtd">0</span></div>
 
-<!-- CARRINHO -->
 <div id="cartBox">
 <button class="close" onclick="closeCart()">⬅ Voltar</button>
 
 <h2>🛒 Carrinho</h2>
 <div id="lista"></div>
-<div class="total" id="total"></div>
-<div class="freteBox" id="freteBox"></div>
+<p class="total" id="total"></p>
 
 <h2>📋 Dados do Cliente</h2>
 <input id="nome" placeholder="Nome *">
+<input id="cep" placeholder="CEP *" onblur="buscarCEP()">
 <input id="endereco" placeholder="Endereço *">
-<input id="cep" placeholder="CEP *" oninput="calcularFrete()">
+<input id="cupom" placeholder="Cupom (opcional)">
 
 <select id="pagamento">
 <option value="">Forma de pagamento *</option>
@@ -127,82 +127,63 @@ width:100%;padding:10px;margin:6px 0;border-radius:6px;border:none
 </div>
 
 <script>
-let cart=[],frete=null,distancia=null;
+let cart=[],frete=null,distancia=null,desconto=0;
 
 function add(nome,preco){
 cart.push({nome,preco});
-document.getElementById("qtd").innerText=cart.length;
+qtd.innerText=cart.length;
 }
 
-function openCart(){
-document.getElementById("cartBox").style.display="block";
-render();
+function openCart(){cartBox.style.display="block";render();}
+function closeCart(){cartBox.style.display="none";}
+
+function buscarCEP(){
+let c=cep.value.replace(/\D/g,'');
+if(c.length!==8)return;
+
+fetch(`https://viacep.com.br/ws/${c}/json/`)
+.then(r=>r.json())
+.then(d=>{
+if(d.erro)return alert("CEP inválido");
+endereco.value=`${d.logradouro}, ${d.bairro} - ${d.localidade}/${d.uf}`;
+calcularFrete(c);
+});
 }
 
-function closeCart(){
-document.getElementById("cartBox").style.display="none";
-}
-
-function calcularFrete(){
-let c = cep.value.replace(/\D/g,'');
-if(c.length < 8){
-frete=null;distancia=null;render();return;
-}
-
-distancia = (parseInt(c.slice(-3)) % 15) + 1;
-
-if(distancia <= 3) frete = 5;
-else if(distancia <= 6) frete = 8;
-else if(distancia <= 10) frete = 10;
-else frete = 15;
-
+function calcularFrete(c){
+distancia=(parseInt(c.slice(-3))%15)+1;
+if(distancia<=3)frete=5;
+else if(distancia<=6)frete=8;
+else if(distancia<=10)frete=10;
+else frete=15;
 render();
 }
 
 function render(){
-let lista=document.getElementById("lista");
 let subtotal=0;
 lista.innerHTML="";
-
 cart.forEach(i=>{
-lista.innerHTML+=`<p>• ${i.nome} - R$ ${i.preco.toFixed(2)}</p>`;
+lista.innerHTML+=`<p>${i.nome} - R$ ${i.preco.toFixed(2)}</p>`;
 subtotal+=i.preco;
 });
 
-let total = subtotal + (frete||0);
-document.getElementById("total").innerText =
-`Subtotal: R$ ${subtotal.toFixed(2)} | Total: R$ ${total.toFixed(2)}`;
+if(subtotal>=120)frete=0;
 
-let freteTexto="🚚 Frete será calculado após informar o CEP";
-if(frete!==null){
-freteTexto =
-`🚚 Frete: R$ ${frete.toFixed(2)} (${distancia} km)`;
-}
-document.getElementById("freteBox").innerText = freteTexto;
+let total=subtotal+(frete||0)-desconto;
+totalEl=`Subtotal R$ ${subtotal.toFixed(2)} | Frete ${frete===0?'GRÁTIS':'R$ '+frete} | Total R$ ${total.toFixed(2)}`;
+total.innerText=totalEl;
 }
 
 function finalizar(){
-if(!nome.value || !endereco.value || !cep.value || !pagamento.value){
+if(!nome.value||!cep.value||!endereco.value||!pagamento.value){
 alert("Preencha todos os campos obrigatórios");
 return;
 }
-if(frete===null){
-alert("Informe o CEP para calcular o frete");
-return;
-}
 
-let subtotal = cart.reduce((s,i)=>s+i.preco,0);
-let total = subtotal + frete;
-
-let msg = `🛒 *PEDIDO – ADEGA GS OFICIAL*%0A%0A`;
-cart.forEach(i=>msg+=`• ${i.nome} - R$ ${i.preco.toFixed(2)}%0A`);
-msg+=
-`%0A📦 Subtotal: R$ ${subtotal.toFixed(2)}%0A`+
-`🚚 Frete: R$ ${frete.toFixed(2)} (${distancia} km)%0A`+
-`💰 *Total:* R$ ${total.toFixed(2)}%0A%0A`+
-`👤 ${nome.value}%0A📍 ${endereco.value}%0A`+
-`💳 ${pagamento.value}%0A`+
-`📝 ${obs.value||'-'}`;
+let msg=`🛒 *PEDIDO – ADEGA GS OFICIAL*%0A%0A`;
+cart.forEach(i=>msg+=`• ${i.nome}%0A`);
+msg+=`%0A📍 ${endereco.value}%0A💰 Frete: ${frete===0?'GRÁTIS':'R$ '+frete}%0A`;
+msg+=`💳 ${pagamento.value}%0A👤 ${nome.value}%0A📝 ${obs.value||'-'}`;
 
 window.open("https://wa.me/5511981654980?text="+msg);
 }
