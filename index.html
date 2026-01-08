@@ -2,130 +2,140 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Adega.GS.Oficial</title>
+<title>Adega GS Oficial</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body{
-  margin:0;
-  font-family:Arial, Helvetica, sans-serif;
-  background:#0f0f0f;
-  color:#fff;
-}
-header{
-  background:#000;
-  padding:20px;
-  text-align:center;
-}
-header h1{margin:0;font-size:30px;}
-header p{color:#bbb;margin-top:5px;}
+body{margin:0;font-family:Arial;background:#0f0f0f;color:#fff}
+header{text-align:center;padding:20px;background:#000}
+h1{color:#ffd700}
+.section{padding:20px}
+h2{border-bottom:2px solid #25d366;padding-bottom:5px;color:#ffd700}
+.item{display:flex;justify-content:space-between;align-items:center;
+padding:10px 0;border-bottom:1px solid #333}
+button{background:#25d366;border:none;padding:6px 12px;
+border-radius:6px;font-weight:bold;cursor:pointer}
+.cart-btn{position:fixed;bottom:20px;right:20px;background:#25d366;
+color:#000;padding:15px;border-radius:50%;font-size:20px;cursor:pointer}
 
-.container{padding:20px;}
-
-.category{margin-top:30px;}
-.category h2{
-  border-bottom:2px solid #25d366;
-  padding-bottom:5px;
+#cartBox{
+display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+background:#000;overflow:auto;padding:20px;z-index:9999
 }
-
-.product{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:12px 0;
-  border-bottom:1px solid #333;
-  padding-bottom:8px;
+input,select,textarea{
+width:100%;padding:10px;margin:6px 0;border-radius:6px;border:none
 }
-
-button{
-  background:#25d366;
-  border:none;
-  color:#000;
-  padding:6px 12px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-#btnCarrinho{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#25d366;
-  color:#000;
-  padding:14px 18px;
-  border-radius:50px;
-  font-weight:bold;
-  text-decoration:none;
-  box-shadow:0 4px 10px rgba(0,0,0,0.4);
-}
+.total{font-size:18px;margin-top:10px}
+.close{background:#444;margin-bottom:10px}
 </style>
-
-<script>
-let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-
-function addProduto(nome, preco){
-  carrinho.push({ nome, preco });
-  localStorage.setItem("carrinho", JSON.stringify(carrinho));
-  atualizarCarrinho();
-  alert(nome + " adicionado ao carrinho");
-}
-
-function atualizarCarrinho(){
-  const qtd = document.getElementById("qtdCarrinho");
-  if(qtd) qtd.innerText = carrinho.length;
-}
-
-document.addEventListener("DOMContentLoaded", atualizarCarrinho);
-</script>
 </head>
 
 <body>
 
 <header>
-  <h1>🍺 Adega.GS.Oficial</h1>
-  <p>Conveniência • Delivery rápido</p>
+<h1>🍺 Adega GS Oficial</h1>
+<p>Conveniência • Delivery rápido</p>
 </header>
 
-<div class="container">
-
-<div class="category">
+<div class="section">
 <h2>🍺 Cervejas</h2>
-<div class="product"><span>Skol Lata</span><button onclick="addProduto('Skol Lata',5)">Adicionar</button></div>
-<div class="product"><span>Brahma Lata</span><button onclick="addProduto('Brahma Lata',5)">Adicionar</button></div>
-<div class="product"><span>Heineken Lata</span><button onclick="addProduto('Heineken Lata',5.5)">Adicionar</button></div>
-<div class="product"><span>Heineken Long Neck</span><button onclick="addProduto('Heineken Long Neck',9)">Adicionar</button></div>
-<div class="product"><span>Corona Long Neck</span><button onclick="addProduto('Corona Long Neck',10)">Adicionar</button></div>
-<div class="product"><span>Budweiser Long Neck</span><button onclick="addProduto('Budweiser Long Neck',10)">Adicionar</button></div>
-<div class="product"><span>Budweiser Lata</span><button onclick="addProduto('Budweiser Lata',5)">Adicionar</button></div>
+<div class="item"><span>Skol 269ml R$4,00</span><button onclick="add('Skol 269ml',4)">Adicionar</button></div>
+<div class="item"><span>Original 269ml R$4,00</span><button onclick="add('Original 269ml',4)">Adicionar</button></div>
+<div class="item"><span>Heineken 269ml R$5,20</span><button onclick="add('Heineken 269ml',5.2)">Adicionar</button></div>
+<div class="item"><span>Amstel 269ml R$9,00</span><button onclick="add('Amstel 269ml',9)">Adicionar</button></div>
 </div>
 
-<div class="category">
-<h2>⚡ Energéticos</h2>
-<div class="product"><span>Red Bull</span><button onclick="addProduto('Red Bull',11)">Adicionar</button></div>
-<div class="product"><span>Baly Energético</span><button onclick="addProduto('Baly Energético',14)">Adicionar</button></div>
-<div class="product"><span>Vibe Energético</span><button onclick="addProduto('Vibe Energético',12.5)">Adicionar</button></div>
+<div class="section">
+<h2>🍟 Porções</h2>
+<div class="item"><span>Porção de Calabresa R$25,00</span><button onclick="add('Porção Calabresa',25)">Adicionar</button></div>
+<div class="item"><span>Porção Batata Frita R$22,00</span><button onclick="add('Batata Frita',22)">Adicionar</button></div>
 </div>
 
-<div class="category">
-<h2>🥃 Destilados</h2>
-<div class="product"><span>Gin</span><button onclick="addProduto('Gin',26)">Adicionar</button></div>
-<div class="product"><span>Velho Barreiro</span><button onclick="addProduto('Velho Barreiro',18.5)">Adicionar</button></div>
-<div class="product"><span>Pitu Lata</span><button onclick="addProduto('Pitu Lata',7)">Adicionar</button></div>
+<div class="section">
+<h2>🥟 Pastel</h2>
+<div class="item"><span>Pastel de Carne R$8,00</span><button onclick="add('Pastel Carne',8)">Adicionar</button></div>
+<div class="item"><span>Pastel de Pizza R$8,00</span><button onclick="add('Pastel Pizza',8)">Adicionar</button></div>
+<div class="item"><span>Pastel Frango c/ Catupiry R$9,00</span><button onclick="add('Pastel Frango Catupiry',9)">Adicionar</button></div>
 </div>
 
-<div class="category">
-<h2>❄️ Gelo & Extras</h2>
-<div class="product"><span>Carvão</span><button onclick="addProduto('Carvão',15)">Adicionar</button></div>
-<div class="product"><span>Saco de Gelo 5kg</span><button onclick="addProduto('Saco de Gelo 5kg',17)">Adicionar</button></div>
+<div class="section">
+<h2>🍫 Chocolates</h2>
+<div class="item"><span>Bis R$4,50</span><button onclick="add('Bis',4.5)">Adicionar</button></div>
 </div>
 
+<div class="section">
+<h2>🥨 Salgadinhos</h2>
+<div class="item"><span>Torcidas Carne R$4,00</span><button onclick="add('Torcidas Carne',4)">Adicionar</button></div>
+<div class="item"><span>Torcidas Churrasco R$4,00</span><button onclick="add('Torcidas Churrasco',4)">Adicionar</button></div>
+<div class="item"><span>Torcidas Bacon R$4,00</span><button onclick="add('Torcidas Bacon',4)">Adicionar</button></div>
+<div class="item"><span>Torcidas Vinagrete R$4,00</span><button onclick="add('Torcidas Vinagrete',4)">Adicionar</button></div>
 </div>
 
-<!-- BOTÃO DO CARRINHO -->
-<a id="btnCarrinho" href="checkout.html">
-🛒 Carrinho (<span id="qtdCarrinho">0</span>)
-</a>
+<div class="cart-btn" onclick="openCart()">🛒</div>
+
+<!-- CARRINHO -->
+<div id="cartBox">
+<button class="close" onclick="closeCart()">⬅ Voltar</button>
+
+<h2>🛒 Carrinho</h2>
+<div id="lista"></div>
+<p class="total" id="total"></p>
+
+<h2>📋 Dados do Cliente</h2>
+<input id="nome" placeholder="Nome">
+<input id="endereco" placeholder="Endereço">
+<input id="cep" placeholder="CEP">
+<select id="pagamento">
+<option>Pix</option>
+<option>Crédito</option>
+<option>Débito</option>
+</select>
+<textarea id="obs" placeholder="Observações (opcional)"></textarea>
+
+<button onclick="finalizar()">FINALIZAR NO WHATSAPP</button>
+</div>
+
+<script>
+let cart=[];
+
+function add(nome,preco){
+cart.push({nome,preco});
+alert("Adicionado ao carrinho");
+}
+
+function openCart(){
+document.getElementById("cartBox").style.display="block";
+render();
+}
+
+function closeCart(){
+document.getElementById("cartBox").style.display="none";
+}
+
+function render(){
+let lista=document.getElementById("lista");
+let total=0;
+lista.innerHTML="";
+cart.forEach(i=>{
+lista.innerHTML+=`<p>${i.nome} - R$ ${i.preco.toFixed(2)}</p>`;
+total+=i.preco;
+});
+let frete = total>=120?0:10;
+document.getElementById("total").innerText=
+`Total: R$ ${(total+frete).toFixed(2)} | Frete: ${frete==0?'GRÁTIS':'R$10,00'}`;
+}
+
+function finalizar(){
+let msg="🛒 Pedido Adega GS%0A";
+cart.forEach(i=>msg+=`- ${i.nome}%0A`);
+msg+=`Nome: ${nome.value}%0AEndereço: ${endereco.value}%0A`;
+msg+=`Pagamento: ${pagamento.value}%0A`;
+msg+=`Obs: ${obs.value}`;
+window.open("https://wa.me/5511981654980?text="+msg);
+cart=[];
+closeCart();
+}
+</script>
 
 </body>
 </html>
