@@ -5,6 +5,20 @@
 <title>Adega GS Oficial</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- PREVIEW WHATSAPP / LINK -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="🍺 Adega GS Oficial">
+<meta property="og:description" content="Conveniência • Delivery rápido | Faça seu pedido online">
+<meta property="og:url" content="https://suportewebflexsites-max.github.io/adegagsoficial/">
+<meta property="og:image" content="https://suportewebflexsites-max.github.io/adegagsoficial/logo.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="🍺 Adega GS Oficial">
+<meta name="twitter:description" content="Conveniência • Delivery rápido">
+<meta name="twitter:image" content="https://suportewebflexsites-max.github.io/adegagsoficial/logo.png">
+
 <style>
 body{margin:0;font-family:Arial;background:#0f0f0f;color:#fff}
 header{text-align:center;padding:20px;background:#000}
@@ -143,26 +157,23 @@ document.getElementById("cartBox").style.display="none";
 }
 
 function calcFrete(){
-if(document.getElementById("cep").value.length<8){
-frete=null;render();return;
-}
+if(cep.value.length<8){frete=null;render();return;}
 frete=10;
 render();
 }
 
 function render(){
 let lista=document.getElementById("lista");
-let total=0;
+let subtotal=0;
 lista.innerHTML="";
 cart.forEach(i=>{
 lista.innerHTML+=`<p>${i.nome} - R$ ${i.preco.toFixed(2)}</p>`;
-total+=i.preco;
+subtotal+=i.preco;
 });
-if(frete!==null && total>=120)frete=0;
-
-let txtFrete=frete===null?"Frete a calcular":frete===0?"Frete grátis":"Frete R$10,00";
-document.getElementById("total").innerText=
-`Total: R$ ${(total+(frete||0)).toFixed(2)} | ${txtFrete}`;
+if(frete!==null && subtotal>=120)frete=0;
+let freteTxt = frete===null?"Frete a calcular":frete===0?"Frete grátis":"Frete R$10,00";
+document.getElementById("total").innerText =
+`Subtotal: R$ ${subtotal.toFixed(2)} | ${freteTxt} | Total: R$ ${(subtotal+(frete||0)).toFixed(2)}`;
 }
 
 function finalizar(){
@@ -170,11 +181,25 @@ if(!nome.value||!endereco.value||!cep.value||!pagamento.value){
 alert("Preencha Nome, Endereço, CEP e Forma de pagamento");
 return;
 }
-let msg="🛒 Pedido Adega GS Oficial%0A%0A";
-cart.forEach(i=>msg+=`- ${i.nome}%0A`);
-msg+=`%0ATotal: ${total.innerText}%0A`;
-msg+=`Nome: ${nome.value}%0AEndereço: ${endereco.value}%0A`;
-msg+=`Pagamento: ${pagamento.value}%0AObs: ${obs.value}`;
+
+let subtotal=0,itens="";
+cart.forEach(i=>{
+itens+=`• ${i.nome}%0A`;
+subtotal+=i.preco;
+});
+let valorFrete = frete===null?0:frete;
+let totalFinal = subtotal+valorFrete;
+
+let msg =
+`🛒 *PEDIDO – ADEGA GS OFICIAL*%0A%0A`+
+`📦 *Itens:*%0A${itens}%0A`+
+`💰 *Resumo:*%0ASubtotal: R$ ${subtotal.toFixed(2)}%0A`+
+`Frete: ${valorFrete===0?'GRÁTIS':'R$ '+valorFrete.toFixed(2)}%0A`+
+`*Total: R$ ${totalFinal.toFixed(2)}*%0A%0A`+
+`📍 *Entrega:*%0A${nome.value}%0A${endereco.value}%0ACEP: ${cep.value}%0A%0A`+
+`💳 *Pagamento:* ${pagamento.value}%0A`+
+`📝 Obs: ${obs.value||'-'}`;
+
 window.open("https://wa.me/5511981654980?text="+msg);
 }
 </script>
