@@ -8,23 +8,50 @@
 <style>
 body{margin:0;font-family:Arial;background:#0f0f0f;color:#fff}
 header{text-align:center;padding:20px;background:#000}
-h1{color:#ffd700}
+h1{color:#ffd700;margin:0}
+p{color:#bbb;margin:5px 0}
+
 .section{padding:20px}
 h2{border-bottom:2px solid #25d366;padding-bottom:5px;color:#ffd700}
-.item{display:flex;justify-content:space-between;align-items:center;
-padding:10px 0;border-bottom:1px solid #333}
-button{background:#25d366;border:none;padding:6px 12px;
-border-radius:6px;font-weight:bold;cursor:pointer}
-.cart-btn{position:fixed;bottom:20px;right:20px;background:#25d366;
-color:#000;padding:15px;border-radius:50%;font-size:20px;cursor:pointer}
+
+.item{
+display:flex;justify-content:space-between;align-items:center;
+padding:10px 0;border-bottom:1px solid #333
+}
+
+button{
+background:#25d366;border:none;padding:6px 12px;
+border-radius:6px;font-weight:bold;cursor:pointer
+}
+
+.cart-btn{
+position:fixed;bottom:20px;right:20px;
+background:#25d366;color:#000;
+width:55px;height:55px;
+border-radius:50%;
+display:flex;align-items:center;justify-content:center;
+font-size:22px;cursor:pointer
+}
+
+.badge{
+position:absolute;top:-5px;right:-5px;
+background:red;color:#fff;
+border-radius:50%;font-size:12px;
+padding:2px 6px
+}
 
 #cartBox{
-display:none;position:fixed;top:0;left:0;width:100%;height:100%;
-background:#000;overflow:auto;padding:20px;z-index:9999
+display:none;position:fixed;top:0;left:0;
+width:100%;height:100%;
+background:#000;overflow:auto;
+padding:20px;z-index:9999
 }
+
 input,select,textarea{
-width:100%;padding:10px;margin:6px 0;border-radius:6px;border:none
+width:100%;padding:10px;margin:6px 0;
+border-radius:6px;border:none
 }
+
 .total{font-size:18px;margin-top:10px}
 .close{background:#444;margin-bottom:10px}
 </style>
@@ -47,15 +74,15 @@ width:100%;padding:10px;margin:6px 0;border-radius:6px;border:none
 
 <div class="section">
 <h2>🍟 Porções</h2>
-<div class="item"><span>Porção de Calabresa R$25,00</span><button onclick="add('Porção Calabresa',25)">Adicionar</button></div>
-<div class="item"><span>Porção Batata Frita R$22,00</span><button onclick="add('Batata Frita',22)">Adicionar</button></div>
+<div class="item"><span>Porção de Calabresa R$25,00</span><button onclick="add('Porção de Calabresa',25)">Adicionar</button></div>
+<div class="item"><span>Batata Frita R$22,00</span><button onclick="add('Batata Frita',22)">Adicionar</button></div>
 </div>
 
 <div class="section">
 <h2>🥟 Pastel</h2>
-<div class="item"><span>Pastel de Carne R$8,00</span><button onclick="add('Pastel Carne',8)">Adicionar</button></div>
-<div class="item"><span>Pastel de Pizza R$8,00</span><button onclick="add('Pastel Pizza',8)">Adicionar</button></div>
-<div class="item"><span>Pastel Frango c/ Catupiry R$9,00</span><button onclick="add('Pastel Frango Catupiry',9)">Adicionar</button></div>
+<div class="item"><span>Pastel de Carne R$8,00</span><button onclick="add('Pastel de Carne',8)">Adicionar</button></div>
+<div class="item"><span>Pastel de Pizza R$8,00</span><button onclick="add('Pastel de Pizza',8)">Adicionar</button></div>
+<div class="item"><span>Pastel Frango c/ Catupiry R$9,00</span><button onclick="add('Pastel Frango com Catupiry',9)">Adicionar</button></div>
 </div>
 
 <div class="section">
@@ -71,9 +98,9 @@ width:100%;padding:10px;margin:6px 0;border-radius:6px;border:none
 <div class="item"><span>Torcidas Vinagrete R$4,00</span><button onclick="add('Torcidas Vinagrete',4)">Adicionar</button></div>
 </div>
 
-<div class="cart-btn" onclick="openCart()">🛒</div>
-
 <!-- CARRINHO -->
+<div class="cart-btn" onclick="openCart()">🛒<span class="badge" id="qtd">0</span></div>
+
 <div id="cartBox">
 <button class="close" onclick="closeCart()">⬅ Voltar</button>
 
@@ -82,25 +109,28 @@ width:100%;padding:10px;margin:6px 0;border-radius:6px;border:none
 <p class="total" id="total"></p>
 
 <h2>📋 Dados do Cliente</h2>
-<input id="nome" placeholder="Nome">
-<input id="endereco" placeholder="Endereço">
-<input id="cep" placeholder="CEP">
+<input id="nome" placeholder="Nome *">
+<input id="endereco" placeholder="Endereço *">
+<input id="cep" placeholder="CEP *" oninput="calcFrete()">
+
 <select id="pagamento">
+<option value="">Forma de pagamento *</option>
 <option>Pix</option>
 <option>Crédito</option>
 <option>Débito</option>
 </select>
+
 <textarea id="obs" placeholder="Observações (opcional)"></textarea>
 
 <button onclick="finalizar()">FINALIZAR NO WHATSAPP</button>
 </div>
 
 <script>
-let cart=[];
+let cart=[],frete=null;
 
 function add(nome,preco){
 cart.push({nome,preco});
-alert("Adicionado ao carrinho");
+document.getElementById("qtd").innerText=cart.length;
 }
 
 function openCart(){
@@ -112,6 +142,14 @@ function closeCart(){
 document.getElementById("cartBox").style.display="none";
 }
 
+function calcFrete(){
+if(document.getElementById("cep").value.length<8){
+frete=null;render();return;
+}
+frete=10;
+render();
+}
+
 function render(){
 let lista=document.getElementById("lista");
 let total=0;
@@ -120,20 +158,24 @@ cart.forEach(i=>{
 lista.innerHTML+=`<p>${i.nome} - R$ ${i.preco.toFixed(2)}</p>`;
 total+=i.preco;
 });
-let frete = total>=120?0:10;
+if(frete!==null && total>=120)frete=0;
+
+let txtFrete=frete===null?"Frete a calcular":frete===0?"Frete grátis":"Frete R$10,00";
 document.getElementById("total").innerText=
-`Total: R$ ${(total+frete).toFixed(2)} | Frete: ${frete==0?'GRÁTIS':'R$10,00'}`;
+`Total: R$ ${(total+(frete||0)).toFixed(2)} | ${txtFrete}`;
 }
 
 function finalizar(){
-let msg="🛒 Pedido Adega GS%0A";
+if(!nome.value||!endereco.value||!cep.value||!pagamento.value){
+alert("Preencha Nome, Endereço, CEP e Forma de pagamento");
+return;
+}
+let msg="🛒 Pedido Adega GS Oficial%0A%0A";
 cart.forEach(i=>msg+=`- ${i.nome}%0A`);
+msg+=`%0ATotal: ${total.innerText}%0A`;
 msg+=`Nome: ${nome.value}%0AEndereço: ${endereco.value}%0A`;
-msg+=`Pagamento: ${pagamento.value}%0A`;
-msg+=`Obs: ${obs.value}`;
+msg+=`Pagamento: ${pagamento.value}%0AObs: ${obs.value}`;
 window.open("https://wa.me/5511981654980?text="+msg);
-cart=[];
-closeCart();
 }
 </script>
 
