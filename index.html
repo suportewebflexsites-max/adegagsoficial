@@ -10,6 +10,7 @@ body{margin:0;font-family:Arial;background:#0f0f0f;color:#fff}
 header{text-align:center;padding:20px;background:#000}
 h1{color:#ffd700;margin:0}
 p{color:#bbb;margin:5px 0}
+.info{color:#25d366;font-weight:bold}
 
 .section{padding:20px}
 h2{border-bottom:2px solid #25d366;color:#ffd700;padding-bottom:5px}
@@ -60,6 +61,8 @@ width:100%;padding:10px;margin:6px 0;border-radius:6px;border:none
 <header>
 <h1>🍺 Adega GS Oficial</h1>
 <p>Conveniência • Delivery rápido</p>
+<p class="info">🕒 Aberto das 11:00 às 04:00</p>
+<p class="info">📍 Rua Plácido Parreira Lima, 142</p>
 </header>
 
 <!-- PRODUTOS -->
@@ -111,8 +114,9 @@ width:100%;padding:10px;margin:6px 0;border-radius:6px;border:none
 
 <h2>📋 Dados do Cliente</h2>
 <input id="nome" placeholder="Nome *">
+<input id="cep" placeholder="CEP *" onblur="buscarCEP()">
 <input id="endereco" placeholder="Endereço *">
-<input id="cep" placeholder="CEP *" oninput="calcularFrete()">
+<input id="cupom" placeholder="Cupom (opcional)">
 
 <select id="pagamento">
 <option value="">Forma de pagamento *</option>
@@ -127,62 +131,60 @@ width:100%;padding:10px;margin:6px 0;border-radius:6px;border:none
 </div>
 
 <script>
-let cart=[],frete=null,distancia=null;
+let cart=[],frete=null,distancia=null,desconto=0;
 
 function add(nome,preco){
 cart.push({nome,preco});
-document.getElementById("qtd").innerText=cart.length;
+qtd.innerText=cart.length;
 }
 
-function openCart(){
-document.getElementById("cartBox").style.display="block";
-render();
+function openCart(){cartBox.style.display="block";render();}
+function closeCart(){cartBox.style.display="none";}
+
+async function buscarCEP(){
+let c=cep.value.replace(/\D/g,'');
+if(c.length!==8)return;
+
+const r = await fetch(`https://viacep.com.br/ws/${c}/json/`);
+const d = await r.json();
+if(d.erro){alert("CEP inválido");return;}
+
+endereco.value = `${d.logradouro}, ${d.bairro} - ${d.localidade}/${d.uf}`;
+calcularFrete(c);
 }
 
-function closeCart(){
-document.getElementById("cartBox").style.display="none";
-}
-
-function calcularFrete(){
-let c = cep.value.replace(/\D/g,'');
-if(c.length < 8){
-frete=null;distancia=null;render();return;
-}
-
-distancia = (parseInt(c.slice(-3)) % 15) + 1;
-
-if(distancia <= 3) frete = 5;
-else if(distancia <= 6) frete = 8;
-else if(distancia <= 10) frete = 10;
-else frete = 15;
-
+function calcularFrete(c){
+distancia=(parseInt(c.slice(-3))%15)+1;
+if(distancia<=3)frete=5;
+else if(distancia<=6)frete=8;
+else if(distancia<=10)frete=10;
+else frete=15;
 render();
 }
 
 function render(){
-let lista=document.getElementById("lista");
 let subtotal=0;
 lista.innerHTML="";
-
 cart.forEach(i=>{
 lista.innerHTML+=`<p>• ${i.nome} - R$ ${i.preco.toFixed(2)}</p>`;
 subtotal+=i.preco;
 });
 
-let total = subtotal + (frete||0);
-document.getElementById("total").innerText =
-`Subtotal: R$ ${subtotal.toFixed(2)} | Total: R$ ${total.toFixed(2)}`;
+desconto = (cupom.value==="OFF10") ? 10 : 0;
+if(subtotal>=120)frete=0;
 
-let freteTexto="🚚 Frete será calculado após informar o CEP";
-if(frete!==null){
-freteTexto =
-`🚚 Frete: R$ ${frete.toFixed(2)} (${distancia} km)`;
-}
-document.getElementById("freteBox").innerText = freteTexto;
+let total=subtotal+(frete||0)-desconto;
+
+totalEl=`Subtotal: R$ ${subtotal.toFixed(2)} | Desconto: R$ ${desconto.toFixed(2)} | Total: R$ ${total.toFixed(2)}`;
+total.innerText=totalEl;
+
+freteBox.innerText = frete===null
+? "🚚 Frete será calculado após informar o CEP"
+: `🚚 Frete: ${frete===0?'GRÁTIS':'R$ '+frete} (${distancia} km)`;
 }
 
 function finalizar(){
-if(!nome.value || !endereco.value || !cep.value || !pagamento.value){
+if(!nome.value||!cep.value||!endereco.value||!pagamento.value){
 alert("Preencha todos os campos obrigatórios");
 return;
 }
@@ -191,17 +193,14 @@ alert("Informe o CEP para calcular o frete");
 return;
 }
 
-let subtotal = cart.reduce((s,i)=>s+i.preco,0);
-let total = subtotal + frete;
-
-let msg = `🛒 *PEDIDO – ADEGA GS OFICIAL*%0A%0A`;
-cart.forEach(i=>msg+=`• ${i.nome} - R$ ${i.preco.toFixed(2)}%0A`);
+let msg=`🛒 *PEDIDO – ADEGA GS OFICIAL*%0A%0A`;
+cart.forEach(i=>msg+=`• ${i.nome}%0A`);
 msg+=
-`%0A📦 Subtotal: R$ ${subtotal.toFixed(2)}%0A`+
-`🚚 Frete: R$ ${frete.toFixed(2)} (${distancia} km)%0A`+
-`💰 *Total:* R$ ${total.toFixed(2)}%0A%0A`+
-`👤 ${nome.value}%0A📍 ${endereco.value}%0A`+
+`%0A📍 ${endereco.value}%0A`+
+`🚚 Frete: ${frete===0?'GRÁTIS':'R$ '+frete}%0A`+
+`💰 Total: R$ ${(cart.reduce((s,i)=>s+i.preco,0)+(frete||0)-desconto).toFixed(2)}%0A`+
 `💳 ${pagamento.value}%0A`+
+`👤 ${nome.value}%0A`+
 `📝 ${obs.value||'-'}`;
 
 window.open("https://wa.me/5511981654980?text="+msg);
