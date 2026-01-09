@@ -5,68 +5,116 @@
 <title>Adega GS Oficial</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- MAPA -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <style>
-body{margin:0;font-family:Arial;background:#0f0f0f;color:#fff}
-header{text-align:center;padding:20px;background:#000}
-h1{color:#ffd700;margin:0}
-p{color:#bbb;margin:5px 0}
+body{
+  margin:0;
+  font-family:Arial, Helvetica, sans-serif;
+  background:#f4f4f4;
+  color:#111;
+}
+header{
+  background:#fff;
+  padding:16px;
+  text-align:center;
+  border-bottom:1px solid #ddd;
+}
+h1{margin:0;color:#000}
+small{color:#666}
 
-.section{padding:20px}
-h2{border-bottom:2px solid #25d366;color:#ffd700;padding-bottom:5px}
+.section{
+  background:#fff;
+  margin:12px;
+  padding:14px;
+  border-radius:10px;
+}
 
-.item{display:flex;justify-content:space-between;align-items:center;
-padding:10px 0;border-bottom:1px solid #333}
+h2{
+  margin:0 0 10px 0;
+  font-size:18px;
+}
 
-button{background:#25d366;border:none;padding:6px 12px;
-border-radius:6px;font-weight:bold;cursor:pointer}
+.item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid #eee;
+  padding:8px 0;
+}
+
+.qty{
+  display:flex;
+  gap:6px;
+  align-items:center;
+}
+
+.qty button{
+  width:28px;
+  height:28px;
+  border:none;
+  border-radius:6px;
+  background:#ddd;
+  font-weight:bold;
+}
 
 .cart-btn{
-position:fixed;bottom:20px;right:20px;
-background:#25d366;color:#000;
-width:55px;height:55px;border-radius:50%;
-display:flex;align-items:center;justify-content:center;
-font-size:22px;cursor:pointer;z-index:999
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#00c853;
+  color:#fff;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:24px;
 }
 
 .badge{
-position:absolute;top:-5px;right:-5px;
-background:red;color:#fff;border-radius:50%;
-font-size:12px;padding:2px 6px
+  position:absolute;
+  top:-5px;
+  right:-5px;
+  background:red;
+  color:#fff;
+  border-radius:50%;
+  font-size:12px;
+  padding:2px 6px;
 }
 
 #cartBox{
-display:none;position:fixed;top:0;left:0;
-width:100%;height:100%;background:#000;
-overflow:auto;padding:20px;z-index:9999
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;
+  height:100%;
+  background:#f4f4f4;
+  overflow:auto;
 }
 
 input,select,textarea{
-width:100%;padding:10px;margin:6px 0;
-border-radius:6px;border:none;background:#111;color:#fff
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+  border-radius:6px;
+  border:1px solid #ccc;
 }
 
-.total{font-size:16px;font-weight:bold;margin-top:10px}
-.freteBox{margin-top:10px;color:#25d366}
-
-.qtdBtn{
-background:#444;color:#fff;border:none;
-padding:4px 8px;margin:0 4px;border-radius:4px
-}
-
-#mapa{
-width:100%;height:200px;margin-top:10px;
-border-radius:10px;border:1px solid #25d366;display:none
+.total{
+  font-size:16px;
+  font-weight:bold;
 }
 
 .finalizar{
-position:sticky;bottom:10px;
-background:#25d366;color:#000;
-padding:12px;border-radius:8px;
-font-size:16px;margin-top:15px
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:#00c853;
+  color:#fff;
+  padding:16px;
+  border:none;
+  font-size:18px;
 }
 </style>
 </head>
@@ -75,138 +123,123 @@ font-size:16px;margin-top:15px
 
 <header>
 <h1>🍺 Adega GS Oficial</h1>
-<p>Rua Plácido Parreira Lima, 142 • 11:00 às 04:00</p>
+<small>🕒 Aberto das 11:00 às 04:00</small><br>
+<small>📍 Rua Plácido Parreira Lima, 142</small>
 </header>
 
-<!-- PRODUTOS -->
 <div class="section">
-<h2>🍺 Cervejas</h2>
-<div class="item"><span>Skol 269ml</span><button onclick="add('Skol 269ml',4)">R$4,00</button></div>
-<div class="item"><span>Original 269ml</span><button onclick="add('Original 269ml',4)">R$4,00</button></div>
-<div class="item"><span>Heineken 269ml</span><button onclick="add('Heineken 269ml',5.2)">R$5,20</button></div>
-<div class="item"><span>Amstel 269ml</span><button onclick="add('Amstel 269ml',9)">R$9,00</button></div>
+<h2>🍺 Produtos</h2>
+
+<div class="item">
+<span>Pastel Frango Catupiry – R$ 9,00</span>
+<div class="qty">
+<button onclick="alt('Pastel Frango Catupiry',9,-1)">-</button>
+<span id="q-Pastel Frango Catupiry">0</span>
+<button onclick="alt('Pastel Frango Catupiry',9,1)">+</button>
+</div>
 </div>
 
-<div class="section">
-<h2>🍟 Porções</h2>
-<div class="item"><span>Calabresa</span><button onclick="add('Porção Calabresa',25)">R$25,00</button></div>
-<div class="item"><span>Batata Frita</span><button onclick="add('Batata Frita',22)">R$22,00</button></div>
+<div class="item">
+<span>Pastel Pizza – R$ 8,00</span>
+<div class="qty">
+<button onclick="alt('Pastel Pizza',8,-1)">-</button>
+<span id="q-Pastel Pizza">0</span>
+<button onclick="alt('Pastel Pizza',8,1)">+</button>
+</div>
 </div>
 
-<div class="section">
-<h2>🥟 Pastel</h2>
-<div class="item"><span>Carne</span><button onclick="add('Pastel Carne',8)">R$8,00</button></div>
-<div class="item"><span>Pizza</span><button onclick="add('Pastel Pizza',8)">R$8,00</button></div>
-<div class="item"><span>Frango c/ Catupiry</span><button onclick="add('Pastel Frango Catupiry',9)">R$9,00</button></div>
+<div class="item">
+<span>Torcidas Carne – R$ 4,00</span>
+<div class="qty">
+<button onclick="alt('Torcidas Carne',4,-1)">-</button>
+<span id="q-Torcidas Carne">0</span>
+<button onclick="alt('Torcidas Carne',4,1)">+</button>
+</div>
+</div>
 </div>
 
-<div class="section">
-<h2>🍫 Chocolates</h2>
-<div class="item"><span>Bis</span><button onclick="add('Bis',4.5)">R$4,50</button></div>
-</div>
+<div class="cart-btn" onclick="openCart()">🛒<span class="badge" id="count">0</span></div>
 
-<div class="section">
-<h2>🥨 Salgadinhos</h2>
-<div class="item"><span>Torcidas Carne</span><button onclick="add('Torcidas Carne',4)">R$4,00</button></div>
-<div class="item"><span>Torcidas Churrasco</span><button onclick="add('Torcidas Churrasco',4)">R$4,00</button></div>
-<div class="item"><span>Torcidas Bacon</span><button onclick="add('Torcidas Bacon',4)">R$4,00</button></div>
-<div class="item"><span>Torcidas Vinagrete</span><button onclick="add('Torcidas Vinagrete',4)">R$4,00</button></div>
-</div>
-
-<!-- BOTÃO CARRINHO -->
-<div class="cart-btn" onclick="openCart()">🛒<span class="badge" id="qtd">0</span></div>
-
-<!-- CARRINHO -->
 <div id="cartBox">
+<div class="section">
 <button onclick="closeCart()">⬅ Voltar</button>
 
-<h2>🛒 Carrinho</h2>
-<div id="lista"></div>
-<div class="total" id="total"></div>
-<div class="freteBox" id="freteBox"></div>
-
+<h2>Cupom</h2>
 <input id="cupom" placeholder="Cupom (opcional)">
-<input id="cep" placeholder="CEP *" oninput="buscarCEP()">
+
+<h2>CEP</h2>
+<input id="cep" placeholder="CEP *" onblur="buscarCEP()">
+
 <div id="mapa"></div>
 
-<h2>📋 Dados do Cliente</h2>
+<h2>Dados do Cliente</h2>
 <input id="nome" placeholder="Nome *">
+<input id="cpf" placeholder="CPF *">
 <input id="endereco" placeholder="Endereço *">
 <select id="pagamento">
-<option value="">Forma de pagamento *</option>
+<option value="">Pagamento *</option>
 <option>Pix</option>
 <option>Crédito</option>
 <option>Débito</option>
 </select>
 <textarea id="obs" placeholder="Observações"></textarea>
 
+<p class="total" id="resumo"></p>
+</div>
+
 <button class="finalizar" onclick="finalizar()">FINALIZAR NO WHATSAPP</button>
 </div>
 
 <script>
-let cart=[],frete=null,distancia=null,map,marker;
+let cart={},frete=0,dist=0;
 
-function add(nome,preco){
-let item=cart.find(i=>i.nome===nome);
-if(item)item.qtd++;
-else cart.push({nome,preco,qtd:1});
-document.getElementById("qtd").innerText=
-cart.reduce((s,i)=>s+i.qtd,0);
-}
-
-function openCart(){cartBox.style.display="block";render();}
-function closeCart(){cartBox.style.display="none";}
-
-function render(){
-let lista=document.getElementById("lista");
-let subtotal=0;
-lista.innerHTML="";
-cart.forEach(i=>{
-subtotal+=i.preco*i.qtd;
-lista.innerHTML+=`
-<p>${i.nome} - R$ ${i.preco.toFixed(2)}
-<button class="qtdBtn" onclick="i.qtd--;if(i.qtd<=0)cart.splice(cart.indexOf(i),1);render()">-</button>
-${i.qtd}
-<button class="qtdBtn" onclick="i.qtd++;render()">+</button>
-</p>`;
-});
-let total=subtotal+(frete||0);
-totalEl.innerText=`Subtotal: R$ ${subtotal.toFixed(2)} | Total: R$ ${total.toFixed(2)}`;
-freteBox.innerText=frete==null?"Informe o CEP para calcular frete":
-frete==0?"🚚 Frete GRÁTIS":
-`🚚 Frete R$ ${frete.toFixed(2)} (${distancia} km)`;
-}
-
-async function buscarCEP(){
-let c=cep.value.replace(/\D/g,'');
-if(c.length!==8){frete=null;render();return;}
-
-let r=await fetch(`https://viacep.com.br/ws/${c}/json/`);
-let d=await r.json();
-if(d.erro)return alert("CEP inválido");
-
-endereco.value=`${d.logradouro}, ${d.bairro} - ${d.localidade}/${d.uf}`;
-
-if(!map){
-map=L.map("mapa").setView([-23.55,-46.63],13);
-L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
-marker=L.marker([-23.55,-46.63]).addTo(map);
-mapa.style.display="block";
-}
-
-distancia=(parseInt(c.slice(-3))%15)+1;
-frete=distancia<=3?5:distancia<=6?8:distancia<=10?10:15;
+function alt(n,p,v){
+cart[n]=(cart[n]||0)+v;
+if(cart[n]<0)cart[n]=0;
+document.getElementById("q-"+n).innerText=cart[n];
 render();
 }
 
-function finalizar(){
-if(!nome.value||!endereco.value||!pagamento.value||frete==null)
-return alert("Preencha todos os dados");
+function render(){
+let c=Object.values(cart).reduce((a,b)=>a+b,0);
+document.getElementById("count").innerText=c;
+}
 
-let msg="🛒 *PEDIDO – ADEGA GS OFICIAL*%0A%0A";
-cart.forEach(i=>msg+=`• ${i.qtd}x ${i.nome}%0A`);
-msg+=`%0A🚚 Frete: ${frete==0?"GRÁTIS":"R$ "+frete.toFixed(2)}%0A`;
-msg+=`👤 ${nome.value}%0A📍 ${endereco.value}%0A💳 ${pagamento.value}`;
+function openCart(){cartBox.style.display="block";calc();}
+function closeCart(){cartBox.style.display="none";}
+
+function buscarCEP(){
+let c=cep.value.replace(/\D/g,'');
+if(c.length!==8)return;
+fetch("https://viacep.com.br/ws/"+c+"/json/")
+.then(r=>r.json()).then(d=>{
+endereco.value=d.logradouro+" - "+d.bairro+" - "+d.localidade;
+mapa.innerHTML=`<iframe width="100%" height="200" 
+src="https://maps.google.com/maps?q=${encodeURIComponent(endereco.value)}&output=embed"></iframe>`;
+dist=(parseInt(c.slice(-2))%15)+1;
+if(dist<=3)frete=5;
+else if(dist<=6)frete=8;
+else if(dist<=10)frete=10;
+else frete=15;
+calc();
+});
+}
+
+function calc(){
+let sub=0;
+for(let i in cart)sub+=cart[i]*9;
+resumo.innerText=`Frete: R$ ${frete.toFixed(2)} | Total: R$ ${(sub+frete).toFixed(2)}`;
+}
+
+function finalizar(){
+if(!nome.value||!cpf.value||!endereco.value||!pagamento.value){
+alert("Preencha todos os campos obrigatórios");
+return;
+}
+let msg="🛒 PEDIDO ADEGA GS%0A";
+for(let i in cart) if(cart[i]>0) msg+=`${cart[i]}x ${i}%0A`;
+msg+=`Frete: R$ ${frete}%0ATotal: ${resumo.innerText}%0A`;
+msg+=`Nome: ${nome.value}%0ACPF: ${cpf.value}%0A`;
 window.open("https://wa.me/5511981654980?text="+msg);
 }
 </script>
